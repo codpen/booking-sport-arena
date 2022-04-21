@@ -14,8 +14,8 @@ export default function Navbar() {
 	};
 
 	return (
-		<nav>
-			<div className='flex justify-between mx-20'>
+		<nav className='shadow-md mb-2'>
+			<div className='flex justify-between mx-32'>
 				<h4 className='my-auto font-bold text-2xl text-teal-500'>
 					Hobiku
 				</h4>
