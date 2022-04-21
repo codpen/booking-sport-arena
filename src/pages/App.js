@@ -1,6 +1,6 @@
 import logo from "../assets/logo.svg";
 import { OutlineButton, SolidButton } from "../components/Buttons";
-// import { InputText } from "../components/InputText";
+import { InputText } from "../components/InputText";
 import "../styles/App.css";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
           <SolidButton text="Login" link="/login" />
 
           <OutlineButton text="Register" link="/Register" />
-          {/* <InputText type="text" placeholder="Search" /> */}
+          <InputText type="text" placeholder="Search" />
         </div>
       </header>
     </div>
