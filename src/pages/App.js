@@ -1,12 +1,14 @@
-import Navbar from '../components/Navbar';
-import '../styles/App.css';
+import { ListArena, ListCategory } from '../components/Card';
+import Layout from '../components/Layout';
 
 function App() {
 	return (
-		<div className='App'>
-			<Navbar />
-			<header className='App-header'></header>
-		</div>
+		<>
+			<Layout>
+				<ListCategory />
+				<ListArena />
+			</Layout>
+		</>
 	);
 }
 
