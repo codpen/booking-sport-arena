@@ -12,11 +12,15 @@ export default function Navbar() {
 				</h4>
 
 				<div className=''>
-					<Button variant='solid' onClick={() => navigate('/login')}>
+					<Button
+						variant='solid'
+						className='my-3 mx-1'
+						onClick={() => navigate('/login')}>
 						Login
 					</Button>
 					<Button
 						variant='outline'
+						className='my-3 mx-1'
 						onClick={() => navigate('/register')}>
 						Register
 					</Button>
