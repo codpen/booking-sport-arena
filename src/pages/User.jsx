@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import Button from '../components/Buttons';
-import { InputText } from '../components/InputText';
 import Layout from '../components/Layout';
+import { InputText } from '../components/InputText';
+import Button from '../components/Buttons';
 import user from '../assets/user.png';
 
 export default function User() {
-	const [fullname, setFullname] = useState('');
+	const [fullName, setFullName] = useState('');
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [phone, setPhone] = useState('');
 	const [password, setPassword] = useState('');
+	const [business, setBusiness] = useState('');
 
 	useEffect(() => {
 		// get user data
@@ -33,8 +34,10 @@ export default function User() {
 									width={200}
 									alt=''
 								/>
-								<h4 className='text-3xl uppercase'>Username</h4>
-								<h4>(Business)</h4>
+								<h4 className='text-3xl uppercase'>
+									{username ? username : 'Username'}
+								</h4>
+								<h4>( {business ? business : 'Business'} )</h4>
 							</div>
 							<div className='col-span-2 grid grid-flow-col my-auto'>
 								<h1 className='text-5xl my-auto font-bold uppercase'>
@@ -48,10 +51,10 @@ export default function User() {
 										<h6>Fullname</h6>
 										<InputText
 											type='text'
-											placeholder='Fullname'
-											value={fullname}
+											placeholder='Your Fullname'
+											value={fullName}
 											onChange={(e) =>
-												setFullname(e.target.value)
+												setFullName(e.target.value)
 											}
 										/>
 									</div>
@@ -59,7 +62,7 @@ export default function User() {
 										<h6>Nickname</h6>
 										<InputText
 											type='text'
-											placeholder='Nickname'
+											placeholder='Your Nickname'
 											value={username}
 											onChange={(e) =>
 												setUsername(e.target.value)
@@ -70,7 +73,7 @@ export default function User() {
 										<h6>Email</h6>
 										<InputText
 											type='email'
-											placeholder='Email'
+											placeholder='email@mail.com'
 											value={email}
 											onChange={(e) =>
 												setEmail(e.target.value)
@@ -81,7 +84,7 @@ export default function User() {
 										<h6>Phone Number</h6>
 										<InputText
 											type='text'
-											placeholder='Phone'
+											placeholder='+62 812-345-6789'
 											value={phone}
 											onChange={(e) =>
 												setPhone(e.target.value)
@@ -92,7 +95,7 @@ export default function User() {
 										<h6>Password</h6>
 										<InputText
 											type='password'
-											placeholder='Password'
+											placeholder='********'
 											value={password}
 											onChange={(e) =>
 												setPassword(e.target.value)
