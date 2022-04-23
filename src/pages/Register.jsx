@@ -46,30 +46,44 @@ export default function Register() {
               <h1 className="text-3xl font-bold text-teal-500 mb-7">
                 Crete an account
               </h1>
-              <div className="flex space-x-4">
-                <div className="w-6/12">
-                  <p className=" mb-2">fullname</p>
-                  <InputText onChange={(e) => setFullname(e.target.value)} />
-                  <p className=" mb-2">email</p>
-                  <InputText onChange={(e) => setEmail(e.target.value)} />
-                  <p className=" mb-2">password</p>
-                  <InputText
-                    onChange={(e) => setPassword(e.target.value)}
-                    type="password"
-                  />
+              <form>
+                <div className="flex w-full gap-3">
+                  <div>
+                    <p className=" mb-2">fullname</p>
+                    <InputText onChange={(e) => setFullname(e.target.value)} />
+                  </div>
+                  <div>
+                    <p className=" mb-2">username</p>
+                    <InputText onChange={(e) => setUsername(e.target.value)} />
+                  </div>
                 </div>
-                <div className="w-6/12">
-                  <p className=" mb-2">username</p>
-                  <InputText onChange={(e) => setUsername(e.target.value)} />
-                  <p className=" mb-2">phone number</p>
-                  <InputText onChange={(e) => setPhone(e.target.value)} />
-                  <p className=" mb-2">confirm password</p>
-                  <InputText
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    type="password"
-                  />
+                <div className="flex w-full gap-3">
+                  <div>
+                    <p className=" mb-2">email</p>
+                    <InputText onChange={(e) => setEmail(e.target.value)} />
+                  </div>
+                  <div>
+                    <p className=" mb-2">phone number</p>
+                    <InputText onChange={(e) => setPhone(e.target.value)} />
+                  </div>
                 </div>
-              </div>
+                <div className="flex w-full gap-3">
+                  <div>
+                    <p className=" mb-2">password</p>
+                    <InputText
+                      onChange={(e) => setPassword(e.target.value)}
+                      type="password"
+                    />
+                  </div>
+                  <div>
+                    <p className=" mb-2">confirm password</p>
+                    <InputText
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      type="password"
+                    />
+                  </div>
+                </div>
+              </form>
 
               <button
                 type="submit"
@@ -77,7 +91,7 @@ export default function Register() {
                   signUp();
                 }}
                 className="
-            m-2 bg-teal-500 text-white px-5 py-2 rounded-md font-bold hover:bg-teal-600"
+             bg-teal-500 text-white px-5 py-2 rounded-md font-bold hover:bg-teal-600 w-full mx-auto mt-5"
               >
                 login
               </button>
