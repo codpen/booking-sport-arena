@@ -1,7 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Button({ className, variant, children, link }) {
+export default function Button({
+	className,
+	variant,
+	children,
+	link,
+	onClick,
+	type,
+}) {
 	const addClassName = className ? `${className}` : '';
 
 	const variants = {
@@ -13,7 +20,9 @@ export default function Button({ className, variant, children, link }) {
 
 	return (
 		<button
-			className={`px-5 py-2 rounded-md font-bold my-3 mx-2 ${pickedVariant} ${addClassName}`}>
+			className={`px-5 py-2 rounded-md font-bold my-3 mx-2 ${pickedVariant} ${addClassName}`}
+			onClick={onClick}
+			type={type}>
 			<Link to={link}>{children}</Link>
 		</button>
 	);
