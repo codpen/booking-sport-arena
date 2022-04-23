@@ -1,18 +1,7 @@
 import React from 'react';
-import { OutlineButton, SolidButton } from './Buttons';
-import { useNavigate } from 'react-router';
-import { loginAlert } from '../functions/Alert';
+import Button from './Buttons';
 
 export default function Navbar() {
-	const navigate = useNavigate();
-	const isLogin = () => {
-		if (localStorage.getItem('token')) {
-			navigate('/user');
-		} else {
-			loginAlert(navigate);
-		}
-	};
-
 	return (
 		<nav className='shadow-md mb-2'>
 			<div className='flex justify-between mx-32'>
@@ -21,8 +10,12 @@ export default function Navbar() {
 				</h4>
 
 				<div className=''>
-					<SolidButton text='Login' link='/login' onClick={isLogin} />
-					<OutlineButton text='Register' link='/Register' />
+					<Button variant='solid' link='/login'>
+						Login
+					</Button>
+					<Button variant='outline' link='/Register'>
+						Register
+					</Button>
 				</div>
 			</div>
 		</nav>

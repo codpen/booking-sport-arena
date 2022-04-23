@@ -1,22 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export function SolidButton({ text, link, onClick }) {
-	return (
-		<button
-			className='m-2 bg-teal-500 text-white px-5 py-2 rounded-md font-bold'
-			onClick={onClick}>
-			<Link to={link}>{text}</Link>
-		</button>
-	);
-}
+export default function Button({ className, variant, children, link }) {
+	const addClassName = className ? `${className}` : '';
 
-export function OutlineButton({ text, link, onClick }) {
+	const variants = {
+		solid: 'bg-teal-500 text-white',
+		outline: 'border-teal-500 text-teal-500 border',
+	};
+
+	const pickedVariant = variants[variant];
+
 	return (
 		<button
-			className='m-2 outline-teal-500 text-teal-500 outline outline-2 px-5 py-2 rounded-md font-bold'
-			onClick={onClick}>
-			<Link to={link}>{text}</Link>
+			className={`px-5 py-2 rounded-md font-bold my-3 mx-2 ${pickedVariant} ${addClassName}`}>
+			<Link to={link}>{children}</Link>
 		</button>
 	);
 }
