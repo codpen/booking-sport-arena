@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from './Buttons';
 
 export default function Navbar() {
+	const navigate = useNavigate();
 	return (
 		<nav className='shadow-md mb-2'>
 			<div className='flex justify-between mx-32'>
@@ -10,10 +12,12 @@ export default function Navbar() {
 				</h4>
 
 				<div className=''>
-					<Button variant='solid' link='/login'>
+					<Button variant='solid' onClick={() => navigate('/login')}>
 						Login
 					</Button>
-					<Button variant='outline' link='/Register'>
+					<Button
+						variant='outline'
+						onClick={() => navigate('/register')}>
 						Register
 					</Button>
 				</div>
