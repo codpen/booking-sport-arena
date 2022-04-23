@@ -16,7 +16,7 @@ export function loginService(body) {
 
 export function registerService(body) {
   return api.post(
-    `${API}/user`,
+    `${API}/users`,
     null,
     {
       "content-type": "application/x-www-form-urlencoded",

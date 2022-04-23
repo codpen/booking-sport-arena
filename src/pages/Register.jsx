@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { SolidButton } from "../components/Buttons";
+// import { SolidButton } from "../components/Buttons";
 import { InputText } from "../components/InputText";
 import Navbar from "../components/Navbar";
 import illustration from "../assets/goal.png";
 import { useNavigate } from "react-router-dom";
+import { registerService } from "../services/Auth";
+import qs from "qs";
 
 export default function Register() {
   const [fullname, setFullname] = useState({});
@@ -13,6 +15,17 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState({});
   const [phone, setPhone] = useState({});
   const navigate = useNavigate();
+
+  async function signUp() {
+    let item = { fullname, username, email, password, confirmPassword, phone };
+    const result = await registerService(qs.stringify(item));
+    if (result.code === 200) {
+      alert("register sukses");
+      navigate("/login");
+    } else {
+      alert("register gagal");
+    }
+  }
 
   return (
     <div>
@@ -36,23 +49,38 @@ export default function Register() {
               <div className="flex space-x-4">
                 <div className="w-6/12">
                   <p className=" mb-2">fullname</p>
-                  <InputText />
+                  <InputText onChange={(e) => setFullname(e.target.value)} />
                   <p className=" mb-2">email</p>
-                  <InputText />
+                  <InputText onChange={(e) => setEmail(e.target.value)} />
                   <p className=" mb-2">password</p>
-                  <InputText type="password" />
+                  <InputText
+                    onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                  />
                 </div>
                 <div className="w-6/12">
                   <p className=" mb-2">username</p>
-                  <InputText />
+                  <InputText onChange={(e) => setUsername(e.target.value)} />
                   <p className=" mb-2">phone number</p>
-                  <InputText />
+                  <InputText onChange={(e) => setPhone(e.target.value)} />
                   <p className=" mb-2">confirm password</p>
-                  <InputText type="password" />
+                  <InputText
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    type="password"
+                  />
                 </div>
               </div>
 
-              <SolidButton className="w-screen" text="Register" link="/login" />
+              <button
+                type="submit"
+                onClick={() => {
+                  signUp();
+                }}
+                className="
+            m-2 bg-teal-500 text-white px-5 py-2 rounded-md font-bold hover:bg-teal-600"
+              >
+                login
+              </button>
               <p className="text-center">
                 Already have an account?{" "}
                 <a className="text-cyan-400" href="login">
