@@ -18,7 +18,7 @@ export default function Button({
 
 	return (
 		<button
-			className={`px-5 py-2 rounded-md font-bold my-3 mx-2 ${pickedVariant} ${addClassName}`}
+			className={`px-5 py-2 rounded-md font-bold ${pickedVariant} ${addClassName}`}
 			onClick={onClick}
 			type={type}>
 			{children}
