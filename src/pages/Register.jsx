@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { SolidButton } from "../components/Buttons";
 import { InputText } from "../components/InputText";
 import Navbar from "../components/Navbar";
 import illustration from "../assets/goal.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const [fullname, setFullname] = useState({});
+  const [username, setUsername] = useState({});
+  const [email, setEmail] = useState({});
+  const [password, setPassword] = useState({});
+  const [confirmPassword, setConfirmPassword] = useState({});
+  const [phone, setPhone] = useState({});
+  const navigate = useNavigate();
+
   return (
     <div>
       {" "}

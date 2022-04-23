@@ -1,33 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { SolidButton } from "../components/Buttons";
 import { InputText } from "../components/InputText";
 import Navbar from "../components/Navbar";
-// import TextField from "@material-ui/core/TextField";
+import { loginService } from "../services/Auth";
+import qs from "qs";
 
 export default function Login() {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const navigate = useNavigate();
+
+  async function signIn() {
+    let Auth = await loginService(
+      qs.stringify({
+        username: email,
+        password: password,
+      })
+    );
+    if (Auth.code === 200) {
+      localStorage.setItem("user-info", JSON.stringify(Auth.data));
+      alert("login sukses");
+      navigate("/");
+    } else if (Auth.code === 401) {
+      alert("Wrong email or password");
+    }
+  }
+
   return (
     <div>
-      {/* <TextField
-        helperText="Please enter your name"
-        id="demo-helper-text-aligned"
-        label="Name"
-        variant="outlined"
-        color={lightGreen[500]}
-      />
-      <TextField
-        helperText=" "
-        id="demo-helper-text-aligned-no-helper"
-        label="Name"
-        variant="outlined"
-        color={amber[500]}
-      />
-      <TextField
-        id="outlined-basic"
-        label="Outlined"
-        variant="outlined"
-        color="secondary"
-      /> */}
-
       <Navbar />
       <div
         className="flex justify-center items-center h-screen bg-no-repeat bg-cover p-96"
@@ -40,10 +41,29 @@ export default function Login() {
             Login
           </h1>
           <p className="text-center mb-2">email</p>
-          <InputText />
+          <InputText
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="email"
+          />
           <p className="text-center mb-2 mt-6">password</p>
-          <InputText type="password" className="mb-4" />
-          <SolidButton className="w-screen" text="Login" link="/login" />
+          <InputText
+            nChange={(e) => setPassword(e.target.value)}
+            placeholder="password"
+            type="password"
+            className="mb-4"
+          />
+          <button
+            type="submit"
+            onClick={() => {
+              signIn();
+            }}
+            className="
+            m-2 bg-teal-500 text-white px-5 py-2 rounded-md font-bold hover:bg-teal-600"
+          >
+            login
+          </button>
+
           <p className="text-center">
             don't have an account?{" "}
             <a className="text-cyan-400" href="Register">
