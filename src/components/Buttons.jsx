@@ -22,3 +22,16 @@ export function OutlineButton({ text, link, onClick }) {
     </button>
   );
 }
+
+export function SubmitButton({ text, handleClick }) {
+  return (
+    <button
+      type="submit"
+      onClick={handleClick}
+      className="
+            mt-7 mx-auto bg-teal-500 text-white px-5 py-2 rounded-md font-bold hover:bg-teal-600 w-full"
+    >
+      {text}
+    </button>
+  );
+}

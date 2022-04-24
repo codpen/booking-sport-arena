@@ -5,21 +5,22 @@ import Navbar from "../components/Navbar";
 import illustration from "../assets/goal.png";
 import { useNavigate } from "react-router-dom";
 import { registerService } from "../services/Auth";
-import qs from "qs";
+import { SubmitButton } from "../components/Buttons";
 
 export default function Register() {
   const [fullname, setFullname] = useState({});
   const [username, setUsername] = useState({});
   const [email, setEmail] = useState({});
   const [password, setPassword] = useState({});
-  const [confirmPassword, setConfirmPassword] = useState({});
-  const [phone, setPhone] = useState({});
+  // const [confirmPassword, setConfirmPassword] = useState({});
+  const [phone_number, setPhone] = useState({});
   const navigate = useNavigate();
 
   async function signUp() {
-    let item = { fullname, username, email, password, confirmPassword, phone };
-    const result = await registerService(qs.stringify(item));
-    if (result.code === 200) {
+    let item = { fullname, username, email, phone_number, password };
+    const result = await registerService(item);
+    console.log(item);
+    if (result.status === "success") {
       alert("register sukses");
       navigate("/login");
     } else {
@@ -29,8 +30,8 @@ export default function Register() {
 
   return (
     <div>
-      {" "}
       <Navbar />
+
       <div
         className="flex justify-center items-center h-screen bg-no-repeat bg-cover py-28 px-52"
         style={{
@@ -77,24 +78,18 @@ export default function Register() {
                   </div>
                   <div>
                     <p className=" mb-2">confirm password</p>
-                    <InputText
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      type="password"
-                    />
+                    <InputText type="password" />
                   </div>
                 </div>
               </form>
 
-              <button
+              <SubmitButton
                 type="submit"
-                onClick={() => {
+                text="register"
+                handleClick={() => {
                   signUp();
                 }}
-                className="
-             bg-teal-500 text-white px-5 py-2 rounded-md font-bold hover:bg-teal-600 w-full mx-auto mt-5"
-              >
-                login
-              </button>
+              ></SubmitButton>
               <p className="text-center">
                 Already have an account?{" "}
                 <a className="text-cyan-400" href="login">
