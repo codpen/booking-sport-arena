@@ -3,8 +3,10 @@ import Layout from '../components/Layout';
 import { InputText } from '../components/InputText';
 import Button from '../components/Buttons';
 import user from '../assets/user.png';
+import { useNavigate } from 'react-router-dom';
 
 export default function User() {
+	const navigate = useNavigate();
 	const [fullName, setFullName] = useState('');
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
@@ -43,7 +45,13 @@ export default function User() {
 								<h1 className='text-5xl my-auto font-bold uppercase'>
 									Profile
 								</h1>
-								<Button variant='solid'>Become Owner</Button>
+								<Button
+									variant='solid'
+									onClick={() => {
+										navigate('/verify');
+									}}>
+									Become Owner
+								</Button>
 							</div>
 							<div className='row-span-2 col-span-2'>
 								<form className='grid grid-cols-2 gap-4'>

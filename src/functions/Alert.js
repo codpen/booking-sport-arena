@@ -40,7 +40,7 @@ export function fillAll() {
 	Swal.fire({
 		position: 'center',
 		icon: 'error',
-		title: 'Please fill all the fields',
+		title: 'Please fill all the required fields',
 		showConfirmButton: false,
 		timer: 1500,
 	});
