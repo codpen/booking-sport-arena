@@ -6,7 +6,7 @@ export default function Layout({ children, onScroll }) {
 		<>
 			<div className='bg-white' onScroll={onScroll}>
 				<Navbar />
-				<div className='mx-32'>{children}</div>
+				<div className='lg:mx-32 md:mx-16 sm:mx-8'>{children}</div>
 			</div>
 		</>
 	);
