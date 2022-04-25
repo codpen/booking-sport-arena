@@ -19,7 +19,7 @@ export async function post(url, params, headers, body) {
       headers,
     })
     .then((response) => response.data)
-    .catch((error) => error.response.data);
+    .catch((error) => console.log(error));
   return axiosResponse;
 }
 
