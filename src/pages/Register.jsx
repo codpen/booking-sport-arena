@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import illustration from "../assets/goal.png";
 import { useNavigate } from "react-router-dom";
 import { registerService } from "../services/Auth";
-import { SubmitButton } from "../components/Buttons";
+import Button from "../components/Buttons";
 
 export default function Register() {
   const [fullname, setFullname] = useState({});
@@ -83,13 +83,16 @@ export default function Register() {
                 </div>
               </form>
 
-              <SubmitButton
+              <Button
                 type="submit"
-                text="register"
-                handleClick={() => {
+                variant="solid"
+                className="mt-10 w-full"
+                onClick={() => {
                   signUp();
                 }}
-              ></SubmitButton>
+              >
+                register
+              </Button>
               <p className="text-center">
                 Already have an account?{" "}
                 <a className="text-cyan-400" href="login">

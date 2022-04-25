@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { SolidButton } from "../components/Buttons";
 import { InputText } from "../components/InputText";
-import { SubmitButton, OutlineButton } from "../components/Buttons";
+import Button from "../components/Buttons";
 import Navbar from "../components/Navbar";
 import { loginService } from "../services/Auth";
-import qs from "qs";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -51,12 +50,16 @@ export default function Login() {
             type="password"
             className="mb-4"
           />
-          <SubmitButton
-            text="login"
-            handleClick={() => {
+          <Button
+            type="submit"
+            variant="solid"
+            className="mt-10 w-full"
+            onClick={() => {
               signIn();
             }}
-          />
+          >
+            login
+          </Button>
           <p className="text-center">
             don't have an account?
             <a className="text-cyan-400" href="Register">
