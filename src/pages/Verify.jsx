@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { InputText } from '../components/InputText';
-import { fillAll } from '../functions/Alert';
+import {
+	errorMessage,
+	errorMessageSwagger,
+	fillAll,
+	successMessage,
+} from '../functions/Alert';
 import Button from '../components/Buttons';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function Verification() {
 	const [business, setBusiness] = useState('');
 	const [description, setDescription] = useState('');
 	const [certificate, setCertificate] = useState('');
+	const navigate = useNavigate();
+	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/owners`;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -18,15 +27,34 @@ export default function Verification() {
 			certificate.length > 0
 		) {
 			const formData = new FormData();
-			formData.append('business', business);
-			formData.append('description', description);
-			formData.append('certificate', certificate);
+			formData.append('business_name', business);
+			formData.append('business_description', description);
+			formData.append('business_certificate', certificate);
 
-			// axios post request
+			axios
+				.put(`${API}/request`, formData, {
+					headers: {
+						'Content-Type': 'multipart/form-data',
+						Authorization: `Bearer ${localStorage.getItem(
+							'user-info'
+						)}`,
+					},
+				})
+				.then((res) => {
+					if (res.status === 200) {
+						successMessage(res);
+						navigate('/');
+					}
+				})
+				.catch((err) => {
+					// errorMessage(err);
+					errorMessageSwagger(err);
+				});
 		} else {
 			fillAll();
 		}
 	};
+
 	return (
 		<>
 			<Layout>
