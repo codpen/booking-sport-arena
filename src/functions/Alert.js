@@ -88,3 +88,14 @@ export function verifyOwner(navigate) {
 		}
 	});
 }
+
+// for swagger dummy
+export function errorMessageSwagger(err) {
+	Swal.fire({
+		position: 'center',
+		icon: 'error',
+		title: err.message,
+		showConfirmButton: false,
+		timer: 1500,
+	});
+}
