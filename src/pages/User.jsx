@@ -2,59 +2,105 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import { InputText } from '../components/InputText';
 import Button from '../components/Buttons';
-import user from '../assets/user.png';
 import { useNavigate } from 'react-router-dom';
+import { fetchUser } from '../services/Users';
+import user from '../assets/user.png';
+import axios from 'axios';
+import { errorMessage, successMessage, verifyOwner } from '../functions/Alert';
 
 export default function User() {
 	const navigate = useNavigate();
 	const [fullName, setFullName] = useState('');
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
-	const [phone, setPhone] = useState('');
+	const [phoneNumber, setPhoneNumber] = useState('');
 	const [password, setPassword] = useState('');
-	const [business, setBusiness] = useState('');
+	const [businessName, setBusinessName] = useState('');
+	const [profileImage, setProfileImage] = useState('');
+	const [userId, setUserId] = useState('');
+
+	const API =
+		'https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/users';
 
 	useEffect(() => {
-		// get user data
+		fetchUser({
+			setFullName,
+			setUsername,
+			setEmail,
+			setPhoneNumber,
+			setBusinessName,
+			setProfileImage,
+			setUserId,
+		});
 	}, []);
 
-	const handleSubmit = (e) => {
+	const updateButton = (e) => {
 		e.preventDefault();
+		axios
+			.put(
+				`${API}/${userId}`,
+				{
+					fullname: fullName,
+					username: username,
+					email: email,
+					phone_number: phoneNumber,
+					password: password,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem(
+							'user-info'
+						)}`,
+					},
+				}
+			)
+			.then((res) => {
+				successMessage(res);
+			})
+			.catch((err) => {
+				errorMessage(err);
+			});
 	};
+
 	return (
 		<>
-			{/* v2 using Grid */}
 			<Layout>
 				<div className='container'>
 					<div className='border-2 rounded-2xl p-16 my-5'>
 						<div className='grid lg:grid-rows-3 grid-flow-col gap-4'>
-							<div className='row-span-3 my-auto text-center'>
+							<div className='row-span-3 border my-auto rounded-3xl text-center py-20'>
 								<img
 									className='rounded-full mx-auto'
+									// src={profileImage ? profileImage : user}
 									src={user}
 									height={200}
 									width={200}
-									alt=''
+									alt={profileImage}
 								/>
 								<h4 className='text-3xl uppercase'>
 									{username ? username : 'Username'}
 								</h4>
-								<h4>( {business ? business : 'Business'} )</h4>
+								<h4>
+									( {businessName ? businessName : 'Business'}{' '}
+									)
+								</h4>
 							</div>
-							<div className='col-span-2 grid grid-flow-col my-auto'>
+							<div className='col-span-2 border rounded-3xl grid grid-flow-col py-6 px-10 justify-items-stretch'>
 								<h1 className='text-5xl my-auto font-bold uppercase'>
 									Profile
 								</h1>
-								<Button
-									variant='solid'
-									onClick={() => {
-										navigate('/verify');
-									}}>
-									Become Owner
-								</Button>
+								<div className='my-auto justify-self-end'>
+									<Button
+										variant='solid'
+										onClick={() => {
+											verifyOwner(navigate);
+										}}>
+										Become Owner
+									</Button>
+								</div>
 							</div>
-							<div className='row-span-2 col-span-2'>
-								<form className='grid grid-cols-2 gap-4'>
+							<div className='row-span-2 border col-span-2 rounded-3xl'>
+								<form className='grid grid-cols-2 gap-4 px-10 py-5'>
 									<div className=''>
 										<h6>Fullname</h6>
 										<InputText
@@ -93,9 +139,9 @@ export default function User() {
 										<InputText
 											type='text'
 											placeholder='+62 812-345-6789'
-											value={phone}
+											value={phoneNumber}
 											onChange={(e) =>
-												setPhone(e.target.value)
+												setPhoneNumber(e.target.value)
 											}
 										/>
 									</div>
@@ -111,12 +157,16 @@ export default function User() {
 										/>
 									</div>
 									<div className='grid justify-items-stretch'>
-										<Button
-											variant='solid'
-											className='uppercase'
-											onClick={() => handleSubmit()}>
-											Edit profile
-										</Button>
+										<div className='place-self-end'>
+											<Button
+												variant='solid'
+												className='uppercase'
+												onClick={(e) =>
+													updateButton(e)
+												}>
+												Update profile
+											</Button>
+										</div>
 									</div>
 								</form>
 							</div>
