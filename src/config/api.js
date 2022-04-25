@@ -36,7 +36,7 @@ export async function put(url, params, headers) {
 
 export async function destroy(url, params, headers) {
   const axiosResponse = await axios
-    .put(url, {
+    .delete(url, {
       params,
       headers,
     })
