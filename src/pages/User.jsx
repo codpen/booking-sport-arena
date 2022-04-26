@@ -7,6 +7,7 @@ import { fetchUser } from '../services/Users';
 import user from '../assets/user.png';
 import axios from 'axios';
 import { errorMessage, successMessage, verifyOwner } from '../functions/Alert';
+import Swal from 'sweetalert2';
 
 export default function User() {
 	const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function User() {
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [password, setPassword] = useState('');
 	const [businessName, setBusinessName] = useState('');
-	const [profileImage, setProfileImage] = useState('');
+	const [image, setImage] = useState('');
 	const [userId, setUserId] = useState('');
 
 	const API =
@@ -29,7 +30,7 @@ export default function User() {
 			setEmail,
 			setPhoneNumber,
 			setBusinessName,
-			setProfileImage,
+			setImage,
 			setUserId,
 		});
 	}, []);
@@ -62,6 +63,85 @@ export default function User() {
 			});
 	};
 
+	const changeImageButton = (e) => {
+		e.preventDefault();
+		Swal.fire({
+			title: 'Upload Profile Image',
+			input: 'file',
+			inputAttributes: {
+				'aria-label': 'Upload Profile Image',
+			},
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Upload',
+			preConfirm: (file) => {
+				return new Promise((resolve) => {
+					const reader = new FileReader();
+					reader.onload = (e) => {
+						resolve(reader.result);
+					};
+					reader.readAsDataURL(file);
+				});
+			},
+		}).then((result) => {
+			if (result.value) {
+				axios
+					.put(
+						`${API}/images/${userId}`,
+						{
+							image: result.value,
+						},
+						{
+							headers: {
+								Authorization: `Bearer ${localStorage.getItem(
+									'user-info'
+								)}`,
+							},
+						}
+					)
+					.then((res) => {
+						successMessage(res);
+					})
+					.catch((err) => {
+						errorMessage(err);
+					});
+			}
+		});
+	};
+
+	const deleteButton = (e) => {
+		e.preventDefault();
+		Swal.fire({
+			position: 'center',
+			icon: 'warning',
+			title: 'Are you sure?',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes',
+			cancelButtonText: 'No',
+		}).then((result) => {
+			if (result.value) {
+				axios
+					.delete(`${API}/${userId}`, {
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem(
+								'user-info'
+							)}`,
+						},
+					})
+					.then((res) => {
+						successMessage(res);
+						navigate('/');
+					})
+					.catch((err) => {
+						errorMessage(err);
+					});
+			}
+		});
+	};
+
 	return (
 		<>
 			<Layout>
@@ -71,16 +151,24 @@ export default function User() {
 							<div className='row-span-3 border my-auto rounded-3xl text-center py-20'>
 								<img
 									className='rounded-full mx-auto'
-									// src={profileImage ? profileImage : user}
-									src={user}
+									src={image ? image : user}
+									// src={user}
 									height={200}
 									width={200}
-									alt={profileImage}
+									alt={image}
 								/>
+								<div className='mb-5'>
+									<a
+										href='#'
+										onClick={changeImageButton}
+										className='py-1 px-3 uppercase text-teal-500 border-t-2 border-b-2'>
+										change image
+									</a>
+								</div>
 								<h4 className='text-3xl uppercase'>
 									{username ? username : 'Username'}
 								</h4>
-								<h4>
+								<h4 className='text-amber-500 font-bold'>
 									( {businessName ? businessName : 'Business'}{' '}
 									)
 								</h4>
@@ -100,7 +188,7 @@ export default function User() {
 								</div>
 							</div>
 							<div className='row-span-2 border col-span-2 rounded-3xl'>
-								<form className='grid grid-cols-2 gap-4 px-10 py-5'>
+								<form className='grid grid-cols-2 gap-4 px-10 py-5 content-end'>
 									<div className=''>
 										<h6>Fullname</h6>
 										<InputText
@@ -157,14 +245,22 @@ export default function User() {
 										/>
 									</div>
 									<div className='grid justify-items-stretch'>
-										<div className='place-self-end'>
+										<div className='grid-cols-2 grid gap-4 content-end '>
 											<Button
 												variant='solid'
 												className='uppercase'
 												onClick={(e) =>
 													updateButton(e)
 												}>
-												Update profile
+												Update
+											</Button>
+											<Button
+												variant='danger'
+												className='uppercase'
+												onClick={(e) => {
+													deleteButton(e);
+												}}>
+												Delete
 											</Button>
 										</div>
 									</div>
