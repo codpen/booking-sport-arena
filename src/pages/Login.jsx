@@ -24,6 +24,7 @@ export default function Login() {
       alert(Auth.message);
     }
   }
+
   return (
     <div>
       <Navbar />
