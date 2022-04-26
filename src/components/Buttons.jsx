@@ -13,6 +13,8 @@ export default function Button({
 	const variants = {
 		solid: 'bg-teal-500 text-white',
 		outline: 'border-teal-500 text-teal-500 border',
+		warning: ' bg-amber-500 text-white',
+		danger: 'bg-red-500 text-white',
 	};
 
 	const pickedVariant = variants[variant];
