@@ -9,3 +9,9 @@ export function loginService(body) {
 export function registerService(body) {
   return api.post(`${API}/users`, null, null, body);
 }
+
+export function profileService(token) {
+  return api.get(`${API}/users/profile`, null, {
+    Authorization: `Bearer ${token}`,
+  });
+}

@@ -8,15 +8,18 @@ import { registerService } from "../services/Auth";
 import Button from "../components/Buttons";
 
 export default function Register() {
-  const [fullname, setFullname] = useState({});
-  const [username, setUsername] = useState({});
-  const [email, setEmail] = useState({});
-  const [password, setPassword] = useState({});
-  // const [confirmPassword, setConfirmPassword] = useState({});
-  const [phone_number, setPhone] = useState({});
+  const [fullname, setFullname] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone_number, setPhone] = useState("");
   const navigate = useNavigate();
 
   async function signUp() {
+    if (confirmPassword !== password) {
+      return;
+    }
     let item = { fullname, username, email, phone_number, password };
     const result = await registerService(item);
     console.log(item);
@@ -27,6 +30,16 @@ export default function Register() {
       alert("register gagal");
     }
   }
+
+  const checkConfirmPassword = () => {
+    if (
+      password !== "" &&
+      confirmPassword !== "" &&
+      confirmPassword !== password
+    ) {
+      return <span>Password Not Match</span>;
+    }
+  };
 
   return (
     <div>
@@ -78,7 +91,11 @@ export default function Register() {
                   </div>
                   <div>
                     <p className=" mb-2">confirm password</p>
-                    <InputText type="password" />
+                    <InputText
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      type="password"
+                    />
+                    {checkConfirmPassword()}
                   </div>
                 </div>
               </form>
