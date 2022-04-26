@@ -39,7 +39,9 @@ export function ListCategory() {
 
 	return (
 		<>
-			<h4 className="uppercase text-center text-3xl my-8">Category</h4>
+			<h4 className="uppercase text-2xl my-8 text-teal-500 font-bold text-center">
+				Category
+			</h4>
 			<Category categories={category} />
 		</>
 	);
