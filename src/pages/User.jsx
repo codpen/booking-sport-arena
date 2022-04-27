@@ -21,8 +21,7 @@ export default function User() {
 	const [userId, setUserId] = useState('');
 	document.title = 'Profile';
 
-	const API =
-		'https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/users';
+	const API = `https://haudhi.site`;
 
 	useEffect(() => {
 		fetchUser({
@@ -38,9 +37,11 @@ export default function User() {
 
 	const updateButton = (e) => {
 		e.preventDefault();
+		const getToken = localStorage.getItem('user-info');
+		const token = Object.values(JSON.parse(getToken)).toString();
 		axios
 			.put(
-				`${API}/${userId}`,
+				`${API}/users/${userId}`,
 				{
 					fullname: fullName,
 					username: username,
@@ -50,9 +51,7 @@ export default function User() {
 				},
 				{
 					headers: {
-						Authorization: `Bearer ${localStorage.getItem(
-							'user-info'
-						)}`,
+						Authorization: `Bearer ${token}`,
 					},
 				}
 			)
@@ -65,6 +64,8 @@ export default function User() {
 	};
 
 	const changeImageButton = (e) => {
+		const getToken = localStorage.getItem('user-info');
+		const token = Object.values(JSON.parse(getToken)).toString();
 		e.preventDefault();
 		Swal.fire({
 			title: 'Upload Profile Image',
@@ -79,7 +80,7 @@ export default function User() {
 			preConfirm: (file) => {
 				return new Promise((resolve) => {
 					const reader = new FileReader();
-					reader.onload = (e) => {
+					reader.onload = () => {
 						resolve(reader.result);
 					};
 					reader.readAsDataURL(file);
@@ -89,15 +90,14 @@ export default function User() {
 			if (result.value) {
 				axios
 					.put(
-						`${API}/images/${userId}`,
+						`${API}/users/image/${userId}`,
 						{
 							image: result.value,
 						},
 						{
 							headers: {
-								Authorization: `Bearer ${localStorage.getItem(
-									'user-info'
-								)}`,
+								'Content-Type': 'multipart/form-data',
+								Authorization: `Bearer ${token}`,
 							},
 						}
 					)
@@ -105,13 +105,16 @@ export default function User() {
 						successMessage(res);
 					})
 					.catch((err) => {
-						errorMessage(err);
+						// errorMessage(err);
+						console.log(err);
 					});
 			}
 		});
 	};
 
 	const deleteButton = (e) => {
+		const getToken = localStorage.getItem('user-info');
+		const token = Object.values(JSON.parse(getToken)).toString();
 		e.preventDefault();
 		Swal.fire({
 			position: 'center',
@@ -125,11 +128,9 @@ export default function User() {
 		}).then((result) => {
 			if (result.value) {
 				axios
-					.delete(`${API}/${userId}`, {
+					.delete(`${API}/users/${userId}`, {
 						headers: {
-							Authorization: `Bearer ${localStorage.getItem(
-								'user-info'
-							)}`,
+							Authorization: `Bearer ${token}`,
 						},
 					})
 					.then((res) => {
@@ -146,41 +147,50 @@ export default function User() {
 	return (
 		<>
 			<Layout>
-				<div className='container'>
-					<div className='border-2 rounded-2xl p-16 my-5'>
-						<div className='grid lg:grid-rows-3 grid-flow-col gap-4'>
-							<div className='row-span-3 border my-auto rounded-3xl text-center py-20'>
-								<img
-									className='rounded-full mx-auto'
-									src={image ? image : user}
-									// src={user}
-									height={200}
-									width={200}
-									alt={image}
-								/>
-								<div className='mb-5'>
-									<a
-										href='#'
-										onClick={changeImageButton}
-										className='py-1 px-3 uppercase text-teal-500 border-t-2 border-b-2'>
-										change image
-									</a>
-								</div>
-								<h4 className='text-3xl uppercase'>
-									{username ? username : 'Username'}
-								</h4>
-								<h4 className='text-amber-500 font-bold'>
-									( {businessName ? businessName : 'Business'}{' '}
-									)
-								</h4>
-							</div>
-							<div className='col-span-2 border rounded-3xl grid grid-flow-col py-6 px-10 justify-items-stretch'>
-								<h1 className='text-5xl my-auto font-bold uppercase'>
+				<div className="container">
+					<div className="border-2 rounded-2xl p-8 lg:p-16 my-5">
+						<div className="flex flex-col lg:grid lg:flex-none lg:grid-rows-3 lg:grid-flow-col gap-y-4 lg:gap-4 place-content-center">
+							<div className="border rounded-3xl text-center lg:hidden py-6 px-10">
+								<h1 className="text-3xl font-bold uppercase">
 									Profile
 								</h1>
-								<div className='my-auto justify-self-end'>
+							</div>
+							<div className="lg:row-span-3 border my-auto rounded-3xl text-center py-10 lg:py-20 px-5 place-self-auto ">
+								<div className="flex flex-col justify-center">
+									<img
+										className="rounded-full mx-auto"
+										src={image ? image : user}
+										height={200}
+										width={200}
+										alt={image}
+									/>
+									<div className="mb-5">
+										<a
+											href="#"
+											onClick={changeImageButton}
+											className="py-1 px-3 uppercase text-teal-500 border-t-2 border-b-2">
+											change image
+										</a>
+									</div>
+									<h4 className="text-lg lg:text-3xl uppercase">
+										{username ? username : 'Username'}
+									</h4>
+									<h4 className="text-amber-500 font-bold">
+										({' '}
+										{businessName
+											? businessName
+											: 'Business'}{' '}
+										)
+									</h4>
+								</div>
+							</div>
+							<div className="lg:col-span-2 border rounded-3xl lg:grid lg:grid-flow-col py-6 lg:px-10 justify-items-stretch">
+								<h1 className="text-5xl hidden lg:grid my-auto font-bold uppercase">
+									Profile
+								</h1>
+								<div className="my-auto flex justify-center">
 									<Button
-										variant='solid'
+										variant="solid"
 										onClick={() => {
 											verifyOwner(navigate);
 										}}>
@@ -188,76 +198,76 @@ export default function User() {
 									</Button>
 								</div>
 							</div>
-							<div className='row-span-2 border col-span-2 rounded-3xl'>
-								<form className='grid grid-cols-2 gap-4 px-10 py-5 content-end'>
-									<div className=''>
+							<div className="row-span-2 border col-span-2 rounded-3xl">
+								<form className="flex flex-col md:flex-none md:grid md:grid-cols-2 gap-4 px-5 md:px-10 py-5 content-end">
+									<div className="">
 										<h6>Fullname</h6>
 										<InputText
-											type='text'
-											placeholder='Your Fullname'
+											type="text"
+											placeholder="Your Fullname"
 											value={fullName}
 											onChange={(e) =>
 												setFullName(e.target.value)
 											}
 										/>
 									</div>
-									<div className=''>
+									<div className="">
 										<h6>Nickname</h6>
 										<InputText
-											type='text'
-											placeholder='Your Nickname'
+											type="text"
+											placeholder="Your Nickname"
 											value={username}
 											onChange={(e) =>
 												setUsername(e.target.value)
 											}
 										/>
 									</div>
-									<div className=''>
+									<div className="">
 										<h6>Email</h6>
 										<InputText
-											type='email'
-											placeholder='email@mail.com'
+											type="email"
+											placeholder="email@mail.com"
 											value={email}
 											onChange={(e) =>
 												setEmail(e.target.value)
 											}
 										/>
 									</div>
-									<div className=''>
+									<div className="">
 										<h6>Phone Number</h6>
 										<InputText
-											type='text'
-											placeholder='+62 812-345-6789'
+											type="text"
+											placeholder="+62 812-345-6789"
 											value={phoneNumber}
 											onChange={(e) =>
 												setPhoneNumber(e.target.value)
 											}
 										/>
 									</div>
-									<div className=''>
+									<div className="">
 										<h6>Password</h6>
 										<InputText
-											type='password'
-											placeholder='********'
+											type="password"
+											placeholder="********"
 											value={password}
 											onChange={(e) =>
 												setPassword(e.target.value)
 											}
 										/>
 									</div>
-									<div className='grid justify-items-stretch'>
-										<div className='grid-cols-2 grid gap-4 content-end '>
+									<div className="grid justify-items-stretch">
+										<div className="grid-cols-2 grid gap-4 content-end ">
 											<Button
-												variant='solid'
-												className='uppercase'
+												variant="solid"
+												className="uppercase"
 												onClick={(e) =>
 													updateButton(e)
 												}>
 												Update
 											</Button>
 											<Button
-												variant='danger'
-												className='uppercase'
+												variant="danger"
+												className="uppercase"
 												onClick={(e) => {
 													deleteButton(e);
 												}}>
