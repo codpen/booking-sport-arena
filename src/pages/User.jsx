@@ -19,6 +19,7 @@ export default function User() {
 	const [businessName, setBusinessName] = useState('');
 	const [image, setImage] = useState('');
 	const [userId, setUserId] = useState('');
+	document.title = 'Profile';
 
 	const API =
 		'https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/users';

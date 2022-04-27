@@ -7,6 +7,7 @@ import { ListVenue } from '../components/Venue';
 import '../styles/App.css';
 
 function App() {
+	document.title = 'Hobiku - Booking Sport Arena';
 	return (
 		<>
 			<Layout>

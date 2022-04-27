@@ -31,6 +31,7 @@ export default function Venue() {
 				setFacility(venue.facility);
 				setCategory(venue.category);
 				setOperational(venue.operational);
+				document.title = venue.name;
 			})
 			.catch((err) => {
 				console.log(err);

@@ -16,6 +16,8 @@ export default function Verification() {
 	const [description, setDescription] = useState('');
 	const [certificate, setCertificate] = useState('');
 	const navigate = useNavigate();
+	document.title = 'Become Owner';
+
 	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/owners`;
 
 	const handleSubmit = (e) => {
