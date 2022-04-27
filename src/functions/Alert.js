@@ -48,9 +48,11 @@ export function fillAll() {
 
 export function minimumCharacter(number) {
 	Swal.fire({
-		icon: 'error',
-		title: 'Oops...',
+		icon: "error",
+		title: "Oops...",
 		text: `Password must be at least ${number} characters`,
+		showConfirmButton: true,
+		confirmButtonColor: "#3085d6",
 	});
 }
 
