@@ -7,15 +7,15 @@ export default function Navbar() {
 	const navigate = useNavigate();
 	const isLogin = localStorage.getItem('user-info');
 	return (
-		<nav className='shadow-md mb-2'>
-			<div className='flex justify-between mx-32'>
-				<h4 className='my-auto font-bold text-2xl text-teal-500 text'>
-					<a href='/'>Hobiku</a>
+		<nav className="shadow-md mb-2">
+			<div className="flex justify-between mx-8 md:mx-10 lg:mx-28 xl:mx-32">
+				<h4 className="my-auto font-bold text-2xl text-teal-500 text">
+					<a href="/">Hobiku</a>
 				</h4>
 
 				<Button
-					variant='outline'
-					className='my-3'
+					variant="outline"
+					className="my-3"
 					onClick={() => {
 						if (isLogin) {
 							navigate('/user');
@@ -23,7 +23,7 @@ export default function Navbar() {
 							navigate('/login');
 						}
 					}}>
-					<img src={user} alt='' height={20} width={20} />
+					<img src={user} alt="" height={20} width={20} />
 				</Button>
 			</div>
 		</nav>
