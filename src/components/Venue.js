@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CardLoading } from './Card';
+import PaginationRounded from './Pagination';
 
 const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 
@@ -17,7 +18,7 @@ export const Venues = ({ venues, loading }) => {
 					: venues.map((venue) => (
 							<div
 								key={venue.id}
-								className="my-4 lg:my-10"
+								className="my-4 md:my-6 lg:my-6 xl:my-6"
 								onClick={() => {
 									navigate(`/venues/${venue.id}`);
 								}}>
@@ -84,6 +85,7 @@ export function ListVenue() {
 				LIST ARENA
 			</h4>
 			<Venues venues={currentVenues} loading={loading} />
+			<PaginationRounded />
 		</>
 	);
 }
