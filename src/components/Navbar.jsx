@@ -1,33 +1,30 @@
-import React from 'react';
-import { OutlineButton, SolidButton } from './Buttons';
-import { useNavigate } from 'react-router';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "./Buttons";
+import user from '../assets/user.png';
 
 export default function Navbar() {
 	const navigate = useNavigate();
-	const isLogin = () => {
-		if (localStorage.getItem('token')) {
-			navigate('/user');
-		} else {
-			alert('Please Login');
-			navigate('/login');
-		}
-	};
-
+	const isLogin = localStorage.getItem('user-info');
 	return (
 		<nav className='shadow-md mb-2'>
 			<div className='flex justify-between mx-32'>
-				<h4 className='my-auto font-bold text-2xl text-teal-500'>
-					Hobiku
+				<h4 className='my-auto font-bold text-2xl text-teal-500 text'>
+					<a href='/'>Hobiku</a>
 				</h4>
 
-				<div className=''>
-					<SolidButton text='Login' link='/login' onClick={isLogin} />
-					<OutlineButton
-						text='Register'
-						link='/Register'
-						onClick={isLogin}
-					/>
-				</div>
+				<Button
+					variant='outline'
+					className='my-3'
+					onClick={() => {
+						if (isLogin) {
+							navigate('/user');
+						} else {
+							navigate('/login');
+						}
+					}}>
+					<img src={user} alt='' height={20} width={20} />
+				</Button>
 			</div>
 		</nav>
 	);
