@@ -21,7 +21,7 @@ function App() {
 							<div className="mx-auto flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-row gap-2">
 								<InputText type="text" placeholder="Search" />
 								<Button variant="solid" className="" size="lg">
-									<i class="fa-solid fa-magnifying-glass"></i>
+									<i className="fa-solid fa-magnifying-glass"></i>
 								</Button>
 							</div>
 						</div>
