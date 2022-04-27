@@ -1,33 +1,27 @@
-// import * as api from '../config/api';
 import axios from 'axios';
-
-// const API = 'https://haudhi.site/users';
-
-// export function checkAuth(token) {
-// 	return api.get(`${API}/profile`, null, {
-// 		Authorization: `Bearer ${token}`,
-// 	});
-// }
-
 // v2
 const API =
-	'https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/users';
+	// 'https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/users';
+	`https://haudhi.site`;
 
 export const fetchUser = async (props) => {
+	const getToken = localStorage.getItem('user-info');
+	const token = Object.values(JSON.parse(getToken)).toString();
+
 	await axios
-		.get(`${API}/profile`, {
+		.get(`${API}/users/profile`, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('user-info')}`,
+				Authorization: `Bearer ${token}`,
 			},
 		})
 		.then((res) => {
-			const profile = res.data.data_user;
+			const profile = res.data.data;
 			props.setFullName(profile.fullname);
 			props.setUsername(profile.username);
 			props.setEmail(profile.email);
 			props.setPhoneNumber(profile.phone_number);
 			props.setBusinessName(profile.business_name);
-			props.setProfileImage(profile.image);
+			props.setImage(profile.image);
 			props.setUserId(profile.id);
 		})
 		.catch((err) => {
