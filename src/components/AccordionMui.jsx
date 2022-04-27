@@ -27,31 +27,31 @@ export default function AccordionMui() {
           id="panel1bh-header"
         >
           <div className="w-full">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
+            <div className="flex items-center">
+              <div className="flex items-center basis-2/5">
                 <Avatar
                   sx={{ width: 56, height: 56 }}
                   alt="Remy Sharp"
                   src="/static/images/avatar/1.jpg"
                 />
-                <div className="ml-4">
-                  <strong>full name naem name</strong>
-                  <p>username</p>
+                <div className="ml-4 ">
+                  <p>full name naem name</p>
+                  <p className="text-slate-400">username</p>
                 </div>
               </div>
 
-              <div>
-                <strong>mail@mail.com</strong>
-                <p>+91-1234567890</p>
+              <div className="basis-1/5">
+                <p>mail@mail.com</p>
+                <p className="text-slate-400">+91-1234567890</p>
               </div>
 
-              <div>
-                <strong>may 26, 2019</strong>
-                <p>6.30pm</p>
+              <div className="basis-1/5">
+                <p>may 26, 2019</p>
+                <p className="text-slate-400">6.30pm</p>
               </div>
 
-              <div>
-                <button className="w-auto bg-yellow-400 px-6 py-1 rounded-full mr-20 text-white">
+              <div className="basis-1/5 text-center">
+                <button className="w-28 bg-yellow-400 px-6 py-1 rounded-full mr-20 text-white block">
                   Pending
                 </button>
               </div>
@@ -62,12 +62,14 @@ export default function AccordionMui() {
           <Typography>
             <div className="w-full">
               <div className="flex items-center justify-between">
-                <div>nama file.pdf</div>
                 <div>
-                  <button className="w-auto bg-emerald-600 px-6 py-1 rounded-full mr-5 text-white">
+                  <Document file="./assets/example.pdf"></Document>
+                </div>
+                <div>
+                  <button className="w-28 bg-emerald-600 px-6 py-1 rounded-full mr-5 text-white">
                     approve
                   </button>
-                  <button className="w-auto bg-red-600 px-6 py-1 rounded-full mr-20 text-white">
+                  <button className="w-28 bg-red-600 px-6 py-1 rounded-full mr-10 text-white">
                     reject
                   </button>
                 </div>
