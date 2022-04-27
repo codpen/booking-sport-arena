@@ -15,7 +15,7 @@ export const Venues = ({ venues, loading }) => {
 			{venues.map((venue) => (
 				<div
 					key={venue.id}
-					className="grid grid-cols-4 gap-10 my-10"
+					className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-10 my-4 lg:my-10"
 					onClick={() => {
 						navigate(`/venues/${venue.id}`);
 					}}>
@@ -30,7 +30,7 @@ export const Venues = ({ venues, loading }) => {
 							alt=""
 						/>
 						<div className="text-left m-2">
-							<h3 className="text-xl font-bold capitalize">
+							<h3 className="text-xl md:text-xl lg:text-xl xl:text-xl 2xl:text-2xl font-bold capitalize">
 								{' '}
 								{venue.venue_name}
 							</h3>
@@ -77,7 +77,7 @@ export function ListVenue() {
 
 	return (
 		<>
-			<h4 className="uppercase text-2xl my-8 text-teal-500 font-bold text-center">
+			<h4 className="uppercase text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl  my-8 text-teal-500 font-bold text-center">
 				LIST ARENA
 			</h4>
 			<Venues venues={currentVenues} loading={loading} />
