@@ -16,10 +16,10 @@ const theme = createTheme({
 
 export default function PaginationRounded() {
 	return (
-		<div className='my-5 flex justify-end'>
+		<div className="my-5 flex justify-center lg:justify-end">
 			<ThemeProvider theme={theme}>
 				<Stack spacing={2}>
-					<Pagination count={10} color='primary' shape='rounded' />
+					<Pagination count={10} color="primary" shape="rounded" />
 				</Stack>
 			</ThemeProvider>
 		</div>
