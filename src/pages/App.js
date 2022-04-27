@@ -10,8 +10,8 @@ function App() {
 	return (
 		<>
 			<Layout>
-				<div className="banner h-fit w-full">
-					<div className="cover">
+				<div className="banner h-80">
+					<div className="cover h-80">
 						<div className="h-full grid gap-4 content-center">
 							<h5 className="uppercase font-bold text-white text-center text-2xl lg:text-3xl px-4">
 								We offer you
