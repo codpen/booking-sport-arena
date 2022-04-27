@@ -6,7 +6,7 @@ export default function Layout({ children, onScroll }) {
 		<>
 			<div className="bg-white" onScroll={onScroll}>
 				<Navbar />
-				<div className="h-screen px-8 md:px-10 lg:px-24">
+				<div className="h-screen px-8 md:px-10 lg:px-24 xl:px-32 2xl:px-40">
 					{children}
 				</div>
 			</div>
