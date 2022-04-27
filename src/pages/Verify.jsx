@@ -17,8 +17,10 @@ export default function Verification() {
 	const [certificate, setCertificate] = useState('');
 	const navigate = useNavigate();
 	document.title = 'Become Owner';
-
-	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/owners`;
+	const getToken = localStorage.getItem("user-info");
+	const token = Object.values(JSON.parse(getToken)).toString();
+	const API = `https://haudhi.site`;
+	// `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/owners`;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -29,28 +31,26 @@ export default function Verification() {
 			certificate.length > 0
 		) {
 			const formData = new FormData();
-			formData.append('business_name', business);
-			formData.append('business_description', description);
-			formData.append('business_certificate', certificate);
+			formData.append("business_name", business);
+			formData.append("business_description", description);
+			formData.append("business_certificate", certificate);
 
 			axios
-				.put(`${API}/request`, formData, {
+				.put(`${API}/owners/request`, formData, {
 					headers: {
-						'Content-Type': 'multipart/form-data',
-						Authorization: `Bearer ${localStorage.getItem(
-							'user-info'
-						)}`,
+						"Content-Type": "multipart/form-data",
+						Authorization: `Bearer ${token}`,
 					},
 				})
 				.then((res) => {
 					if (res.status === 200) {
 						successMessage(res);
-						navigate('/');
+						navigate("/");
 					}
 				})
 				.catch((err) => {
-					// errorMessage(err);
-					errorMessageSwagger(err);
+					errorMessage(err);
+					// errorMessageSwagger(err);
 				});
 		} else {
 			fillAll();
@@ -60,73 +60,80 @@ export default function Verification() {
 	return (
 		<>
 			<Layout>
-				<div className='container'>
-					<div className='border-2 rounded-2xl p-16 my-5'>
-						<h2 className='text-3xl uppercase text-center'>
+				<div className="container">
+					<div className="border-2 rounded-2xl p-16 my-5">
+						<h2 className="text-3xl uppercase text-center">
 							Ownership Registration
 						</h2>
 						<form>
-							<div className='my-2'>
+							<div className="my-2">
 								<h6>
-									Business Name{' '}
-									<strong className='text-amber-500'>
+									Business Name{" "}
+									<strong className="text-amber-500">
 										*
 									</strong>
 								</h6>
 								<InputText
-									type='text'
-									placeholder='Business Name'
+									type="text"
+									placeholder="Business Name"
 									value={business}
 									onChange={(e) =>
 										setBusiness(e.target.value)
 									}
 								/>
 							</div>
-							<div className='my-2'>
+							<div className="my-2">
 								<h6>Business Description</h6>
 								<textarea
-									className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500'
-									type='text'
-									placeholder='Business Description'
+									className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
+									type="text"
+									placeholder="Business Description"
 									value={description}
 									onChange={(e) =>
 										setDescription(e.target.value)
 									}
-									cols='30'
-									rows='5'
+									cols="30"
+									rows="5"
 								/>
 							</div>
-							<div className='my-2'>
-								<h6>
-									Business Certificate (Surat Izin Usaha){' '}
-									<strong className='text-amber-500'>
+							<div className="my-2">
+								<h6 className="hidden md:inline-block">
+									Business Certificate (Surat Izin Usaha){" "}
+									<strong className="text-amber-500">
+										*
+									</strong>
+								</h6>
+								<h6 className="flex flex-wrap md:flex-none md:hidden">
+									Business Certificate <br />
+									(Surat Izin Usaha){" "}
+									<strong className="text-amber-500">
 										*
 									</strong>
 								</h6>
 								<input
-									type='file'
-									accept='.pdf'
-									className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 justify-center'
+									type="file"
+									accept=".pdf"
+									className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 justify-center"
 									value={certificate}
 									onChange={(e) =>
 										setCertificate(e.target.value)
 									}
 								/>
-								<h6 className='italic'>
+								<h6 className="italic">
 									(max file size: 2 MB)
 								</h6>
 							</div>
 							<p>
-								(<strong className='text-amber-500'>*</strong>)
+								(<strong className="text-amber-500">*</strong>)
 								All the required fields needs to be filled
 								correctly.
 							</p>
 
-							<div className='my-2'>
+							<div className="my-2">
 								<Button
-									type='submit'
-									variant='solid'
-									className='w-full my-10'
+									type="submit"
+									variant="solid"
+									className="w-full mt-4 lg:my-10"
 									onClick={handleSubmit}>
 									Submit
 								</Button>
