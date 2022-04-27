@@ -4,7 +4,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 
 export default function AdminDashboard() {
   return (
-    <div>
+    <div className="w-screen h-screen flex">
       <Sidebar />
       {/* <Accordion /> */}
       <AccordionMui />
