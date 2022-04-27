@@ -3,12 +3,10 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 50vh;
   border-radius: 1rem;
 }
 
 .cover{
   background-color: rgba(0, 0, 0, .5);
-  height: 50vh;
   border-radius: 1rem;
 }
