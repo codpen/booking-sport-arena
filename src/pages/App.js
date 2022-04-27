@@ -11,10 +11,10 @@ function App() {
 	return (
 		<>
 			<Layout>
-				<div className="banner">
+				<div className="banner h-fit w-full">
 					<div className="cover">
 						<div className="h-full grid gap-4 content-center">
-							<div className="mx-auto flex flex-row gap-2">
+							<div className="mx-auto flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-row gap-2">
 								<InputText type="text" placeholder="Search" />
 								<Button variant="solid" className="" size="lg">
 									Search
