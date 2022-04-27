@@ -6,21 +6,26 @@ import { useNavigate } from 'react-router-dom';
 import { fetchUser } from '../services/Users';
 import user from '../assets/user.png';
 import axios from 'axios';
-import { errorMessage, successMessage, verifyOwner } from '../functions/Alert';
-import Swal from 'sweetalert2';
+import {
+	errorMessage,
+	fillAll,
+	minimumCharacter,
+	successMessage,
+	verifyOwner,
+} from "../functions/Alert";
+import Swal from "sweetalert2";
 
 export default function User() {
 	const navigate = useNavigate();
-	const [fullName, setFullName] = useState('');
-	const [username, setUsername] = useState('');
-	const [email, setEmail] = useState('');
-	const [phoneNumber, setPhoneNumber] = useState('');
-	const [password, setPassword] = useState('');
-	const [businessName, setBusinessName] = useState('');
-	const [image, setImage] = useState('');
-	const [userId, setUserId] = useState('');
-	document.title = 'Profile';
-
+	const [fullName, setFullName] = useState("");
+	const [username, setUsername] = useState("");
+	const [email, setEmail] = useState("");
+	const [phoneNumber, setPhoneNumber] = useState("");
+	const [password, setPassword] = useState("");
+	const [businessName, setBusinessName] = useState("");
+	const [image, setImage] = useState("");
+	const [userId, setUserId] = useState("");
+	document.title = "Profile";
 	const API = `https://haudhi.site`;
 
 	useEffect(() => {
@@ -37,46 +42,58 @@ export default function User() {
 
 	const updateButton = (e) => {
 		e.preventDefault();
-		const getToken = localStorage.getItem('user-info');
+		const getToken = localStorage.getItem("user-info");
 		const token = Object.values(JSON.parse(getToken)).toString();
-		axios
-			.put(
-				`${API}/users/${userId}`,
-				{
-					fullname: fullName,
-					username: username,
-					email: email,
-					phone_number: phoneNumber,
-					password: password,
-				},
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
+		if (fullName && username && email && phoneNumber && password === "") {
+			fillAll();
+		} else if (password.length < 8) {
+			minimumCharacter(8);
+		} else if (
+			fullName &&
+			username &&
+			email &&
+			phoneNumber &&
+			password !== ""
+		) {
+			axios
+				.put(
+					`${API}/users/${userId}`,
+					{
+						fullname: fullName,
+						username: username,
+						email: email,
+						phone_number: phoneNumber,
+						password: password,
 					},
-				}
-			)
-			.then((res) => {
-				successMessage(res);
-			})
-			.catch((err) => {
-				errorMessage(err);
-			});
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				)
+				.then((res) => {
+					successMessage(res);
+				})
+				.catch((err) => {
+					errorMessage(err);
+				});
+		}
 	};
 
 	const changeImageButton = (e) => {
-		const getToken = localStorage.getItem('user-info');
+		const getToken = localStorage.getItem("user-info");
 		const token = Object.values(JSON.parse(getToken)).toString();
 		e.preventDefault();
 		Swal.fire({
-			title: 'Upload Profile Image',
-			input: 'file',
+			title: "Upload Profile Image",
+			input: "file",
 			inputAttributes: {
-				'aria-label': 'Upload Profile Image',
+				"aria-label": "Upload Profile Image",
 			},
 			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Upload',
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Upload",
 			preConfirm: (file) => {
 				return new Promise((resolve) => {
 					const reader = new FileReader();
@@ -96,7 +113,7 @@ export default function User() {
 						},
 						{
 							headers: {
-								'Content-Type': 'multipart/form-data',
+								"Content-Type": "multipart/form-data",
 								Authorization: `Bearer ${token}`,
 							},
 						}
@@ -113,18 +130,18 @@ export default function User() {
 	};
 
 	const deleteButton = (e) => {
-		const getToken = localStorage.getItem('user-info');
+		const getToken = localStorage.getItem("user-info");
 		const token = Object.values(JSON.parse(getToken)).toString();
 		e.preventDefault();
 		Swal.fire({
-			position: 'center',
-			icon: 'warning',
-			title: 'Are you sure?',
+			position: "center",
+			icon: "warning",
+			title: "Are you sure?",
 			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes',
-			cancelButtonText: 'No',
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
 		}).then((result) => {
 			if (result.value) {
 				axios
@@ -135,7 +152,7 @@ export default function User() {
 					})
 					.then((res) => {
 						successMessage(res);
-						navigate('/');
+						navigate("/");
 					})
 					.catch((err) => {
 						errorMessage(err);
@@ -173,13 +190,13 @@ export default function User() {
 										</a>
 									</div>
 									<h4 className="text-lg lg:text-3xl uppercase">
-										{username ? username : 'Username'}
+										{username ? username : "Username"}
 									</h4>
 									<h4 className="text-amber-500 font-bold">
-										({' '}
+										({" "}
 										{businessName
 											? businessName
-											: 'Business'}{' '}
+											: "Business"}{" "}
 										)
 									</h4>
 								</div>
