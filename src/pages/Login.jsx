@@ -5,6 +5,7 @@ import { InputText } from "../components/InputText";
 import Button from "../components/Buttons";
 import Navbar from "../components/Navbar";
 import { loginService } from "../services/Auth";
+import swal from "sweetalert";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -16,12 +17,12 @@ export default function Login() {
       email: email,
       password: password,
     });
-    if (Auth.status === "success") {
+    if (Auth.code === 200) {
       localStorage.setItem("user-info", JSON.stringify(Auth.data));
-      alert("login sukses");
+      swal(Auth.message, "", "success");
       navigate("/");
-    } else if (Auth.status === "failed") {
-      alert(Auth.message);
+    } else if (Auth.code === 400) {
+      swal("Login failed", Auth.message, "error");
     }
   }
 
@@ -38,16 +39,16 @@ export default function Login() {
           <h1 className="text-3xl font-bold text-center text-teal-500 mb-7">
             Login
           </h1>
-          <p className=" mb-2">email</p>
+          <p className=" mb-2 font-semibold text-center">Email</p>
           <InputText
             onChange={(e) => setEmail(e.target.value)}
             type="text"
-            placeholder="email"
+            placeholder="mail@mail.com"
           />
-          <p className=" mb-2 mt-6">password</p>
+          <p className=" mb-2 mt-6 font-semibold text-center">Password</p>
           <InputText
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="password"
+            placeholder="Password"
             type="password"
             className="mb-4"
           />
@@ -61,7 +62,7 @@ export default function Login() {
           >
             login
           </Button>
-          <p className="text-center">
+          <p className="text-center mt-3">
             don't have an account?
             <a className="text-cyan-400" href="Register">
               Register
