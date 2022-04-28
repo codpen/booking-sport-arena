@@ -1,33 +1,31 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Buttons";
+import user from '../assets/user.png';
 
 export default function Navbar() {
-  const navigate = useNavigate();
-  return (
-    <nav className="shadow-md mb-2">
-      <div className="flex justify-between mx-32">
-        <h4 className="my-auto font-bold text-2xl text-teal-500 text">
-          <a href="/">Hobiku</a>
-        </h4>
+	const navigate = useNavigate();
+	const isLogin = localStorage.getItem('user-info');
+	return (
+		<nav className="shadow-md mb-2">
+			<div className="flex justify-between mx-8 md:mx-10 lg:mx-28 xl:mx-32">
+				<h4 className="my-auto font-bold text-2xl text-teal-500 text">
+					<a href="/">Hobiku</a>
+				</h4>
 
-        <div className="">
-          <Button
-            variant="solid"
-            className="my-3 mx-1"
-            onClick={() => navigate("/login")}
-          >
-            Login
-          </Button>
-          <Button
-            variant="outline"
-            className="my-3 mx-1"
-            onClick={() => navigate("/register")}
-          >
-            Register
-          </Button>
-        </div>
-      </div>
-    </nav>
-  );
+				<Button
+					variant="outline"
+					className="my-3"
+					onClick={() => {
+						if (isLogin) {
+							navigate('/user');
+						} else {
+							navigate('/login');
+						}
+					}}>
+					<img src={user} alt="" height={20} width={20} />
+				</Button>
+			</div>
+		</nav>
+	);
 }
