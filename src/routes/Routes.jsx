@@ -5,7 +5,8 @@ import Venue from "../pages/Detail";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import User from "../pages/User";
-import Verify from "../pages/Verify";
+import BookingHistory from "../pages/user/History";
+import Verify from "../pages/user/Verify";
 
 function Routing() {
 	return (
@@ -18,6 +19,7 @@ function Routing() {
 				<Route path="/verify" element={<Verify />} />
 				<Route path="/venues/:venue_id" element={<Venue />} />
 				<Route path="/admin" element={<AdminDashboard />} />
+				<Route path="/user/history" element={<BookingHistory />} />
 			</Routes>
 		</BrowserRouter>
 	);

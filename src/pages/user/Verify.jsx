@@ -1,22 +1,17 @@
-import React, { useState } from 'react';
-import Layout from '../components/Layout';
-import { InputText } from '../components/InputText';
-import {
-	errorMessage,
-	errorMessageSwagger,
-	fillAll,
-	successMessage,
-} from '../functions/Alert';
-import Button from '../components/Buttons';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import Layout from "../../components/Layout";
+import { InputText } from "../../components/InputText";
+import { errorMessage, fillAll, successMessage } from "../../functions/Alert";
+import Button from "../../components/Buttons";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Verification() {
-	const [business, setBusiness] = useState('');
-	const [description, setDescription] = useState('');
-	const [certificate, setCertificate] = useState('');
+	const [business, setBusiness] = useState("");
+	const [description, setDescription] = useState("");
+	const [certificate, setCertificate] = useState("");
 	const navigate = useNavigate();
-	document.title = 'Become Owner';
+	document.title = "Become Owner";
 	const getToken = localStorage.getItem("user-info");
 	const token = Object.values(JSON.parse(getToken)).toString();
 	const API = `https://haudhi.site`;
