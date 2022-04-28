@@ -19,8 +19,15 @@ function App() {
 								the best sport arena in the city
 							</h5>
 							<div className="mx-auto flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-row gap-2">
-								<InputText type="text" placeholder="Search" />
-								<Button variant="solid" className="" size="lg">
+								<InputText
+									type="text"
+									placeholder="Search"
+									id="input-search"
+								/>
+								<Button
+									variant="solid"
+									className=""
+									id="search-button">
 									<i className="fa-solid fa-magnifying-glass"></i>
 								</Button>
 							</div>
