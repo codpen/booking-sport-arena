@@ -184,6 +184,7 @@ export default function User() {
 									<div className="mb-5">
 										<a
 											href="#"
+											id="change-profile-image"
 											onClick={changeImageButton}
 											className="py-1 px-3 uppercase text-teal-500 border-t-2 border-b-2">
 											change image
@@ -207,6 +208,7 @@ export default function User() {
 								</h1>
 								<div className="my-auto flex justify-center">
 									<Button
+										id="become-owner-button"
 										variant="solid"
 										onClick={() => {
 											verifyOwner(navigate);
@@ -220,6 +222,7 @@ export default function User() {
 									<div className="">
 										<h6>Fullname</h6>
 										<InputText
+											id="input-fullname"
 											type="text"
 											placeholder="Your Fullname"
 											value={fullName}
@@ -231,6 +234,7 @@ export default function User() {
 									<div className="">
 										<h6>Nickname</h6>
 										<InputText
+											id="input-username"
 											type="text"
 											placeholder="Your Nickname"
 											value={username}
@@ -242,6 +246,7 @@ export default function User() {
 									<div className="">
 										<h6>Email</h6>
 										<InputText
+											id="input-email"
 											type="email"
 											placeholder="email@mail.com"
 											value={email}
@@ -253,6 +258,7 @@ export default function User() {
 									<div className="">
 										<h6>Phone Number</h6>
 										<InputText
+											id="input-phone"
 											type="text"
 											placeholder="+62 812-345-6789"
 											value={phoneNumber}
@@ -264,6 +270,7 @@ export default function User() {
 									<div className="">
 										<h6>Password</h6>
 										<InputText
+											id="input-password"
 											type="password"
 											placeholder="********"
 											value={password}
@@ -275,6 +282,7 @@ export default function User() {
 									<div className="grid justify-items-stretch">
 										<div className="grid-cols-2 grid gap-4 content-end ">
 											<Button
+												id="update-profile-button"
 												variant="solid"
 												className="uppercase"
 												onClick={(e) =>
@@ -283,6 +291,7 @@ export default function User() {
 												Update
 											</Button>
 											<Button
+												id="delete-account-button"
 												variant="danger"
 												className="uppercase"
 												onClick={(e) => {

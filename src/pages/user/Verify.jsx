@@ -69,6 +69,7 @@ export default function Verification() {
 									</strong>
 								</h6>
 								<InputText
+									id="input-business-name"
 									type="text"
 									placeholder="Business Name"
 									value={business}
@@ -82,6 +83,7 @@ export default function Verification() {
 								<textarea
 									className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
 									type="text"
+									id="input-business-description"
 									placeholder="Business Description"
 									value={description}
 									onChange={(e) =>
@@ -110,6 +112,7 @@ export default function Verification() {
 									accept=".pdf"
 									className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 justify-center"
 									value={certificate}
+									id="add-business-certificate"
 									onChange={(e) =>
 										setCertificate(e.target.value)
 									}
@@ -127,6 +130,7 @@ export default function Verification() {
 							<div className="my-2">
 								<Button
 									type="submit"
+									id="submit-ownership-registration-form"
 									variant="solid"
 									className="w-full mt-4 lg:my-10"
 									onClick={handleSubmit}>

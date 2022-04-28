@@ -29,7 +29,9 @@ export function IconCard(item) {
 	return (
 		<>
 			<div key={item.id} className="">
-				<div className="rounded-3xl border-2 outline-gray-500 text-center p-2 md:p-4 lg:p-4 xl:p-4 2xl:p-4">
+				<div
+					id={`category-${item.id}`}
+					className="rounded-3xl border-2 outline-gray-500 text-center p-2 md:p-4 lg:p-4 xl:p-4 2xl:p-4">
 					<i className={`text-4xl p-2 ${item.icon}`} />
 					<h5 className="font-bold uppercase">{item.name}</h5>
 				</div>
