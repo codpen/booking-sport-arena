@@ -20,7 +20,7 @@ export default function UserDropdown() {
 				<div className="">
 					<Menu.Button className="inline-flex justify-center w-full rounded-md border-teal-500 text-teal-500 border shadow-sm px-4 py-2 bg-white text-sm font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 my-3">
 						<img src={user} alt="" height={20} width={20} />
-						<i class="fa-solid fa-angle-down my-auto pl-2"></i>
+						<i className="fa-solid fa-angle-down my-auto pl-2"></i>
 					</Menu.Button>
 				</div>
 
@@ -64,7 +64,14 @@ export default function UserDropdown() {
 												? "bg-gray-100 text-gray-900"
 												: "text-gray-700",
 											"block px-4 py-2 text-sm"
-										)}>
+										)}
+										onClick={() => {
+											if (isLogin) {
+												navigate("/user/history");
+											} else {
+												navigate("/login");
+											}
+										}}>
 										History
 									</a>
 								)}
