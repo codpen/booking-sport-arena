@@ -16,9 +16,12 @@ function Routing() {
 				<Route path="/user" element={<User />} />
 				<Route path="/verify" element={<Verify />} />
 				<Route path="/venues/:venue_id" element={<Venue />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/pdfview" element={<ViewPdf />} />
 			</Routes>
 		</BrowserRouter>
 	);
+
 }
 
 export default Routing;

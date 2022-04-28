@@ -6,27 +6,40 @@ import illustration from "../assets/goal.png";
 import { useNavigate } from "react-router-dom";
 import { registerService } from "../services/Auth";
 import Button from "../components/Buttons";
+import swal from "sweetalert";
 
 export default function Register() {
-  const [fullname, setFullname] = useState({});
-  const [username, setUsername] = useState({});
-  const [email, setEmail] = useState({});
-  const [password, setPassword] = useState({});
-  // const [confirmPassword, setConfirmPassword] = useState({});
-  const [phone_number, setPhone] = useState({});
+  const [fullname, setFullname] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone_number, setPhone] = useState("");
   const navigate = useNavigate();
 
   async function signUp() {
+    if (confirmPassword !== password) {
+      return;
+    }
     let item = { fullname, username, email, phone_number, password };
     const result = await registerService(item);
-    console.log(item);
-    if (result.status === "success") {
-      alert("register sukses");
+    if (result.code === 200) {
+      swal(result.message, "", "success");
       navigate("/login");
     } else {
-      alert("register gagal");
+      swal(result.message, "email aready used / check all form", "error");
     }
   }
+
+  const checkConfirmPassword = () => {
+    if (
+      password !== "" &&
+      confirmPassword !== "" &&
+      confirmPassword !== password
+    ) {
+      return <span>Password Not Match</span>;
+    }
+  };
 
   return (
     <div>
@@ -78,9 +91,13 @@ export default function Register() {
                   </div>
                   <div>
                     <p className=" mb-2">confirm password</p>
-                    <InputText type="password" />
+                    <InputText
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      type="password"
+                    />
                   </div>
                 </div>
+                {checkConfirmPassword()}
               </form>
 
               <Button
