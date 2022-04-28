@@ -31,6 +31,7 @@ export function ListCategory() {
 				<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
 					<IconCard
 						key={item.id}
+						id={item.id}
 						icon={item.icon_name}
 						name={item.name}
 					/>
