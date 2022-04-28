@@ -18,6 +18,7 @@ export const Venues = ({ venues, loading }) => {
 					: venues.map((venue) => (
 							<div
 								key={venue.id}
+								id={`venue-${venue.id}`}
 								className="my-4 md:my-6 lg:my-6 xl:my-6"
 								onClick={() => {
 									navigate(`/venues/${venue.id}`);
@@ -27,14 +28,14 @@ export const Venues = ({ venues, loading }) => {
 										className="rounded-t-xl"
 										src={
 											venue.image.length < 10
-												? 'https://images.unsplash.com/photo-1505305976870-c0be1cd39939?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
+												? "https://images.unsplash.com/photo-1505305976870-c0be1cd39939?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
 												: venue.image
 										}
 										alt=""
 									/>
 									<div className="text-left m-2">
 										<h3 className="text-xl md:text-xl lg:text-xl xl:text-xl 2xl:text-2xl font-bold capitalize">
-											{' '}
+											{" "}
 											{venue.venue_name}
 										</h3>
 										<h6 className="">{venue.location}</h6>
