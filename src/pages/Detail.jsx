@@ -32,6 +32,7 @@ export default function Venue() {
 				setVenueName(venue.name);
 				setVenueImage(venue.image);
 				setAddress(venue.address);
+				setDescription(venue.description);
 				setCity(venue.city);
 				setFacility(venue.facility);
 				setOpenHour(venue.operational_hours.open_hour);
@@ -47,7 +48,11 @@ export default function Venue() {
 	return (
 		<>
 			<Layout>
-				<div className="banner h-32 md:h-48 lg:h-72">
+				<div
+					className="h-32 md:h-48 lg:h-72 rounded-xl bg-no-repeat bg-cover bg-center"
+					style={{
+						backgroundImage: `url(${venueImage})`,
+					}}>
 					<div className="cover h-32 md:h-48 lg:h-72">
 						<div className="h-full grid gap-4 content-center"></div>
 					</div>
