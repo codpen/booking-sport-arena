@@ -21,6 +21,7 @@ export default function Venue() {
 
 	useEffect(() => {
 		fetchVenue();
+		// eslint-disable-next-line
 	}, []);
 
 	const fetchVenue = async () => {
