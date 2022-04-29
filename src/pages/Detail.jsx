@@ -77,17 +77,6 @@ export default function Venue() {
 							</p>
 						</div>
 						{/* facility */}
-						<div className="my-3">
-							<h4 className="text-xl font-bold">Facility</h4>
-							{facility.map((item) => (
-								<div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 my-2">
-									<IconCard
-										icon={item.icon_name}
-										name={item.name}
-									/>
-								</div>
-							))}
-						</div>
 					</div>
 					{/* Schedule */}
 					{/* maybe MUI Table */}
@@ -126,6 +115,22 @@ export default function Venue() {
 							<h4 className="text-xl font-bold">Information</h4>
 							<h6 className="text-lg my-1">{address}</h6>
 						</div>
+					</div>
+				</div>
+
+				<div className="w-full border-b-2 my-5">
+					<div className="my-3">
+						<h4 className="text-xl font-bold">Facility</h4>
+						{facility.map((item) => (
+							<div
+								key={item.id}
+								className="grid grid-cols-3 lg:grid-cols-7 gap-4 my-2">
+								<IconCard
+									icon={item.icon_name}
+									name={item.name}
+								/>
+							</div>
+						))}
 					</div>
 				</div>
 			</Layout>
