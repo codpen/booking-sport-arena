@@ -28,9 +28,10 @@ export function ListCategory() {
 				Category
 			</h4>
 			{category.map((item) => (
-				<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
+				<div
+					key={item.id}
+					className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
 					<IconCard
-						key={item.id}
 						id={item.id}
 						icon={item.icon_name}
 						name={item.name}
