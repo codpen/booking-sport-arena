@@ -10,7 +10,6 @@ import {
 	fillAll,
 	minimumCharacter,
 	successMessage,
-	verifyOwner,
 } from "../functions/Alert";
 import Swal from "sweetalert2";
 
@@ -216,7 +215,8 @@ export default function User() {
 										id="become-owner-button"
 										variant="solid"
 										onClick={() => {
-											verifyOwner(navigate);
+											// verifyOwner(navigate);
+											navigate("/verify");
 										}}>
 										Become Owner
 									</Button>
