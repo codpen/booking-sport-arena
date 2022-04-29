@@ -74,22 +74,22 @@ export function emptyInput() {
 	});
 }
 
-export function verifyOwner(navigate) {
-	Swal.fire({
-		position: 'center',
-		icon: 'warning',
-		title: 'Are you sure?',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		confirmButtonText: 'Yes',
-		cancelButtonText: 'No',
-	}).then((result) => {
-		if (result.value) {
-			navigate('/verify');
-		}
-	});
-}
+// export function verifyOwner(navigate) {
+// 	Swal.fire({
+// 		position: 'center',
+// 		icon: 'warning',
+//			title: 'Before you can become a venue owner, you must pass the verification process',
+// 		showCancelButton: true,
+// 		confirmButtonColor: '#3085d6',
+// 		cancelButtonColor: '#d33',
+// 		confirmButtonText: 'Yes',
+// 		cancelButtonText: 'No',
+// 	}).then((result) => {
+// 		if (result.value) {
+// 			navigate('/verify');
+// 		}
+// 	});
+// }
 
 // for swagger dummy
 export function errorMessageSwagger(err) {
