@@ -12,6 +12,7 @@ import {
 	successMessage,
 } from "../functions/Alert";
 import Swal from "sweetalert2";
+import { ImageDisclosure } from "../components/Disclosure";
 
 export default function User() {
 	const navigate = useNavigate();
@@ -162,37 +163,10 @@ export default function User() {
 										alt="profile"
 									/>
 									<div className="mb-5">
-										<form className="flex items-center flex-col">
-											<label
-												className="block"
-												htmlFor="avatar">
-												<span className="sr-only">
-													Choose profile photo
-												</span>
-											</label>
-											<input
-												type="file"
-												name="image"
-												id="avatar"
-												className="block w-full my-2 text-sm text-slate-500
-												file:mr-4 file:py-2 file:px-4
-												file:rounded-full file:border-0
-												file:text-sm file:font-semibold
-												file:bg-violet-50 file:text-teal-500
-												hover:file:bg-violet-100"
-												accept="image/png, image/jpeg"
-												onChange={(e) =>
-													changeImageButton(e)
-												}
-											/>
-											<button
-												type="submit"
-												id="submit-image"
-												className="py-1 px-3 uppercase font-semibold text-teal-500 border-t-2 border-b-2"
-												onClick={onSubmitImage}>
-												Upload
-											</button>
-										</form>
+										<ImageDisclosure
+											onChange={changeImageButton}
+											onSubmit={onSubmitImage}
+										/>
 									</div>
 									<h4 className="text-lg lg:text-3xl uppercase">
 										{username ? username : "Username"}
