@@ -118,13 +118,13 @@ export default function Venue() {
 					</div>
 				</div>
 
-				<div className="w-full border-b-2 my-5">
+				<div className="w-full my-5">
 					<div className="my-3">
 						<h4 className="text-xl font-bold">Facility</h4>
 						{facility.map((item) => (
 							<div
 								key={item.id}
-								className="grid grid-cols-3 lg:grid-cols-7 gap-4 my-2">
+								className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7  gap-4 my-2">
 								<IconCard
 									icon={item.icon_name}
 									name={item.name}
