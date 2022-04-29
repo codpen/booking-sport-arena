@@ -11,6 +11,7 @@ export default function BookingHistory() {
 
 	useEffect(() => {
 		fetchBookingHistory();
+		// eslint-disable-next-line
 	}, []);
 
 	const fetchBookingHistory = async () => {

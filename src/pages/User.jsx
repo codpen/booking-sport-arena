@@ -188,6 +188,7 @@ export default function User() {
 											/>
 											<button
 												type="submit"
+												id="submit-image"
 												className="py-1 px-3 uppercase font-semibold text-teal-500 border-t-2 border-b-2"
 												onClick={onSubmitImage}>
 												Upload

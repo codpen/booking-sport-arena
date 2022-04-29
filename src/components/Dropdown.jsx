@@ -36,6 +36,7 @@ export default function UserDropdown() {
 						<div className="py-1">
 							<Menu.Item>
 								{({ active }) => (
+									// eslint-disable-next-line
 									<a
 										href="#"
 										className={classNames(
@@ -57,6 +58,7 @@ export default function UserDropdown() {
 							</Menu.Item>
 							<Menu.Item>
 								{({ active }) => (
+									// eslint-disable-next-line
 									<a
 										href="#"
 										className={classNames(
