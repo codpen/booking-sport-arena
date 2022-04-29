@@ -215,7 +215,6 @@ export default function User() {
 										id="become-owner-button"
 										variant="solid"
 										onClick={() => {
-											// verifyOwner(navigate);
 											navigate("/verify");
 										}}>
 										Become Owner
