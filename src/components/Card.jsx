@@ -33,7 +33,7 @@ export function IconCard(item) {
 			<div key={item.id} className="">
 				<div
 					id={`category-${item.id}`}
-					className="rounded-3xl border-2 outline-gray-500 text-center p-2 md:p-4 lg:p-4 xl:p-4 2xl:p-4">
+					className="rounded-3xl border-2 bg-white shadow-md outline-gray-500 text-center p-2 md:p-4 lg:p-4 xl:p-4 2xl:p-4">
 					<i className={`text-4xl p-2 ${item.icon}`} />
 					<h5 className="font-bold uppercase">{item.name}</h5>
 				</div>
@@ -83,12 +83,12 @@ export function TimeSlots({ selectedTime, setSelectedTime }) {
 				const time = moment(startTime).add(i, "hours");
 				const extraTime = moment(startTime).add(i + 1, "hours");
 				return (
-					<div
+					<button
 						id={`time-${time.format("HH:mm")}`}
 						className={`text-center border py-5 rounded-lg lg:shadow-md ${
 							selectedTime === time.format("LT")
 								? "bg-teal-500 text-white"
-								: ""
+								: "bg-white"
 						}`}
 						key={i}
 						onClick={() => setSelectedTime(time.format("LT"))}>
@@ -98,7 +98,7 @@ export function TimeSlots({ selectedTime, setSelectedTime }) {
 						<h5 className="font-semibold text-lg hidden xl:block">
 							{time.format("LT")} - {extraTime.format("LT")}
 						</h5>
-					</div>
+					</button>
 				);
 			})}
 		</div>
@@ -114,12 +114,12 @@ export function DaySlots({ selectedDay, setSelectedDay }) {
 			{[...Array(week.diff(today, "days") + 1)].map((_, i) => {
 				const day = moment(today).add(i, "days");
 				return (
-					<div
+					<button
 						id={`day-${i + 1}`}
 						className={`text-center border py-5 rounded-lg lg:shadow-md ${
 							selectedDay.date === day.format("LL")
 								? "bg-teal-500 text-white"
-								: ""
+								: "bg-white"
 						}`}
 						key={i}
 						onClick={() => {
@@ -137,7 +137,7 @@ export function DaySlots({ selectedDay, setSelectedDay }) {
 						<h5 className="text-xl font-semibold">
 							{day.format("MMMM")}
 						</h5>
-					</div>
+					</button>
 				);
 			})}
 		</div>
@@ -147,7 +147,7 @@ export function DaySlots({ selectedDay, setSelectedDay }) {
 export function DisplayBooking({ selectedDay, selectedTime, price }) {
 	moment.locale("en");
 	return (
-		<div className="my-3 border rounded-lg py-5 px-10 shadow-sm">
+		<div className="my-3 border rounded-lg py-5 px-10 shadow-sm bg-white">
 			<h4 className="text-xl font-bold text-center lg:text-left capitalize border-b-2">
 				Booking status
 			</h4>

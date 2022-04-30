@@ -24,7 +24,7 @@ export function ListCategory() {
 
 	return (
 		<>
-			<h4 className="uppercase text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl  my-8 text-teal-500 font-bold text-center">
+			<h4 className="uppercase text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl my-8 text-teal-500 font-bold text-center">
 				Category
 			</h4>
 			{category.map((item) => (
