@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Buttons";
 import {
 	IconCard,
@@ -10,7 +10,7 @@ import {
 	DisplayBooking,
 } from "../components/Card";
 import Layout from "../components/Layout";
-import { errorMessage } from "../functions/Alert";
+import { errorMessage, successMessage } from "../functions/Alert";
 import "../styles/App.css";
 
 export default function Venue() {
@@ -25,6 +25,8 @@ export default function Venue() {
 	const [openHour, setOpenHour] = useState("");
 	const [closeHour, setCloseHour] = useState("");
 	const [price, setPrice] = useState({});
+	const [idVenue, setIdVenue] = useState("");
+	const navigate = useNavigate();
 
 	const [selectedDay, setSelectedDay] = useState({
 		day: moment().format("dddd"),
@@ -55,6 +57,36 @@ export default function Venue() {
 				setCloseHour(venue.operational_hours.close_hour);
 				setPrice(venue.operational_hours.price);
 				document.title = venue.name;
+				setIdVenue(venue.id);
+			})
+			.catch((err) => {
+				errorMessage(err);
+			});
+	};
+
+	const bookNow = async (e) => {
+		e.preventDefault();
+		const getToken = localStorage.getItem("user-info");
+		const token = Object.values(JSON.parse(getToken)).toString();
+		const startTime = moment(selectedTime, "HH:mm").clone();
+		const endTime = moment(selectedTime, "HH:mm").clone().add(1, "hours");
+		const booking = {
+			venue_id: idVenue,
+			price: price,
+			status: "pending",
+			start_date: startTime,
+			end_date: endTime,
+		};
+		await axios
+			.post(`${API}/booking`, booking, {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => {
+				successMessage(res);
+				navigate("/payment");
 			})
 			.catch((err) => {
 				errorMessage(err);
@@ -115,9 +147,6 @@ export default function Venue() {
 									</tr>
 								</tbody>
 							</table>
-							<h6 className="text-lg my-1">
-								Rp. {price.toLocaleString()} / Hour
-							</h6>
 						</div>
 						<div className="my-3">
 							<h4 className="text-xl font-bold">Information</h4>
@@ -132,7 +161,7 @@ export default function Venue() {
 						{facility.map((item) => (
 							<div
 								key={item.id}
-								className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7  gap-4 my-2">
+								className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 my-2">
 								<IconCard
 									icon={item.icon_name}
 									name={item.name}
@@ -144,26 +173,38 @@ export default function Venue() {
 
 				<div className="w-full my-5">
 					<div className="my-3 space-y-5">
-						<h4 className="text-xl font-bold">Booking Schedule</h4>
+						<div className="space-y-2">
+							<h4 className="text-xl font-bold">
+								Booking Schedule
+							</h4>
+							<h5 className="text-lg">
+								( Please select the date and time you want to
+								book )
+							</h5>
+						</div>
 						<DaySlots
 							selectedDay={selectedDay}
 							setSelectedDay={setSelectedDay}
 						/>
-						<TimeSlots
-							selectedTime={selectedTime}
-							setSelectedTime={setSelectedTime}
-						/>
+						<div className="border-y-2 py-5">
+							<TimeSlots
+								selectedTime={selectedTime}
+								setSelectedTime={setSelectedTime}
+							/>
+						</div>
 						<DisplayBooking
 							selectedDay={selectedDay}
 							selectedTime={selectedTime}
+							price={price}
 						/>
 					</div>
 
-					<div className="w-full mx-auto my-5">
+					<div className="flex justify-center">
 						<Button
 							variant="solid"
 							id="booking-button"
-							className="text-center">
+							className="text-center"
+							onClick={(e) => bookNow(e)}>
 							Book Now
 						</Button>
 					</div>
