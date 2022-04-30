@@ -1,5 +1,7 @@
-import React from "react";
+// import React from "react";
 import moment from "moment";
+import "moment/locale/id";
+import "moment/locale/en-sg";
 
 export function CardLoading(item) {
 	return (
@@ -41,10 +43,11 @@ export function IconCard(item) {
 }
 
 export function WideCard(item) {
+	moment.locale("en");
 	return (
 		<div
-			className="flex flex-col md:flex-row p-2 gap-2 border-2 rounded-lg"
-			id={item.id}>
+			key={item.id}
+			className="flex flex-col md:flex-row p-2 gap-2 border-2 rounded-lg">
 			<div className="md:w-3/12 w-fit">
 				<img className="rounded-md" src={item.image} alt="" />
 			</div>
@@ -64,6 +67,103 @@ export function WideCard(item) {
 							{item.status}
 						</button>
 					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export function TimeSlots({ selectedTime, setSelectedTime }) {
+	moment.locale("id");
+	const startTime = moment().startOf("day").add(8, "hours");
+	const endTime = moment().startOf("day").add(23, "hours");
+	return (
+		<div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
+			{[...Array(endTime.diff(startTime, "hours") + 1)].map((_, i) => {
+				const time = moment(startTime).add(i, "hours");
+				const extraTime = moment(startTime).add(i + 1, "hours");
+				return (
+					<div
+						id={`time-${time.format("HH:mm")}`}
+						className={`text-center border py-5 rounded-lg ${
+							selectedTime === time.format("LT")
+								? "bg-teal-500 text-white"
+								: ""
+						}`}
+						key={i}
+						onClick={() => setSelectedTime(time.format("LT"))}>
+						<h5 className="font-semibold text-lg xl:hidden">
+							{time.format("LT")}
+						</h5>
+						<h5 className="font-semibold text-lg hidden xl:block">
+							{time.format("LT")} - {extraTime.format("LT")}
+						</h5>
+					</div>
+				);
+			})}
+		</div>
+	);
+}
+
+export function DaySlots({ selectedDay, setSelectedDay }) {
+	moment.locale("en");
+	const today = moment().startOf("day");
+	const week = moment(today).add(6, "days");
+	return (
+		<div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-7 gap-4">
+			{[...Array(week.diff(today, "days") + 1)].map((_, i) => {
+				const day = moment(today).add(i, "days");
+				return (
+					<div
+						id={`day-${i + 1}`}
+						className={`text-center border py-5 rounded-lg ${
+							selectedDay.date === day.format("LL")
+								? "bg-teal-500 text-white"
+								: ""
+						}`}
+						key={i}
+						onClick={() => {
+							setSelectedDay({
+								day: day.format("dddd"),
+								date: day.format("LL"),
+							});
+						}}>
+						<h6 className="font-semibold md:text-lg uppercase">
+							{day.format("dddd")}
+						</h6>
+						<h3 className="font-bold text-4xl">
+							{day.format("D")}
+						</h3>
+						<h5 className="text-xl font-semibold">
+							{day.format("MMMM")}
+						</h5>
+					</div>
+				);
+			})}
+		</div>
+	);
+}
+
+export function DisplayBooking({ selectedDay, selectedTime }) {
+	moment.locale("en");
+	return (
+		<div className="my-3 border rounded-lg py-5 px-10">
+			<h4 className="text-xl font-bold capitalize border-b-2">
+				Booking status:
+			</h4>
+			<div className="font-semibold flex justify-between">
+				<div className="">
+					<h4 className="text-lg">Date :</h4>
+					<h4 className="text-lg">Booking Time :</h4>
+				</div>
+				<div className="text-right">
+					<h4 className="text-lg">
+						{selectedDay.day},{" "}
+						{moment(selectedDay.date).format("DD MMMM YYYY")}
+					</h4>
+					<h4 className="text-lg">
+						{selectedTime !== "00:00" ? selectedTime : ""} (1 hour)
+					</h4>
 				</div>
 			</div>
 		</div>
