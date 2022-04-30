@@ -1,6 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AdminListOwner from "../pages/admin/AdminListOwner";
+import AdminListUser from "../pages/admin/AdminListUser";
+import AdminOwnerRequest from "../pages/admin/AdminOwnerRequest";
 
-import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminSetting from "../pages/admin/AdminSetting";
 import App from "../pages/App";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -16,7 +19,10 @@ function Routing() {
         <Route path="/register" element={<Register />} />
         <Route path="/user" element={<User />} />
         <Route path="/verify" element={<Verify />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminOwnerRequest />} />
+        <Route path="/admin/setting" element={<AdminSetting />} />
+        <Route path="/admin/list-user" element={<AdminListUser />} />
+        <Route path="/admin/list-owner" element={<AdminListOwner />} />
       </Routes>
     </BrowserRouter>
   );

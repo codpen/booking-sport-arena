@@ -21,8 +21,6 @@ import {
   FiLogOut,
   FiUserCheck,
   FiUser,
-  FiArrowLeftCircle,
-  FiArrowRightCircle,
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
@@ -70,25 +68,26 @@ const Sidebar = () => {
                 className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
                 icon={<FaList />}
               >
-                Owner Request
+                <a href="/admin/">Owner request</a>
               </MenuItem>
               <MenuItem
                 className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
                 icon={<FiUserCheck />}
               >
-                Owner List
+                <a href="/admin/list-owner">Owner list</a>
               </MenuItem>
               <MenuItem
                 className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
                 icon={<FiUser />}
               >
-                User List
+                <a href="/admin/list-user">User list</a>
               </MenuItem>
               <MenuItem
-                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
+                id="menu-settings-admin"
+                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full focus:bg-emerald-900"
                 icon={<BiCog />}
               >
-                Settings
+                <a href="/admin/setting">setting</a>
               </MenuItem>
             </Menu>
           </SidebarContent>

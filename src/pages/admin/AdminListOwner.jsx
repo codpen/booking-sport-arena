@@ -1,16 +1,14 @@
 import React from "react";
 import AccordionMui from "../../components/AccordionMui";
-
 import Sidebar from "../../components/sidebar/Sidebar";
-// import TableDropdown from "../../components/TableDropdown";
 
-export default function AdminDashboard() {
+export default function AdminListOwner() {
   return (
     <div className="w-screen h-screen flex">
       <Sidebar />
       {/* <Accordion /> */}
       <div className="w-full border-2 rounded-lg mb-10 mx-8 mt-20 py-3">
-        <p className="text-lg font-semibold pt-2 pb-6 ml-7"> owner Request</p>
+        <p className="text-lg font-semibold pt-2 pb-6 ml-7"> Owner List</p>
         <div className="flex text-slate-500 mb-3 ">
           <p className="pl-10 basis-2/5">User</p>
           <p className="basis-1/5">Contact</p>
