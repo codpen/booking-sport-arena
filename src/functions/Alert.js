@@ -48,9 +48,11 @@ export function fillAll() {
 
 export function minimumCharacter(number) {
 	Swal.fire({
-		icon: 'error',
-		title: 'Oops...',
+		icon: "error",
+		title: "Oops...",
 		text: `Password must be at least ${number} characters`,
+		showConfirmButton: true,
+		confirmButtonColor: "#3085d6",
 	});
 }
 
@@ -67,6 +69,34 @@ export function emptyInput() {
 		position: 'center',
 		icon: 'error',
 		title: 'This field cannot be empty',
+		showConfirmButton: false,
+		timer: 1500,
+	});
+}
+
+// export function verifyOwner(navigate) {
+// 	Swal.fire({
+// 		position: 'center',
+// 		icon: 'warning',
+//			title: 'Before you can become a venue owner, you must pass the verification process',
+// 		showCancelButton: true,
+// 		confirmButtonColor: '#3085d6',
+// 		cancelButtonColor: '#d33',
+// 		confirmButtonText: 'Yes',
+// 		cancelButtonText: 'No',
+// 	}).then((result) => {
+// 		if (result.value) {
+// 			navigate('/verify');
+// 		}
+// 	});
+// }
+
+// for swagger dummy
+export function errorMessageSwagger(err) {
+	Swal.fire({
+		position: 'center',
+		icon: 'error',
+		title: err.message,
 		showConfirmButton: false,
 		timer: 1500,
 	});

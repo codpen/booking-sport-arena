@@ -5,6 +5,7 @@ export function InputText(props) {
 
   const addClassName = className ? `${className}` : "";
   return (
+
     <input
       className={`bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 ${addClassName}`}
       id={id}
@@ -13,6 +14,7 @@ export function InputText(props) {
       value={value}
       onChange={onChange}
     />
+
   );
 }
 
