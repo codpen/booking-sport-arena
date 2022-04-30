@@ -85,7 +85,7 @@ export function TimeSlots({ selectedTime, setSelectedTime }) {
 				return (
 					<div
 						id={`time-${time.format("HH:mm")}`}
-						className={`text-center border py-5 rounded-lg ${
+						className={`text-center border py-5 rounded-lg lg:shadow-md ${
 							selectedTime === time.format("LT")
 								? "bg-teal-500 text-white"
 								: ""
@@ -116,7 +116,7 @@ export function DaySlots({ selectedDay, setSelectedDay }) {
 				return (
 					<div
 						id={`day-${i + 1}`}
-						className={`text-center border py-5 rounded-lg ${
+						className={`text-center border py-5 rounded-lg lg:shadow-md ${
 							selectedDay.date === day.format("LL")
 								? "bg-teal-500 text-white"
 								: ""
@@ -144,25 +144,34 @@ export function DaySlots({ selectedDay, setSelectedDay }) {
 	);
 }
 
-export function DisplayBooking({ selectedDay, selectedTime }) {
+export function DisplayBooking({ selectedDay, selectedTime, price }) {
 	moment.locale("en");
 	return (
-		<div className="my-3 border rounded-lg py-5 px-10">
-			<h4 className="text-xl font-bold capitalize border-b-2">
-				Booking status:
+		<div className="my-3 border rounded-lg py-5 px-10 shadow-sm">
+			<h4 className="text-xl font-bold text-center lg:text-left capitalize border-b-2">
+				Booking status
 			</h4>
-			<div className="font-semibold flex justify-between">
-				<div className="">
-					<h4 className="text-lg">Date :</h4>
-					<h4 className="text-lg">Booking Time :</h4>
+			<div className="font-semibold flex justify-between ">
+				<div className="text-left text-lg">
+					<h4 className="hidden lg:block">Date :</h4>
+					<h4 className="hidden lg:block">Booking Time :</h4>
+					<h4 className="hidden lg:block">Price :</h4>
 				</div>
-				<div className="text-right">
-					<h4 className="text-lg">
-						{selectedDay.day},{" "}
-						{moment(selectedDay.date).format("DD MMMM YYYY")}
+				<div className="text-right text-lg">
+					<h4 className="">
+						{`${selectedDay.day}, ${moment(selectedDay.date).format(
+							"DD MMMM YYYY"
+						)}`}
 					</h4>
-					<h4 className="text-lg">
-						{selectedTime !== "00:00" ? selectedTime : ""} (1 hour)
+					<h4 className="">
+						{selectedTime !== "00:00"
+							? `${selectedTime} (1 hour)`
+							: ""}
+					</h4>
+					<h4 className="">
+						{selectedTime !== "00:00"
+							? `Rp. ${price.toLocaleString()}`
+							: ""}
 					</h4>
 				</div>
 			</div>
