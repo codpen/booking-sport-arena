@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
 
-export default function AccordionMui() {
+export default function AccordionRequestOwner() {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {

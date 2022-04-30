@@ -1,5 +1,5 @@
 import React from "react";
-import AccordionMui from "../../components/AccordionMui";
+import AccordionRequestOwner from "../../components/AccordionRequestOwner";
 import Sidebar from "../../components/sidebar/Sidebar";
 
 export default function AdminListOwner() {
@@ -17,7 +17,7 @@ export default function AdminListOwner() {
         </div>
         <div className="w-full bg-slate-100 h-0.5 mx-4 mb-3" />
         {/* <TableDropdown /> */}
-        <AccordionMui />
+        <AccordionRequestOwner />
       </div>
     </div>
   );

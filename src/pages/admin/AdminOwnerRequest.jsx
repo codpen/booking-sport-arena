@@ -1,10 +1,36 @@
-import React from "react";
-import AccordionMui from "../../components/AccordionMui";
-
+import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import swal from "sweetalert";
+import AccordionRequestOwner from "../../components/AccordionRequestOwner";
 import Sidebar from "../../components/sidebar/Sidebar";
-// import TableDropdown from "../../components/TableDropdown";
+import { getRequestOwner } from "../../services/AdminOwnerRequest";
 
 export default function AdminOwnerRequest() {
+  const [requestOwner, setRequestOwner] = useState([]);
+
+  useEffect(() => {
+    if (localStorage.getItem("user-info")) {
+      const json = JSON.parse(localStorage.getItem("user-info"));
+      fetchDataRequestOwner(json.token);
+    } else {
+      Navigate("/login");
+    }
+  }, []);
+
+  const fetchDataRequestOwner = async (token) => {
+    const response = await getRequestOwner(token);
+    if (response.code === 200) {
+      setRequestOwner(response.data);
+      swal("Success", "Data has been fetched", "success");
+    } else {
+      if (response.message === "invalid or expired jwt") {
+        Navigate("/login");
+      } else {
+        swal("Error", response.message, "error");
+      }
+    }
+  };
+
   return (
     <div className="w-screen h-screen flex">
       <Sidebar />
@@ -19,7 +45,7 @@ export default function AdminOwnerRequest() {
         </div>
         <div className="w-full bg-slate-100 h-0.5 mx-4 mb-3" />
         {/* <TableDropdown /> */}
-        <AccordionMui />
+        <AccordionRequestOwner />
       </div>
     </div>
   );

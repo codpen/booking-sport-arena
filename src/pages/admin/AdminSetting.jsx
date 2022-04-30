@@ -1,5 +1,5 @@
 import React from "react";
-import AccordionMui from "../../components/AccordionMui";
+
 import Sidebar from "../../components/sidebar/Sidebar";
 
 export default function AdminSetting() {
@@ -17,7 +17,6 @@ export default function AdminSetting() {
         </div>
         <div className="w-full bg-slate-100 h-0.5 mx-4 mb-3" />
         {/* <TableDropdown /> */}
-        <AccordionMui />
       </div>
     </div>
   );
