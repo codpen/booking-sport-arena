@@ -1,7 +1,8 @@
 import React from "react";
-import AccordionMui from "../components/AccordionMui";
-import Sidebar from "../components/sidebar/Sidebar";
-import TableDropdown from "../components/TableDropdown";
+import AccordionMui from "../../components/AccordionMui";
+
+import Sidebar from "../../components/sidebar/Sidebar";
+// import TableDropdown from "../../components/TableDropdown";
 
 export default function AdminDashboard() {
   return (

@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ViewPdf from "../components/ViewPdf";
-import AdminDashboard from "../pages/AdminDashboard";
+
+import AdminDashboard from "../pages/admin/AdminDashboard";
 import App from "../pages/App";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -17,7 +17,6 @@ function Routing() {
         <Route path="/user" element={<User />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/pdfview" element={<ViewPdf />} />
       </Routes>
     </BrowserRouter>
   );

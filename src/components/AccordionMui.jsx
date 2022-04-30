@@ -5,8 +5,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
-import { Document } from "react-pdf";
-import { Page } from "react-pdf";
 
 export default function AccordionMui() {
   const [expanded, setExpanded] = React.useState(false);
@@ -32,7 +30,7 @@ export default function AccordionMui() {
                 <Avatar
                   sx={{ width: 56, height: 56 }}
                   alt="Remy Sharp"
-                  src="/static/images/avatar/1.jpg"
+                  src="https://source.unsplash.com/360x360?profile"
                 />
                 <div className="ml-4 ">
                   <p>full name naem name</p>
@@ -62,8 +60,14 @@ export default function AccordionMui() {
           <Typography>
             <div className="w-full">
               <div className="flex items-center justify-between">
-                <div>
-                  <Document file="./assets/example.pdf"></Document>
+                <div className="ml-8">
+                  <a
+                    href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    file pdf
+                  </a>
                 </div>
                 <div>
                   <button className="w-28 bg-emerald-600 px-6 py-1 rounded-full mr-5 text-white">
