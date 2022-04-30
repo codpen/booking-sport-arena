@@ -15,6 +15,7 @@ export default function AdminOwnerRequest() {
     } else {
       Navigate("/login");
     }
+    fetchDataRequestOwner();
   }, []);
 
   const fetchDataRequestOwner = async (token) => {
@@ -28,6 +29,24 @@ export default function AdminOwnerRequest() {
       } else {
         swal("Error", response.message, "error");
       }
+    }
+  };
+
+  const populatingRequestOwner = () => {
+    if (requestOwner.length > 0) {
+      return requestOwner.map((data, index) => {
+        return (
+          <AccordionRequestOwner
+            id={index}
+            fullname={data.fullname}
+            username={data.username}
+            email={data.email}
+            phone={data.phone_number}
+            status={data.status}
+            certificate={data.business_certificate}
+          />
+        );
+      });
     }
   };
 
@@ -45,7 +64,7 @@ export default function AdminOwnerRequest() {
         </div>
         <div className="w-full bg-slate-100 h-0.5 mx-4 mb-3" />
         {/* <TableDropdown /> */}
-        <AccordionRequestOwner />
+        {populatingRequestOwner()}
       </div>
     </div>
   );
