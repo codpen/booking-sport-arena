@@ -2,8 +2,15 @@ import axios from 'axios';
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IconCard } from "../components/Card";
+import Button from "../components/Buttons";
+import {
+	IconCard,
+	DaySlots,
+	TimeSlots,
+	DisplayBooking,
+} from "../components/Card";
 import Layout from "../components/Layout";
+import { errorMessage } from "../functions/Alert";
 import "../styles/App.css";
 
 export default function Venue() {
@@ -18,6 +25,14 @@ export default function Venue() {
 	const [openHour, setOpenHour] = useState("");
 	const [closeHour, setCloseHour] = useState("");
 	const [price, setPrice] = useState({});
+
+	const [selectedDay, setSelectedDay] = useState({
+		day: moment().format("dddd"),
+		date: moment().format("LL"),
+	});
+	const [selectedTime, setSelectedTime] = useState(
+		moment().startOf("day").format("LT")
+	);
 
 	useEffect(() => {
 		fetchVenue();
@@ -42,7 +57,7 @@ export default function Venue() {
 				document.title = venue.name;
 			})
 			.catch((err) => {
-				console.log(err);
+				errorMessage(err);
 			});
 	};
 
@@ -69,24 +84,18 @@ export default function Venue() {
 				</div>
 				<div className="flex mb-4 flex-col lg:flex-row">
 					<div className="basis-8/12">
-						{/* description */}
 						<div className="my-3">
 							<h4 className="text-xl font-bold">Description</h4>
 							<p>
 								{description ? description : "No description"}
 							</p>
 						</div>
-						{/* facility */}
 					</div>
-					{/* Schedule */}
-					{/* maybe MUI Table */}
 					<div className="basis-4/12">
-						{/* Operational */}
 						<div className="my-3">
 							<h4 className="text-xl font-bold">
 								Operational Hours
 							</h4>
-							{/* table */}
 							<table className="table-fixed w-full my-3">
 								<thead className="bg-teal-500 text-white">
 									<tr>
@@ -110,7 +119,6 @@ export default function Venue() {
 								Rp. {price.toLocaleString()} / Hour
 							</h6>
 						</div>
-						{/* Information */}
 						<div className="my-3">
 							<h4 className="text-xl font-bold">Information</h4>
 							<h6 className="text-lg my-1">{address}</h6>
@@ -131,6 +139,33 @@ export default function Venue() {
 								/>
 							</div>
 						))}
+					</div>
+				</div>
+
+				<div className="w-full my-5">
+					<div className="my-3 space-y-5">
+						<h4 className="text-xl font-bold">Booking Schedule</h4>
+						<DaySlots
+							selectedDay={selectedDay}
+							setSelectedDay={setSelectedDay}
+						/>
+						<TimeSlots
+							selectedTime={selectedTime}
+							setSelectedTime={setSelectedTime}
+						/>
+						<DisplayBooking
+							selectedDay={selectedDay}
+							selectedTime={selectedTime}
+						/>
+					</div>
+
+					<div className="w-full mx-auto my-5">
+						<Button
+							variant="solid"
+							id="booking-button"
+							className="text-center">
+							Book Now
+						</Button>
 					</div>
 				</div>
 			</Layout>
