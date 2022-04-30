@@ -1,5 +1,5 @@
 #header .closemenu {
-  color: #000;
+  color: #fff;
   position: absolute;
   right: 0;
   z-index: 9999;
@@ -12,7 +12,7 @@
 }
 
 #header .pro-sidebar-inner {
-  background-color: #ecedf2;
+  background-color: #14b8a6;
   box-shadow: 0.5px 0.866px 2px 0px rgba(0, 0, 0, 0.15);
 }
 
@@ -22,8 +22,8 @@
 
 #header .pro-sidebar-inner .pro-sidebar-layout .logotext p {
   font-size: 20px;
-  padding: 0 20px;
-  color: #000;
+  padding: 0 20px 0 35px;
+  color: #fff;
   font-weight: bold;
 }
 
@@ -31,7 +31,7 @@
   padding: 0 5px;
 }
 #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
-  color: #000;
+  color: #fff;
   margin: 10px 0px;
   font-weight: medium;
 }
@@ -43,7 +43,7 @@
   .pro-inner-item
   .pro-icon-wrapper {
   background-color: rgba(236, 237, 242, 0);
-  color: #000;
+  color: #fff;
   border-radius: 3px;
 }
 

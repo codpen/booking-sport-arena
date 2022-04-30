@@ -1,5 +1,8 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AdminDashboard from "../pages/AdminDashboard";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import AdminDashboard from "../pages/admin/AdminDashboard";
+
 import App from "../pages/App";
 import Venue from "../pages/Detail";
 import Login from "../pages/Login";
@@ -9,6 +12,7 @@ import BookingHistory from "../pages/user/History";
 import Verify from "../pages/user/Verify";
 
 function Routing() {
+
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -23,6 +27,7 @@ function Routing() {
 			</Routes>
 		</BrowserRouter>
 	);
+
 }
 
 export default Routing;
