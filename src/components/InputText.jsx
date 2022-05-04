@@ -3,6 +3,9 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
+import Checkbox from "@mui/material/Checkbox";
+import { FormGroup } from "@mui/material";
+import { display } from "@mui/system";
 
 export function InputText(props) {
 	const { type, placeholder, onChange, value, className, id } = props;
@@ -44,7 +47,7 @@ export function InputFile(props) {
 		<input
 			type="file"
 			accept={accept}
-			className={`bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-teal-500 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 justify-center file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-teal-500 hover:file:bg-violet-100 ${addClassName}`}
+			className={`bg-white appearance-none border-gray-200 rounded w-full py-2 px-4 text-teal-500 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 justify-center file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-teal-500 hover:file:bg-violet-100 ${addClassName}`}
 			id={id}
 			value={value}
 			onChange={onChange}
@@ -58,35 +61,88 @@ export function RadioCategory() {
 		setValue(event.target.value);
 	};
 	return (
+		<RadioGroup
+			sx={{
+				justifyContent: {
+					lg: "space-between",
+					md: "space-between",
+					sm: "left",
+					xs: "left",
+				},
+				flexDirection: {
+					lg: "row",
+					md: "row",
+					sm: "column",
+					xs: "column",
+				},
+			}}
+			className="flex flex-col lg:flex-row"
+			aria-label="category"
+			name="category"
+			value={value}
+			onChange={handleChange}>
+			<FormControlLabel
+				value="Soccer"
+				className="basis-2/12"
+				control={<Radio color="success" />}
+				label="Soccer"
+			/>
+			<FormControlLabel
+				value="Basketball"
+				className="basis-2/12"
+				control={<Radio color="success" />}
+				label="Basketball"
+			/>
+			<FormControlLabel
+				value="Tennis"
+				className="basis-2/12"
+				control={<Radio color="success" />}
+				label="Tennis"
+			/>
+			<FormControlLabel
+				value="Volleyball"
+				className="basis-2/12"
+				control={<Radio color="success" />}
+				label="Volleyball"
+			/>
+		</RadioGroup>
+	);
+}
+
+export function CheckDay({ value, setValue }) {
+	const AvailableDays = [
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
+		"Sunday",
+	];
+	return (
 		<FormControl>
-			<RadioGroup
-				aria-label="category"
-				name="category"
-				row
-				className="justify-evenly gap-4 lg:gap-20"
-				value={value}
-				onChange={handleChange}>
-				<FormControlLabel
-					value="Soccer"
-					control={<Radio color="success" />}
-					label="Soccer"
-				/>
-				<FormControlLabel
-					value="Basketball"
-					control={<Radio color="success" />}
-					label="Basketball"
-				/>
-				<FormControlLabel
-					value="Tennis"
-					control={<Radio color="success" />}
-					label="Tennis"
-				/>
-				<FormControlLabel
-					value="Volleyball"
-					control={<Radio color="success" />}
-					label="Volleyball"
-				/>
-			</RadioGroup>
+			<FormGroup row>
+				{AvailableDays.map((day, index) => (
+					<FormControlLabel
+						key={index}
+						control={
+							<Checkbox
+								checked={value.indexOf(day) !== -1}
+								onChange={(event) => {
+									setValue(
+										event.target.checked
+											? [...value, day]
+											: value.filter((v) => v !== day)
+									);
+								}}
+								name={day}
+								color="primary"
+							/>
+						}
+						label={day}
+					/>
+				))}
+			</FormGroup>
 		</FormControl>
 	);
 }
