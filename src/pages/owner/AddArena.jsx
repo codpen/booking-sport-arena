@@ -1,20 +1,79 @@
 import React, { useState } from "react";
-import { ResponsiveDrawer } from "../../components/Drawer";
-import { InputText } from "../../components/InputText";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/Buttons";
+import { errorMessage, fillAll, successMessage } from "../../functions/Alert";
+import {
+	InputText,
+	TextArea,
+	RadioCategory,
+	InputFile,
+} from "../../components/InputText";
+import { LayoutOwner } from "../../components/Layout";
+import axios from "axios";
 
 export default function CreateArena() {
 	const [venueName, setVenueName] = useState("");
 	const [details, setDetails] = useState("");
 	const [address, setAddress] = useState("");
 	const [city, setCity] = useState("");
+	const [category, setCategory] = useState("");
+	const [image, setImage] = useState("");
+	const [imagePreview, setImagePreview] = useState(null);
+	const navigate = useNavigate();
+	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
+	const getToken = localStorage.getItem("user-info");
+	const token = Object.values(JSON.parse(getToken)).toString();
+
+	document.title = "Create Arena";
+
+	const changeImageButton = (e) => {
+		e.preventDefault();
+		const file = e.target.files[0];
+		setImage(file);
+		setImagePreview(URL.createObjectURL(file));
+	};
+
+	const nextButton = (e) => {
+		e.preventDefault();
+		if (venueName && address && city && category && image) {
+			const formData = new FormData();
+			formData.append("venue_name", venueName);
+			formData.append("detail", details);
+			formData.append("address", address);
+			formData.append("city", city);
+			// formData.append("category", category);
+			formData.append("venue_photo", image);
+			axios
+				.post(`${API}/venues/step1`, formData, {
+					headers: {
+						"Content-Type": "multipart/form-data",
+						Authorization: `Bearer ${token}`,
+					},
+				})
+				.then((res) => {
+					if (res.status === 200) {
+						successMessage(res);
+						navigate("/owner/services");
+					}
+				})
+				.catch((err) => {
+					errorMessage(err);
+				});
+		} else {
+			fillAll();
+		}
+	};
 
 	return (
 		<>
-			<ResponsiveDrawer>
+			<LayoutOwner>
 				<form>
 					<div className="flex flex-wrap mx-3 mb-6">
-						<div className="w-full px-3 lg:px-10">
-							<h6 className="my-3">Venue Name</h6>
+						<div className="mb-5 w-full px-3 lg:px-10">
+							<h6 className="font-bold my-3">
+								Venue Name (
+								<strong className="text-amber-500">*</strong>)
+							</h6>
 							<InputText
 								id="input-arena-name"
 								type="text"
@@ -23,21 +82,20 @@ export default function CreateArena() {
 								onChange={(e) => setVenueName(e.target.value)}
 							/>
 						</div>
-						<div className="w-full px-3 lg:px-10">
-							<h6 className="my-3">Detail Venue</h6>
-							<textarea
-								className="border-2 border-gray-200 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
-								type="text"
-								id="input-business-description"
-								placeholder="Business Description"
+						<div className="mb-5 w-full px-3 lg:px-10">
+							<h6 className="font-bold my-3">Detail Venue</h6>
+							<TextArea
+								id="input-arena-detail"
+								placeholder="Enter venue detail"
 								value={details}
 								onChange={(e) => setDetails(e.target.value)}
-								cols="30"
-								rows="5"
 							/>
 						</div>
-						<div className="w-full px-3 lg:px-10">
-							<h6 className="my-3">Address</h6>
+						<div className="mb-5 w-full px-3 lg:px-10">
+							<h6 className="font-bold my-3">
+								Address (
+								<strong className="text-amber-500">*</strong>)
+							</h6>
 							<div className="flex md:flex-wrap flex-col gap-y-2 md:flex-row md:gap-0">
 								<InputText
 									id="input-arena-address"
@@ -58,12 +116,58 @@ export default function CreateArena() {
 								/>
 							</div>
 						</div>
-						<div className="w-full px-3 lg:px-10">
-							<h6 className="my-3">Categories</h6>
+						<div className="mb-5 w-full px-3 lg:px-10">
+							<h6 className="font-bold my-3">
+								Category (
+								<strong className="text-amber-500">*</strong>)
+							</h6>
+							<div className="">
+								<RadioCategory
+									value={category}
+									setValue={setCategory}
+								/>
+							</div>
+						</div>
+						<div className="mb-5 w-full px-3 lg:px-10">
+							<h6 className="font-bold my-3">
+								Upload Image (
+								<strong className="text-amber-500">*</strong>)
+							</h6>
+							<div className="border-2 rounded-md">
+								<img
+									className="rounded-md mx-auto h-fit"
+									src={imagePreview ? imagePreview : image}
+									height="100%"
+									width="100%"
+									alt=""
+								/>
+								<div className="flex items-center flex-col space-y-5">
+									<InputFile
+										id="input-arena-image"
+										accept="image/png, image/jpeg"
+										onChange={(e) => changeImageButton(e)}
+									/>
+								</div>
+							</div>
+						</div>
+						<p className="w-full px-3 lg:px-10">
+							(<strong className="text-amber-500">*</strong>)
+							Please make sure you fill all the required fields
+							correctly.
+						</p>
+						<div className="w-full flex justify-center md:justify-end my-2 lg:mx-10">
+							<Button
+								className="px-5 md:px-10"
+								onClick={(e) => nextButton(e)}
+								variant="solid"
+								type="submit"
+								id="button-next">
+								Next
+							</Button>
 						</div>
 					</div>
 				</form>
-			</ResponsiveDrawer>
+			</LayoutOwner>
 		</>
 	);
 }
