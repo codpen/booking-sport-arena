@@ -55,8 +55,7 @@ export function InputFile(props) {
 	);
 }
 
-export function RadioCategory() {
-	const [value, setValue] = React.useState("");
+export function RadioCategory({ value, setValue }) {
 	const handleChange = (event) => {
 		setValue(event.target.value);
 	};
@@ -76,7 +75,6 @@ export function RadioCategory() {
 					xs: "column",
 				},
 			}}
-			className="flex flex-col lg:flex-row"
 			aria-label="category"
 			name="category"
 			value={value}
