@@ -23,6 +23,8 @@ import {
   FiUser,
   FiArrowLeftCircle,
   FiArrowRightCircle,
+  FiChevronLeft,
+  FiChevronRight,
 } from "react-icons/fi";
 
 import { BiCog } from "react-icons/bi";
@@ -53,37 +55,37 @@ const Sidebar = () => {
             </div>
             <div className="closemenu" onClick={menuIconClick}>
               {/* changing menu collapse icon on click */}
-              {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
+              {menuCollapse ? <FiChevronRight /> : <FiChevronLeft />}
             </div>
           </SidebarHeader>
           <SidebarContent>
             <Menu iconShape="square">
               <MenuItem
-                className=" hover:bg-slate-300 active:bg-slate-300"
+                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
                 icon={<FiHome />}
               >
                 Home
               </MenuItem>
               <MenuItem
-                className=" hover:bg-slate-300 active:bg-slate-300"
+                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
                 icon={<FaList />}
               >
                 Owner Request
               </MenuItem>
               <MenuItem
-                className=" hover:bg-slate-300 active:bg-slate-300"
+                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
                 icon={<FiUserCheck />}
               >
                 Owner List
               </MenuItem>
               <MenuItem
-                className=" hover:bg-slate-300 active:bg-slate-300"
+                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
                 icon={<FiUser />}
               >
                 User List
               </MenuItem>
               <MenuItem
-                className=" hover:bg-slate-300 active:bg-slate-300"
+                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
                 icon={<BiCog />}
               >
                 Settings

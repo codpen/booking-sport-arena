@@ -1,26 +1,22 @@
-import React, { useState } from 'react';
-import Layout from '../components/Layout';
-import { InputText } from '../components/InputText';
-import {
-	errorMessage,
-	errorMessageSwagger,
-	fillAll,
-	successMessage,
-} from '../functions/Alert';
-import Button from '../components/Buttons';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import Layout from "../../components/Layout";
+import { InputText } from "../../components/InputText";
+import { errorMessage, fillAll, successMessage } from "../../functions/Alert";
+import Button from "../../components/Buttons";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Verification() {
-	const [business, setBusiness] = useState('');
-	const [description, setDescription] = useState('');
-	const [certificate, setCertificate] = useState('');
+	const [business, setBusiness] = useState("");
+	const [description, setDescription] = useState("");
+	const [certificate, setCertificate] = useState("");
 	const navigate = useNavigate();
-	document.title = 'Become Owner';
+	document.title = "Become Owner";
 	const getToken = localStorage.getItem("user-info");
 	const token = Object.values(JSON.parse(getToken)).toString();
-	const API = `https://haudhi.site`;
-	// `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/owners`;
+	const API =
+		// `https://haudhi.site`;
+		`https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -50,7 +46,6 @@ export default function Verification() {
 				})
 				.catch((err) => {
 					errorMessage(err);
-					// errorMessageSwagger(err);
 				});
 		} else {
 			fillAll();
@@ -61,7 +56,7 @@ export default function Verification() {
 		<>
 			<Layout>
 				<div className="container">
-					<div className="border-2 rounded-2xl p-16 my-5">
+					<div className="border-2 rounded-2xl p-8 lg:p-16 my-5">
 						<h2 className="text-3xl uppercase text-center">
 							Ownership Registration
 						</h2>
@@ -114,8 +109,10 @@ export default function Verification() {
 								</h6>
 								<input
 									type="file"
-									accept=".pdf"
-									className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 justify-center"
+									accept="/.pdf"
+									className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-teal-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 justify-center file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
+									file:bg-violet-50 file:text-teal-500
+									hover:file:bg-violet-100"
 									value={certificate}
 									id="add-business-certificate"
 									onChange={(e) =>

@@ -24,13 +24,14 @@ export function ListCategory() {
 
 	return (
 		<>
-			<h4 className="uppercase text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl  my-8 text-teal-500 font-bold text-center">
+			<h4 className="uppercase text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl my-8 text-teal-500 font-bold text-center">
 				Category
 			</h4>
 			{category.map((item) => (
-				<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
+				<div
+					key={item.id}
+					className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
 					<IconCard
-						key={item.id}
 						id={item.id}
 						icon={item.icon_name}
 						name={item.name}

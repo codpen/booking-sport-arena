@@ -1,7 +1,7 @@
-
-import React from 'react';
+import React from "react";
 
 export default function Button({
+
 	className,
 	variant,
 	children,
@@ -18,7 +18,9 @@ export default function Button({
 		danger: "bg-red-500 text-white",
 	};
 
-	const pickedVariant = variants[variant];
+
+  const pickedVariant = variants[variant];
+
 
 	return (
 		<button
@@ -29,4 +31,5 @@ export default function Button({
 			{children}
 		</button>
 	);
+
 }

@@ -19,7 +19,7 @@ export const Venues = ({ venues, loading }) => {
 							<div
 								key={venue.id}
 								id={`venue-${venue.id}`}
-								className="my-4 md:my-6 lg:my-6 xl:my-6"
+								className="my-4 md:my-6 lg:my-6 bg-white shadow-md rounded-lg xl:my-6"
 								onClick={() => {
 									navigate(`/venues/${venue.id}`);
 								}}>
@@ -33,7 +33,7 @@ export const Venues = ({ venues, loading }) => {
 										}
 										alt=""
 									/>
-									<div className="text-left m-2">
+									<div className="text-left m-2 py-1 px-3">
 										<h3 className="text-xl md:text-xl lg:text-xl xl:text-xl 2xl:text-2xl font-bold capitalize">
 											{" "}
 											{venue.venue_name}

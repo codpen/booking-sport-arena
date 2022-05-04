@@ -3,17 +3,16 @@ import Layout from '../components/Layout';
 import { InputText } from '../components/InputText';
 import Button from '../components/Buttons';
 import { useNavigate } from 'react-router-dom';
-import { fetchUser } from '../services/Users';
-import user from '../assets/user.png';
-import axios from 'axios';
+import { fetchUser } from "../services/Users";
+import axios from "axios";
 import {
 	errorMessage,
 	fillAll,
 	minimumCharacter,
 	successMessage,
-	verifyOwner,
 } from "../functions/Alert";
 import Swal from "sweetalert2";
+import { ImageDisclosure } from "../components/Disclosure";
 
 export default function User() {
 	const navigate = useNavigate();
@@ -24,6 +23,7 @@ export default function User() {
 	const [password, setPassword] = useState("");
 	const [businessName, setBusinessName] = useState("");
 	const [image, setImage] = useState("");
+	const [imagePreview, setImagePreview] = useState(null);
 	const [userId, setUserId] = useState("");
 	document.title = "Profile";
 	const API = `https://haudhi.site`;
@@ -81,52 +81,31 @@ export default function User() {
 	};
 
 	const changeImageButton = (e) => {
+		e.preventDefault();
+		const file = e.target.files[0];
+		setImage(file);
+		setImagePreview(URL.createObjectURL(file));
+	};
+
+	const onSubmitImage = (e) => {
+		e.preventDefault();
 		const getToken = localStorage.getItem("user-info");
 		const token = Object.values(JSON.parse(getToken)).toString();
-		e.preventDefault();
-		Swal.fire({
-			title: "Upload Profile Image",
-			input: "file",
-			inputAttributes: {
-				"aria-label": "Upload Profile Image",
-			},
-			showCancelButton: true,
-			confirmButtonColor: "#3085d6",
-			cancelButtonColor: "#d33",
-			confirmButtonText: "Upload",
-			preConfirm: (file) => {
-				return new Promise((resolve) => {
-					const reader = new FileReader();
-					reader.onload = () => {
-						resolve(reader.result);
-					};
-					reader.readAsDataURL(file);
-				});
-			},
-		}).then((result) => {
-			if (result.value) {
-				axios
-					.put(
-						`${API}/users/image/${userId}`,
-						{
-							image: result.value,
-						},
-						{
-							headers: {
-								"Content-Type": "multipart/form-data",
-								Authorization: `Bearer ${token}`,
-							},
-						}
-					)
-					.then((res) => {
-						successMessage(res);
-					})
-					.catch((err) => {
-						// errorMessage(err);
-						console.log(err);
-					});
-			}
-		});
+		const formData = new FormData();
+		formData.append("image", image);
+		axios
+			.put(`${API}/users/image/${userId}`, formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => {
+				successMessage(res);
+			})
+			.catch((err) => {
+				errorMessage(err);
+			});
 	};
 
 	const deleteButton = (e) => {
@@ -176,19 +155,18 @@ export default function User() {
 								<div className="flex flex-col justify-center">
 									<img
 										className="rounded-full mx-auto"
-										src={image ? image : user}
+										src={
+											imagePreview ? imagePreview : image
+										}
 										height={200}
 										width={200}
-										alt={image}
+										alt="profile"
 									/>
 									<div className="mb-5">
-										<a
-											href="#"
-											id="change-profile-image"
-											onClick={changeImageButton}
-											className="py-1 px-3 uppercase text-teal-500 border-t-2 border-b-2">
-											change image
-										</a>
+										<ImageDisclosure
+											onChange={changeImageButton}
+											onSubmit={onSubmitImage}
+										/>
 									</div>
 									<h4 className="text-lg lg:text-3xl uppercase">
 										{username ? username : "Username"}
@@ -211,7 +189,7 @@ export default function User() {
 										id="become-owner-button"
 										variant="solid"
 										onClick={() => {
-											verifyOwner(navigate);
+											navigate("/verify");
 										}}>
 										Become Owner
 									</Button>
@@ -232,11 +210,11 @@ export default function User() {
 										/>
 									</div>
 									<div className="">
-										<h6>Nickname</h6>
+										<h6>User</h6>
 										<InputText
 											id="input-username"
 											type="text"
-											placeholder="Your Nickname"
+											placeholder="Your Username"
 											value={username}
 											onChange={(e) =>
 												setUsername(e.target.value)
