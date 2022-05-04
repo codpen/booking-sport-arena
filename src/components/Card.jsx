@@ -27,6 +27,23 @@ export function CardLoading(item) {
 	);
 }
 
+export function IconLoading(item) {
+	return (
+		<>
+			<div key={item.id} className="">
+				<div className="rounded-2xl animate-pulse">
+					<div className="h-24 bg-gray-400 rounded-md"></div>
+					<div className="m-2 flex justify-center">
+						<div className="w-1/3 text-center bg-gray-400 h-6 rounded-md my-2">
+							{item.icon}
+						</div>
+					</div>
+				</div>
+			</div>
+		</>
+	);
+}
+
 export function IconCard(item) {
 	return (
 		<>
