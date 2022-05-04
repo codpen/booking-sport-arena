@@ -7,6 +7,7 @@ import App from "../pages/App";
 import Venue from "../pages/Detail";
 import Login from "../pages/Login";
 import CreateArena from "../pages/owner/AddArena";
+import AddServices from "../pages/owner/AddServices";
 import Arena from "../pages/owner/Arena";
 import Transaction from "../pages/owner/History";
 import Owner from "../pages/owner/Owner";
@@ -31,6 +32,7 @@ function Routing() {
 				<Route path="/payment" element={<Payment />} />
 				<Route path="/owner" element={<Owner />} />
 				<Route path="/owner/create" element={<CreateArena />} />
+				<Route path="/owner/services" element={<AddServices />} />
 				<Route path="/owner/:arena_id" element={<Arena />} />
 				<Route path="/owner/transaction" element={<Transaction />} />
 			</Routes>
