@@ -10,6 +10,7 @@ import {
 } from "../../components/InputText";
 import { LayoutOwner } from "../../components/Layout";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function CreateArena() {
 	const [venueName, setVenueName] = useState("");
@@ -23,7 +24,6 @@ export default function CreateArena() {
 	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 	const getToken = localStorage.getItem("user-info");
 	const token = Object.values(JSON.parse(getToken)).toString();
-
 	document.title = "Create Arena";
 
 	const changeImageButton = (e) => {
@@ -43,22 +43,35 @@ export default function CreateArena() {
 			formData.append("city", city);
 			// formData.append("category", category);
 			formData.append("venue_photo", image);
-			axios
-				.post(`${API}/venues/step1`, formData, {
-					headers: {
-						"Content-Type": "multipart/form-data",
-						Authorization: `Bearer ${token}`,
-					},
-				})
-				.then((res) => {
-					if (res.status === 200) {
-						successMessage(res);
-						navigate("/owner/services");
-					}
-				})
-				.catch((err) => {
-					errorMessage(err);
-				});
+			Swal.fire({
+				title: "Are you sure?",
+				text: "Please make sure all the information is correct",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes",
+				cancelButtonText: "No",
+			}).then((result) => {
+				if (result.value) {
+					axios
+						.post(`${API}/venues/step1`, formData, {
+							headers: {
+								"Content-Type": "multipart/form-data",
+								Authorization: `Bearer ${token}`,
+							},
+						})
+						.then((res) => {
+							if (res.status === 200) {
+								successMessage(res);
+								navigate("/owner/services");
+							}
+						})
+						.catch((err) => {
+							errorMessage(err);
+						});
+				}
+			});
 		} else {
 			fillAll();
 		}
