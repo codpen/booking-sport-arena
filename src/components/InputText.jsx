@@ -1,4 +1,8 @@
-import React from "react";
+import * as React from "react";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
 
 export function InputText(props) {
 	const { type, placeholder, onChange, value, className, id } = props;
@@ -45,6 +49,45 @@ export function InputFile(props) {
 			value={value}
 			onChange={onChange}
 		/>
+	);
+}
+
+export function RadioCategory() {
+	const [value, setValue] = React.useState("");
+	const handleChange = (event) => {
+		setValue(event.target.value);
+	};
+	return (
+		<FormControl>
+			<RadioGroup
+				aria-label="category"
+				name="category"
+				row
+				className="justify-evenly gap-4 lg:gap-20"
+				value={value}
+				onChange={handleChange}>
+				<FormControlLabel
+					value="Soccer"
+					control={<Radio color="success" />}
+					label="Soccer"
+				/>
+				<FormControlLabel
+					value="Basketball"
+					control={<Radio color="success" />}
+					label="Basketball"
+				/>
+				<FormControlLabel
+					value="Tennis"
+					control={<Radio color="success" />}
+					label="Tennis"
+				/>
+				<FormControlLabel
+					value="Volleyball"
+					control={<Radio color="success" />}
+					label="Volleyball"
+				/>
+			</RadioGroup>
+		</FormControl>
 	);
 }
 
