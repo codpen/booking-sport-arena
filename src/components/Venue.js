@@ -55,7 +55,9 @@ export const Venues = ({ venues, loading }) => {
 export function ListVenue() {
 	const [venues, setVenues] = useState([]);
 	const [loading, setLoading] = useState(false);
+	// eslint-disable-next-line no-unused-vars
 	const [currentPage, setCurrentPage] = useState(1);
+	// eslint-disable-next-line no-unused-vars
 	const [venuesPerPage, setVenuesPerPage] = useState(12);
 
 	useEffect(() => {

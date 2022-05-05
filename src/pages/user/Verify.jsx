@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layout";
-import { InputText } from "../../components/InputText";
+import { InputFile, InputText, TextArea } from "../../components/InputText";
 import { errorMessage, fillAll, successMessage } from "../../functions/Alert";
 import Button from "../../components/Buttons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { statusLogin } from "../../services/Users";
 
 export default function Verification() {
 	const [business, setBusiness] = useState("");
@@ -12,8 +13,7 @@ export default function Verification() {
 	const [certificate, setCertificate] = useState("");
 	const navigate = useNavigate();
 	document.title = "Become Owner";
-	const getToken = localStorage.getItem("user-info");
-	const token = Object.values(JSON.parse(getToken)).toString();
+	const token = statusLogin();
 	const API =
 		// `https://haudhi.site`;
 		`https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
@@ -80,17 +80,13 @@ export default function Verification() {
 							</div>
 							<div className="my-2">
 								<h6>Business Description</h6>
-								<textarea
-									className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
-									type="text"
+								<TextArea
 									id="input-business-description"
-									placeholder="Business Description"
+									placeholder="Add a Description for your Business"
 									value={description}
 									onChange={(e) =>
 										setDescription(e.target.value)
 									}
-									cols="30"
-									rows="5"
 								/>
 							</div>
 							<div className="my-2">
@@ -107,16 +103,13 @@ export default function Verification() {
 										*
 									</strong>
 								</h6>
-								<input
-									type="file"
+								<InputFile
+									id="input-business-certificate"
 									accept="/.pdf"
-									className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-teal-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 justify-center file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
-									file:bg-violet-50 file:text-teal-500
-									hover:file:bg-violet-100"
+									className="border-2"
 									value={certificate}
-									id="add-business-certificate"
 									onChange={(e) =>
-										setCertificate(e.target.value)
+										setCertificate(e.target.files[0])
 									}
 								/>
 								<h6 className="italic">
@@ -125,8 +118,8 @@ export default function Verification() {
 							</div>
 							<p>
 								(<strong className="text-amber-500">*</strong>)
-								All the required fields needs to be filled
-								correctly.
+								Please make sure you have filled all the
+								required fields.
 							</p>
 
 							<div className="my-2">

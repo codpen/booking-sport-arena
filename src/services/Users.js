@@ -1,13 +1,19 @@
 import axios from 'axios';
+import { errorMessage } from "../functions/Alert";
 // v2
 const API =
 	// 'https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/users';
 	`https://haudhi.site`;
 
-export const fetchUser = async (props) => {
-	const getToken = localStorage.getItem('user-info');
-	const token = Object.values(JSON.parse(getToken)).toString();
+export function statusLogin() {
+	const getToken = localStorage.getItem("user-info");
+	const parsedToken = JSON.parse(getToken);
+	const token = parsedToken.token;
+	return token;
+}
 
+export const fetchUser = async (props) => {
+	const token = statusLogin();
 	await axios
 		.get(`${API}/users/profile`, {
 			headers: {
@@ -23,8 +29,9 @@ export const fetchUser = async (props) => {
 			props.setBusinessName(profile.business_name);
 			props.setImage(profile.image);
 			props.setUserId(profile.id);
+			props.setRole(profile.role);
 		})
 		.catch((err) => {
-			console.log(err);
+			errorMessage(err);
 		});
 };
