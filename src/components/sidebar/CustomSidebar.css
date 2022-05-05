@@ -36,6 +36,11 @@
   font-weight: medium;
 }
 
+#header .pro-sidebar .pro-menu a {
+  text-decoration: none;
+  color: #fff;
+}
+
 #header
   .pro-sidebar-inner
   .pro-sidebar-layout

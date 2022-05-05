@@ -101,3 +101,36 @@ export function errorMessageSwagger(err) {
 		timer: 1500,
 	});
 }
+
+export function timeError() {
+	Swal.fire({
+		title: "Error",
+		text: "Close time must be greater than open time",
+		icon: "error",
+		confirmButtonText: "OK",
+	});
+}
+export function minimumDay() {
+	Swal.fire({
+		title: "Error",
+		text: "Minimum one day must be selected",
+		icon: "error",
+		confirmButtonText: "OK",
+	});
+}
+export function notForFree() {
+	Swal.fire({
+		title: "Error",
+		text: "Price must be greater than 0",
+		icon: "error",
+		confirmButtonText: "OK",
+	});
+}
+export function minimumFacility() {
+	Swal.fire({
+		title: "Error",
+		text: "Is there really no facility here?",
+		icon: "error",
+		confirmButtonText: "OK",
+	});
+}

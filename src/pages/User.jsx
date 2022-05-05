@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
-import { InputText } from '../components/InputText';
-import Button from '../components/Buttons';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import Layout from "../components/Layout";
+import { InputText } from "../components/InputText";
+import Button from "../components/Buttons";
+import { useNavigate } from "react-router-dom";
 import { fetchUser } from "../services/Users";
 import axios from "axios";
 import {
@@ -25,6 +25,7 @@ export default function User() {
 	const [image, setImage] = useState("");
 	const [imagePreview, setImagePreview] = useState(null);
 	const [userId, setUserId] = useState("");
+	const [role, setRole] = useState("");
 	document.title = "Profile";
 	const API = `https://haudhi.site`;
 
@@ -37,6 +38,7 @@ export default function User() {
 			setBusinessName,
 			setImage,
 			setUserId,
+			setRole,
 		});
 	}, []);
 
@@ -160,7 +162,7 @@ export default function User() {
 										}
 										height={200}
 										width={200}
-										alt="profile"
+										alt="profile pictures"
 									/>
 									<div className="mb-5">
 										<ImageDisclosure
@@ -171,13 +173,15 @@ export default function User() {
 									<h4 className="text-lg lg:text-3xl uppercase">
 										{username ? username : "Username"}
 									</h4>
-									<h4 className="text-amber-500 font-bold">
-										({" "}
-										{businessName
-											? businessName
-											: "Business"}{" "}
-										)
-									</h4>
+									{role === "owner" && (
+										<h4 className="text-amber-500 font-bold">
+											({" "}
+											{businessName
+												? businessName
+												: "Business"}{" "}
+											)
+										</h4>
+									)}
 								</div>
 							</div>
 							<div className="lg:col-span-2 border rounded-3xl lg:grid lg:grid-flow-col py-6 lg:px-10 justify-items-stretch">

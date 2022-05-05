@@ -5,8 +5,12 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
+import { FiFileText } from "react-icons/fi";
+import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
+import { green } from "@mui/material/colors";
 
-export default function AccordionMui() {
+export default function AccordionRequestOwner(props) {
+  const { fullname, username, email, phone, status, certificate, id } = props;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -16,13 +20,13 @@ export default function AccordionMui() {
   return (
     <div>
       <Accordion
-        expanded={expanded === "panel1"}
-        onChange={handleChange("panel1")}
+        expanded={expanded === `panel${id}`}
+        onChange={handleChange(`panel${id}`)}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
+          aria-controls={`panel${id}bh-content`}
+          id={`panel${id}bh-header`}
         >
           <div className="w-full">
             <div className="flex items-center">
@@ -33,14 +37,14 @@ export default function AccordionMui() {
                   src="https://source.unsplash.com/360x360?profile"
                 />
                 <div className="ml-4 ">
-                  <p>full name naem name</p>
-                  <p className="text-slate-400">username</p>
+                  <p>{fullname}</p>
+                  <p className="text-slate-400">{username}</p>
                 </div>
               </div>
 
               <div className="basis-1/5">
-                <p>mail@mail.com</p>
-                <p className="text-slate-400">+91-1234567890</p>
+                <p>{email}</p>
+                <p className="text-slate-400">{phone}</p>
               </div>
 
               <div className="basis-1/5">
@@ -50,7 +54,7 @@ export default function AccordionMui() {
 
               <div className="basis-1/5 text-center">
                 <button className="w-28 bg-yellow-400 px-6 py-1 rounded-full mr-20 text-white block">
-                  Pending
+                  {status}
                 </button>
               </div>
             </div>
@@ -60,14 +64,21 @@ export default function AccordionMui() {
           <Typography>
             <div className="w-full">
               <div className="flex items-center justify-between">
-                <div className="ml-8">
-                  <a
-                    href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    file pdf
-                  </a>
+                <div className="ml-8 flex justify-items-center">
+                  {/* {<FiFileText />} */}
+                  <InsertDriveFileRoundedIcon
+                    sx={{ color: green[500], fontSize: 40 }}
+                  />
+                  <div>
+                    <a
+                      // href={"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}
+                      href={certificate}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      file.pdf
+                    </a>
+                  </div>
                 </div>
                 <div>
                   <button className="w-28 bg-emerald-600 px-6 py-1 rounded-full mr-5 text-white">

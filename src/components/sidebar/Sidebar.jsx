@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 
 import "react-pro-sidebar/dist/css/styles.css";
+// import "~react-pro-sidebar/dist/scss/styles.scss";
 import "./CustomSidebar.css";
 
 //import react pro sidebar components
@@ -21,8 +22,6 @@ import {
   FiLogOut,
   FiUserCheck,
   FiUser,
-  FiArrowLeftCircle,
-  FiArrowRightCircle,
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
@@ -43,6 +42,12 @@ const Sidebar = () => {
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   };
 
+  const isActive = (path) => {
+    return window.location.pathname === path
+      ? " bg-emerald-900 rounded-full"
+      : " hover:bg-emerald-900 hover:rounded-full";
+  };
+
   return (
     <>
       <div id="header">
@@ -61,7 +66,11 @@ const Sidebar = () => {
           <SidebarContent>
             <Menu iconShape="square">
               <MenuItem
-                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
+                className={
+                  " hover:bg-emerald-900" + (window.location.pathname === "/")
+                    ? "active:bg-emerald-900 hover:rounded-full"
+                    : ""
+                }
                 icon={<FiHome />}
               >
                 Home
@@ -70,25 +79,26 @@ const Sidebar = () => {
                 className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
                 icon={<FaList />}
               >
-                Owner Request
+                <a href="/admin/">Owner request</a>
               </MenuItem>
               <MenuItem
-                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
+                className={isActive("/admin/list-owner")}
                 icon={<FiUserCheck />}
               >
-                Owner List
+                <a href="/admin/list-owner">Owner list</a>
               </MenuItem>
               <MenuItem
-                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
+                className={isActive("/admin/list-user")}
                 icon={<FiUser />}
               >
-                User List
+                <a href="/admin/list-user">User list</a>
               </MenuItem>
               <MenuItem
-                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
+                id="menu-settings-admin"
+                className={isActive("/admin/setting")}
                 icon={<BiCog />}
               >
-                Settings
+                <a href="/admin/setting">setting</a>
               </MenuItem>
             </Menu>
           </SidebarContent>
