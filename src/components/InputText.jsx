@@ -5,7 +5,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import Checkbox from "@mui/material/Checkbox";
 import { FormGroup } from "@mui/material";
-import { display } from "@mui/system";
+import TextField from "@mui/material/TextField";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 
 export function InputText(props) {
 	const { type, placeholder, onChange, value, className, id } = props;
@@ -118,8 +122,26 @@ export function CheckDay({ value, setValue }) {
 		"Sunday",
 	];
 	return (
-		<FormControl>
-			<FormGroup row>
+		<FormControl
+			sx={{
+				display: "block",
+			}}>
+			<FormGroup
+				sx={{
+					display: "flex",
+					justifyContent: {
+						lg: "space-between",
+						md: "space-between",
+						sm: "left",
+						xs: "left",
+					},
+					flexDirection: {
+						lg: "row",
+						md: "row",
+						sm: "column",
+						xs: "column",
+					},
+				}}>
 				{AvailableDays.map((day, index) => (
 					<FormControlLabel
 						key={index}
@@ -134,10 +156,87 @@ export function CheckDay({ value, setValue }) {
 									);
 								}}
 								name={day}
-								color="primary"
+								id={day}
+								color="success"
 							/>
 						}
 						label={day}
+					/>
+				))}
+			</FormGroup>
+		</FormControl>
+	);
+}
+
+export function PickTime({ value, setValue }) {
+	return (
+		<LocalizationProvider dateAdapter={AdapterMoment}>
+			<MobileTimePicker
+				value={value}
+				onChange={(newValue) => {
+					setValue(newValue);
+				}}
+				renderInput={(params) => (
+					<TextField {...params} color="success" />
+				)}
+			/>
+		</LocalizationProvider>
+	);
+}
+
+export function AddFacilities({ value, setValue }) {
+	const AvailableFacilities = [1, 2, 3, 4, 5, 6, 7];
+	const NameFacilities = [
+		"Masjid",
+		"Tempat Parkir",
+		"Toilet",
+		"Cafe",
+		"Loker",
+		"Wifi",
+		"Peminjaman Alat Olahraga",
+	];
+	return (
+		<FormControl
+			sx={{
+				display: "block",
+			}}>
+			<FormGroup
+				sx={{
+					display: "flex",
+					justifyContent: {
+						lg: "space-between",
+						md: "space-between",
+						sm: "left",
+						xs: "left",
+					},
+					flexDirection: {
+						lg: "row",
+						md: "row",
+						sm: "column",
+						xs: "column",
+					},
+				}}>
+				{AvailableFacilities.map((facility, index) => (
+					<FormControlLabel
+						key={index}
+						control={
+							<Checkbox
+								checked={value.indexOf(facility) !== -1}
+								onChange={(event) => {
+									setValue(
+										event.target.checked
+											? [...value, facility]
+											: value.filter(
+													(v) => v !== facility
+											  )
+									);
+								}}
+								name={NameFacilities[index]}
+								id={`facility-number-${facility}`}
+								color="success"
+							/>
+						}
+						label={NameFacilities[index]}
 					/>
 				))}
 			</FormGroup>
