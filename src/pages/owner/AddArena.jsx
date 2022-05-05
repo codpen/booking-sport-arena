@@ -13,6 +13,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export default function CreateArena() {
+	// const [venueId, setVenueId] = useState(0);
 	const [venueName, setVenueName] = useState("");
 	const [details, setDetails] = useState("");
 	const [address, setAddress] = useState("");
@@ -41,7 +42,7 @@ export default function CreateArena() {
 			formData.append("detail", details);
 			formData.append("address", address);
 			formData.append("city", city);
-			// formData.append("category", category);
+			formData.append("category_id", category);
 			formData.append("venue_photo", image);
 			Swal.fire({
 				title: "Are you sure?",
@@ -65,6 +66,7 @@ export default function CreateArena() {
 						.then((res) => {
 							if (res.status === 200) {
 								console.log(res);
+								// setVenueId(res.data.data.venue_id);
 							}
 						})
 						.catch((err) => {
