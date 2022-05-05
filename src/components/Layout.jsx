@@ -1,12 +1,14 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 
-export default function Layout({ children, onScroll }) {
+export default function Layout({ children }) {
 	return (
 		<>
-			<div className='bg-white' onScroll={onScroll}>
+			<div className="bg-gray-50 overflow-auto h-screen">
 				<Navbar />
-				<div className='lg:mx-32 md:mx-16 sm:mx-8'>{children}</div>
+				<div className="px-8 md:px-10 lg:px-24 xl:px-32 2xl:px-40">
+					{children}
+				</div>
 			</div>
 		</>
 	);
