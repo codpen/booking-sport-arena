@@ -106,6 +106,7 @@ export default function Verification() {
 								<InputFile
 									id="input-business-certificate"
 									accept="/.pdf"
+									className="border-2"
 									value={certificate}
 									onChange={(e) =>
 										setCertificate(e.target.files[0])
@@ -117,8 +118,7 @@ export default function Verification() {
 							</div>
 							<p>
 								(<strong className="text-amber-500">*</strong>)
-								All the required fields needs to be filled
-								correctly.
+								Please make sure you have filled all the required fields.
 							</p>
 
 							<div className="my-2">

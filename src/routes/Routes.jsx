@@ -7,6 +7,11 @@ import AdminSetting from "../pages/admin/AdminSetting";
 import App from "../pages/App";
 import Venue from "../pages/Detail";
 import Login from "../pages/Login";
+import CreateArena from "../pages/owner/AddArena";
+import AddServices from "../pages/owner/AddServices";
+import Arena from "../pages/owner/Arena";
+import Transaction from "../pages/owner/History";
+import Owner from "../pages/owner/Owner";
 import Register from "../pages/Register";
 import User from "../pages/User";
 import BookingHistory from "../pages/user/History";
@@ -14,8 +19,6 @@ import Payment from "../pages/user/Payment";
 import Verify from "../pages/user/Verify";
 
 function Routing() {
-
-
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -31,11 +34,14 @@ function Routing() {
         <Route path="/admin/setting" element={<AdminSetting />} />
         <Route path="/admin/list-user" element={<AdminListUser />} />
         <Route path="/admin/list-owner" element={<AdminListOwner />} />
+				<Route path="/owner" element={<Owner />} />
+				<Route path="/owner/create" element={<CreateArena />} />
+				<Route path="/owner/services" element={<AddServices />} />
+				<Route path="/owner/:arena_id" element={<Arena />} />
+				<Route path="/owner/transaction" element={<Transaction />} />
 			</Routes>
 		</BrowserRouter>
 	);
-
-
 }
 
 export default Routing;
