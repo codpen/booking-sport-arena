@@ -1,8 +1,9 @@
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import AdminDashboard from "../pages/admin/AdminDashboard";
-
+import AdminListOwner from "../pages/admin/AdminListOwner";
+import AdminListUser from "../pages/admin/AdminListUser";
+import AdminOwnerRequest from "../pages/admin/AdminOwnerRequest";
+import AdminSetting from "../pages/admin/AdminSetting";
 import App from "../pages/App";
 import Venue from "../pages/Detail";
 import Login from "../pages/Login";
@@ -14,6 +15,7 @@ import Verify from "../pages/user/Verify";
 
 function Routing() {
 
+
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -23,12 +25,16 @@ function Routing() {
 				<Route path="/user" element={<User />} />
 				<Route path="/verify" element={<Verify />} />
 				<Route path="/venues/:venue_id" element={<Venue />} />
-				<Route path="/admin" element={<AdminDashboard />} />
+				<Route path="/admin" element={<AdminOwnerRequest />} />
 				<Route path="/user/history" element={<BookingHistory />} />
 				<Route path="/payment" element={<Payment />} />
+        <Route path="/admin/setting" element={<AdminSetting />} />
+        <Route path="/admin/list-user" element={<AdminListUser />} />
+        <Route path="/admin/list-owner" element={<AdminListOwner />} />
 			</Routes>
 		</BrowserRouter>
 	);
+
 
 }
 
