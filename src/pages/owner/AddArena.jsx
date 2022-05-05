@@ -11,6 +11,7 @@ import {
 import { LayoutOwner } from "../../components/Layout";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { statusLogin } from "../../services/Users";
 
 export default function CreateArena() {
 	// const [venueId, setVenueId] = useState(0);
@@ -23,8 +24,7 @@ export default function CreateArena() {
 	const [imagePreview, setImagePreview] = useState(null);
 	const navigate = useNavigate();
 	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
-	const getToken = localStorage.getItem("user-info");
-	const token = Object.values(JSON.parse(getToken)).toString();
+	const token = statusLogin();
 	document.title = "Create Arena";
 
 	const changeImageButton = (e) => {

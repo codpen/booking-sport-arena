@@ -5,6 +5,7 @@ import { errorMessage, fillAll, successMessage } from "../../functions/Alert";
 import Button from "../../components/Buttons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { statusLogin } from "../../services/Users";
 
 export default function Verification() {
 	const [business, setBusiness] = useState("");
@@ -12,8 +13,7 @@ export default function Verification() {
 	const [certificate, setCertificate] = useState("");
 	const navigate = useNavigate();
 	document.title = "Become Owner";
-	const getToken = localStorage.getItem("user-info");
-	const token = Object.values(JSON.parse(getToken)).toString();
+	const token = statusLogin();
 	const API =
 		// `https://haudhi.site`;
 		`https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
@@ -118,7 +118,8 @@ export default function Verification() {
 							</div>
 							<p>
 								(<strong className="text-amber-500">*</strong>)
-								Please make sure you have filled all the required fields.
+								Please make sure you have filled all the
+								required fields.
 							</p>
 
 							<div className="my-2">

@@ -5,10 +5,15 @@ const API =
 	// 'https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/users';
 	`https://haudhi.site`;
 
-export const fetchUser = async (props) => {
+export function statusLogin() {
 	const getToken = localStorage.getItem("user-info");
-	const token = Object.values(JSON.parse(getToken)).toString();
+	const parsedToken = JSON.parse(getToken);
+	const token = parsedToken.token;
+	return token;
+}
 
+export const fetchUser = async (props) => {
+	const token = statusLogin();
 	await axios
 		.get(`${API}/users/profile`, {
 			headers: {

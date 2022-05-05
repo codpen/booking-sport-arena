@@ -18,6 +18,7 @@ import {
 	successMessage,
 	errorMessage,
 } from "../../functions/Alert";
+import { statusLogin } from "../../services/Users";
 
 export default function AddServices() {
 	document.title = "Create Arena";
@@ -28,8 +29,7 @@ export default function AddServices() {
 	const [facilities, setFacilities] = useState([]);
 	// venue id ?
 	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
-	const getToken = localStorage.getItem("user-info");
-	const token = Object.values(JSON.parse(getToken)).toString();
+	const token = statusLogin();
 	const navigate = useNavigate();
 
 	const submitButton = (e) => {

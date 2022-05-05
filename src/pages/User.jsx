@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import { InputText } from "../components/InputText";
 import Button from "../components/Buttons";
 import { useNavigate } from "react-router-dom";
-import { fetchUser } from "../services/Users";
+import { fetchUser, statusLogin } from "../services/Users";
 import axios from "axios";
 import {
 	errorMessage,
@@ -44,8 +44,7 @@ export default function User() {
 
 	const updateButton = (e) => {
 		e.preventDefault();
-		const getToken = localStorage.getItem("user-info");
-		const token = Object.values(JSON.parse(getToken)).toString();
+		const token = statusLogin();
 		if (fullName && username && email && phoneNumber && password === "") {
 			fillAll();
 		} else if (password.length < 8) {
@@ -91,8 +90,7 @@ export default function User() {
 
 	const onSubmitImage = (e) => {
 		e.preventDefault();
-		const getToken = localStorage.getItem("user-info");
-		const token = Object.values(JSON.parse(getToken)).toString();
+		const token = statusLogin();
 		const formData = new FormData();
 		formData.append("image", image);
 		axios
@@ -111,8 +109,7 @@ export default function User() {
 	};
 
 	const deleteButton = (e) => {
-		const getToken = localStorage.getItem("user-info");
-		const token = Object.values(JSON.parse(getToken)).toString();
+		const token = statusLogin();
 		e.preventDefault();
 		Swal.fire({
 			position: "center",
