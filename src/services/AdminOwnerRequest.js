@@ -7,3 +7,15 @@ export function getRequestOwner(token) {
     Authorization: `Bearer ${token}`,
   });
 }
+
+export function approveOwnerRequest(token, id) {
+  return api.put(`${API}/verification/approve`, null, {
+    Authorization: `Bearer ${token}`,
+  });
+}
+
+export function rejectOwnerRequest(token, id) {
+  return api.put(`${API}/verification/reject`, null, {
+    Authorization: `Bearer ${token}`,
+  });
+}
