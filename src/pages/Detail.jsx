@@ -12,6 +12,7 @@ import {
 } from "../components/Card";
 import Layout from "../components/Layout";
 import { errorMessage, successMessage } from "../functions/Alert";
+import { statusLogin } from "../services/Users";
 import "../styles/App.css";
 
 export default function Venue() {
@@ -70,8 +71,7 @@ export default function Venue() {
 	};
 	const bookNow = async (e) => {
 		e.preventDefault();
-		const getToken = localStorage.getItem("user-info");
-		const token = Object.values(JSON.parse(getToken)).toString();
+		const token = statusLogin();
 		const startTime = moment(selectedTime, "HH:mm").clone();
 		const endTime = moment(selectedTime, "HH:mm").clone().add(1, "hours");
 		const booking = {
