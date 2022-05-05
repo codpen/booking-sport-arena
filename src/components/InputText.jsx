@@ -8,7 +8,6 @@ import { FormGroup } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 
 export function InputText(props) {
@@ -84,25 +83,25 @@ export function RadioCategory({ value, setValue }) {
 			value={value}
 			onChange={handleChange}>
 			<FormControlLabel
-				value="Soccer"
+				value={1}
 				className="basis-2/12"
 				control={<Radio color="success" />}
 				label="Soccer"
 			/>
 			<FormControlLabel
-				value="Basketball"
+				value={2}
 				className="basis-2/12"
 				control={<Radio color="success" />}
 				label="Basketball"
 			/>
 			<FormControlLabel
-				value="Tennis"
+				value={3}
 				className="basis-2/12"
 				control={<Radio color="success" />}
 				label="Tennis"
 			/>
 			<FormControlLabel
-				value="Volleyball"
+				value={4}
 				className="basis-2/12"
 				control={<Radio color="success" />}
 				label="Volleyball"
