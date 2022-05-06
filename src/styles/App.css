@@ -1,12 +1,12 @@
 .banner {
-  background-image: url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)');
+  background-image: url("https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   border-radius: 1rem;
 }
 
-.cover{
-  background-color: rgba(0, 0, 0, .5);
+.cover {
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 1rem;
 }
