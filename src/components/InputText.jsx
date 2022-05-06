@@ -22,6 +22,7 @@ export function InputText(props) {
       placeholder={placeholder}
       value={value}
       pattern={pattern}
+      onChange={onChange}
     />
   );
 }

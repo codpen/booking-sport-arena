@@ -70,7 +70,6 @@ export default function Login() {
           <p className="text-center mt-3 capitalize">
             doesn't have an account?
             <a id="navigate-register" className="text-cyan-600" href="Register">
-              {" "}
               Register
             </a>
           </p>
