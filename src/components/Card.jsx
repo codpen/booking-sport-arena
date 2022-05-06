@@ -90,10 +90,15 @@ export function WideCard(item) {
 	);
 }
 
-export function TimeSlots({ selectedTime, setSelectedTime }) {
+export function TimeSlots({
+	selectedTime,
+	setSelectedTime,
+	open_hour,
+	close_hour,
+}) {
 	moment.locale("id");
-	const startTime = moment().startOf("day").add(8, "hours");
-	const endTime = moment().startOf("day").add(23, "hours");
+	const startTime = moment().startOf("day").add(open_hour, "hours");
+	const endTime = moment().startOf("day").add(close_hour, "hours");
 	return (
 		<div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
 			{[...Array(endTime.diff(startTime, "hours") + 1)].map((_, i) => {

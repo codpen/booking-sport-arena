@@ -14,23 +14,20 @@ import Layout from "../components/Layout";
 import { errorMessage, successMessage } from "../functions/Alert";
 import { statusLogin } from "../services/Users";
 import "../styles/App.css";
+import { API } from "../services/Users";
 
 export default function Venue() {
 	const params = useParams();
-	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
-	const [venueName, setVenueName] = useState("");
-	const [description, setDescription] = useState("");
-	const [venueImage, setVenueImage] = useState("");
-	const [address, setAddress] = useState("");
-	const [city, setCity] = useState("");
-	const [facility, setFacility] = useState([]);
-	const [openHour, setOpenHour] = useState("");
-	const [closeHour, setCloseHour] = useState("");
-	const [price, setPrice] = useState({});
-	const [idVenue, setIdVenue] = useState("");
+	const [venues, setVenues] = useState([]);
+	const [operational, setOperational] = useState([]);
+	const [open, setOpen] = useState("");
+	const [close, setClose] = useState("");
+	const [facilities, setFacilities] = useState([]);
+	const [price, setPrice] = useState(0);
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [skeleton] = useState([1, 2, 3, 4]);
+	// const [linkPayment, setLinkPayment] = useState("");
 
 	const [selectedDay, setSelectedDay] = useState({
 		day: moment().format("dddd"),
@@ -41,41 +38,37 @@ export default function Venue() {
 	);
 
 	useEffect(() => {
-		fetchVenue();
+		fetchVenues();
 		// eslint-disable-next-line
 	}, []);
-
-	const fetchVenue = async () => {
+	const fetchVenues = async () => {
 		setLoading(true);
 		const { venue_id } = params;
 		await axios
 			.get(`${API}/venues/${venue_id}`)
 			.then((res) => {
-				const venue = res.data.data;
-				setVenueName(venue.name);
-				setVenueImage(venue.image);
-				setAddress(venue.address);
-				setDescription(venue.description);
-				setCity(venue.city);
-				setFacility(venue.facility);
-				setOpenHour(venue.operational_hours.open_hour);
-				setCloseHour(venue.operational_hours.close_hour);
-				setPrice(venue.operational_hours.price);
-				document.title = venue.name;
-				setIdVenue(venue.id);
 				setLoading(false);
+				setVenues(res.data.data);
+				setOperational(res.data.data.operational_hours);
+				setFacilities(res.data.data.facility);
+				setPrice(operational[0].price);
+				setOpen(parseInt(operational[0].open_hour));
+				setClose(parseInt(operational[0].close_hour));
+				document.title = `Hobiku | ${res.data.data.name}`;
 			})
 			.catch((err) => {
-				errorMessage(err);
+				setLoading(false);
+				console.log(err);
 			});
 	};
+
 	const bookNow = async (e) => {
 		e.preventDefault();
 		const token = statusLogin();
 		const startTime = moment(selectedTime, "HH:mm").clone();
 		const endTime = moment(selectedTime, "HH:mm").clone().add(1, "hours");
 		const booking = {
-			venue_id: idVenue,
+			venue_id: venues.id,
 			price: price,
 			status: "pending",
 			start_date: startTime,
@@ -90,38 +83,40 @@ export default function Venue() {
 			})
 			.then((res) => {
 				successMessage(res);
-				navigate("/payment");
+				console.log(res);
+				// nunggu response res.link (or anyhing else)
+				// window.location.href = res.data.data.link;
+				navigate("/");
 			})
 			.catch((err) => {
 				errorMessage(err);
 			});
 	};
-
 	return (
 		<Layout>
 			<div
 				className="h-32 md:h-48 lg:h-72 rounded-xl bg-no-repeat bg-cover bg-center"
 				style={{
-					backgroundImage: `url(${venueImage})`,
+					backgroundImage: `url(${venues.image})`,
 				}}>
 				<div className="cover h-32 md:h-48 lg:h-72">
 					<div className="h-full grid gap-4 content-center"></div>
 				</div>
 			</div>
 
-			<div className="w-full border-b-2 my-5">
-				<h3 className="text-3xl capitalize font-semibold">
-					{venueName}
-				</h3>
-				<h4 className="text-lg capitalize text-teal-500 indent-2">
-					{city}
-				</h4>
+			<div className="w-full capitalize border-b-2 my-5">
+				<h3 className="text-3xl font-semibold">{venues.name}</h3>
+				<h4 className="text-lg text-teal-500">{venues.city}</h4>
 			</div>
 			<div className="flex mb-4 flex-col lg:flex-row">
 				<div className="basis-8/12">
 					<div className="my-3">
 						<h4 className="text-xl font-bold">Description</h4>
-						<p>{description ? description : "No description"}</p>
+						<p>
+							{venues.description
+								? venues.description
+								: "No Description"}
+						</p>
 					</div>
 				</div>
 				<div className="basis-4/12">
@@ -135,22 +130,22 @@ export default function Venue() {
 								</tr>
 							</thead>
 							<tbody className="text-center">
-								<tr>
-									{/* jika ada datanya mungkin akan diganti ke map */}
-									<td className="border px-4 py-2">
-										{moment(openHour).format("dddd")}
-									</td>
-									<td className="border px-4 py-2">
-										{moment(openHour).format("H:mm")} -{" "}
-										{moment(closeHour).format("H:mm")}
-									</td>
-								</tr>
+								{operational.map((item, index) => (
+									<tr
+										className="border capitalize"
+										key={index}>
+										<td className="px-4 py-2">
+											{item.day}
+										</td>
+										<td className="px-4 py-2">{`${item.open_hour} - ${item.close_hour}`}</td>
+									</tr>
+								))}
 							</tbody>
 						</table>
 					</div>
 					<div className="my-3">
-						<h4 className="text-xl font-bold">Information</h4>
-						<h6 className="text-lg my-1">{address}</h6>
+						<h4 className="text-xl font-bold">Address</h4>
+						<h6 className="text-lg my-1">{venues.address}</h6>
 					</div>
 				</div>
 			</div>
@@ -161,8 +156,8 @@ export default function Venue() {
 					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 my-2">
 						{loading
 							? skeleton.map((item) => <IconLoading key={item} />)
-							: facility.map((item) => (
-									<div key={item.id}>
+							: facilities.map((item, index) => (
+									<div key={index}>
 										<IconCard
 											icon={item.icon_name}
 											name={item.name}
@@ -189,6 +184,8 @@ export default function Venue() {
 						<TimeSlots
 							selectedTime={selectedTime}
 							setSelectedTime={setSelectedTime}
+							open_hour={open ? open : 10}
+							close_hour={close ? close : 23}
 						/>
 					</div>
 					<DisplayBooking
