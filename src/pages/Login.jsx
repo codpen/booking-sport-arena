@@ -18,10 +18,14 @@ export default function Login() {
       email: email,
       password: password,
     });
-    if (Auth.code === 200) {
+    if (Auth.code === 200 && Auth.data.role === "user") {
       localStorage.setItem("user-info", JSON.stringify(Auth.data));
       swal(Auth.message, "", "success");
       navigate("/");
+    } else if (Auth.code === 200 && Auth.data.role === "admin") {
+      localStorage.setItem("user-info", JSON.stringify(Auth.data));
+      swal(Auth.message, "", "success");
+      navigate("/admin");
     } else if (Auth.code === 400) {
       swal("Login failed", Auth.message, "error");
     }
