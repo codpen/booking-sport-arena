@@ -36,6 +36,13 @@ export default function Transaction() {
 			width: 200,
 		},
 	];
+	function countTotal() {
+		let total = 0;
+		for (let i = 0; i < bookingData.length; i++) {
+			total += bookingData[i].venue.price;
+		}
+		return total;
+	}
 
 	return (
 		<ResponsiveDrawer>
@@ -60,6 +67,12 @@ export default function Transaction() {
 					/>
 				);
 			})}
+			<div className="flex justify-between my-5">
+				<p className="text-xl font-semibold">Total:</p>
+				<p className="text-xl font-semibold">
+					Rp. {countTotal().toLocaleString()}
+				</p>
+			</div>
 		</ResponsiveDrawer>
 	);
 }
