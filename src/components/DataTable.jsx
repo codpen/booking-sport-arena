@@ -1,42 +1,44 @@
 import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarFilterButton,
+} from "@mui/x-data-grid";
 
-const columns = [
-	{ field: "day", headerName: "Day", width: 150 },
-	{
-		field: "date",
-		headerName: "Date",
-		type: "date",
-		width: 150,
-	},
-	{
-		field: "booking",
-		headerName: "Booking Time",
-		width: 200,
-	},
-	{
-		field: "user",
-		headerName: "Booked by",
-		width: 300,
-	},
-	{
-		field: "status",
-		headerName: "Status",
-		width: 100,
-		editable: true,
-	},
-];
+import PropTypes from "prop-types";
 
-export default function DataTable({ rows }) {
+export default function DataTable({ rows, columns }) {
+	const [filterButtonEl, setFilterButtonEl] = React.useState(null);
 	return (
 		<div style={{ width: "100%", height: 450 }}>
 			<DataGrid
 				rows={rows}
 				columns={columns}
-				pageSize={6 ? 6 : rows.length}
-				rowsPerPageOptions={[6]}
-				// disableSelectionOnClick
+				pageSize={10 ? 10 : rows.length}
+				rowsPerPageOptions={[10]}
+				components={{
+					Toolbar: CustomToolbar,
+				}}
+				componentsProps={{
+					panel: {
+						anchorEl: filterButtonEl,
+					},
+					toolbar: {
+						setFilterButtonEl,
+					},
+				}}
+				disableSelectionOnClick
 			/>
 		</div>
 	);
 }
+
+const CustomToolbar = ({ setFilterButtonEl }) => (
+	<GridToolbarContainer>
+		<GridToolbarFilterButton ref={setFilterButtonEl} />
+	</GridToolbarContainer>
+);
+CustomToolbar.propTypes = {
+	setFilterButtonEl: PropTypes.func.isRequired,
+};
+ 
