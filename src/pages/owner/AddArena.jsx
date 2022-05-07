@@ -21,7 +21,7 @@ import { statusLogin, API } from "../../services/Users";
 export default function CreateArena() {
 	const existedVenue = localStorage.getItem("venue_id");
 	// eslint-disable-next-line no-unused-vars
-	const [venueId, setVenueId] = useState(existedVenue);
+	const [venueId, setVenueId] = useState(existedVenue ? existedVenue : 0);
 	const [venueName, setVenueName] = useState("");
 	const [details, setDetails] = useState("");
 	const [address, setAddress] = useState("");
