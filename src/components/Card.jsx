@@ -97,8 +97,8 @@ export function TimeSlots({
 	close_hour,
 }) {
 	moment.locale("id");
-	const startTime = moment().startOf("day").add(open_hour, "hours");
-	const endTime = moment().startOf("day").add(close_hour, "hours");
+	const startTime = moment().startOf("day").add(parseInt(open_hour), "hours");
+	const endTime = moment().startOf("day").add(parseInt(close_hour), "hours");
 	return (
 		<div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
 			{[...Array(endTime.diff(startTime, "hours") + 1)].map((_, i) => {

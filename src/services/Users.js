@@ -35,7 +35,7 @@ export const fetchUser = async (props) => {
 
 export function statusRole() {
 	const getRole = localStorage.getItem("user-info");
-	const parsedRole = JSON.parse(getRole);
-	const role = parsedRole.role;
+	const parsedRole = getRole ? JSON.parse(getRole).role : "";
+	const role = parsedRole ? parsedRole.role : "";
 	return role;
 }

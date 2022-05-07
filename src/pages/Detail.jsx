@@ -54,10 +54,8 @@ export default function Venue() {
 				setOperational(res.data.data.operational_hours);
 				setFacilities(res.data.data.facility);
 				setPrice(res.data.data.operational_hours[0].price);
-				setOpen(parseInt(res.data.data.operational_hours[0].open_hour));
-				setClose(
-					parseInt(res.data.data.operational_hours[0].close_hour)
-				);
+				setOpen(res.data.data.operational_hours[0].open_hour);
+				setClose(res.data.data.operational_hours[0].close_hour);
 				document.title = `Hobiku | ${res.data.data.name}`;
 			})
 			.catch((err) => {
@@ -87,7 +85,6 @@ export default function Venue() {
 			})
 			.then((res) => {
 				successMessage(res);
-				console.log(res);
 				// nunggu response res.link (or anyhing else)
 				// window.location.href = res.data.data.link;
 				navigate("/");
