@@ -53,9 +53,11 @@ export default function Venue() {
 				setVenues(res.data.data);
 				setOperational(res.data.data.operational_hours);
 				setFacilities(res.data.data.facility);
-				setPrice(operational[0].price);
-				setOpen(parseInt(operational[0].open_hour));
-				setClose(parseInt(operational[0].close_hour));
+				setPrice(res.data.data.operational_hours[0].price);
+				setOpen(parseInt(res.data.data.operational_hours[0].open_hour));
+				setClose(
+					parseInt(res.data.data.operational_hours[0].close_hour)
+				);
 				document.title = `Hobiku | ${res.data.data.name}`;
 			})
 			.catch((err) => {
@@ -63,6 +65,7 @@ export default function Venue() {
 				errorMessage(err);
 			});
 	};
+
 	const bookNow = async (e) => {
 		e.preventDefault();
 		const token = statusLogin();
@@ -225,15 +228,17 @@ export default function Venue() {
 						<TimeSlots
 							selectedTime={selectedTime}
 							setSelectedTime={setSelectedTime}
-							open_hour={open ? open : 10}
+							open_hour={open ? open : 8}
 							close_hour={close ? close : 23}
 						/>
 					</div>
-					<DisplayBooking
-						selectedDay={selectedDay}
-						selectedTime={selectedTime}
-						price={price}
-					/>
+					{selectedDay && selectedTime && (
+						<DisplayBooking
+							selectedDay={selectedDay}
+							selectedTime={selectedTime}
+							price={price ? price : 0}
+						/>
+					)}
 				</div>
 				<div className="flex justify-center">
 					<Button
