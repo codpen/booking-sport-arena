@@ -153,6 +153,25 @@ export default function CreateArena() {
 		}
 	};
 
+	const submitImage = (e) => {
+		e.preventDefault();
+		const formData = new FormData();
+		formData.append("venue_photo", image);
+		axios
+			.put(`${API}/venues/image/${venueId}`, formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => {
+				successMessage(res);
+			})
+			.catch((err) => {
+				errorMessage(err);
+			});
+	};
+
 	return (
 		<LayoutOwner>
 			<form>
@@ -235,12 +254,21 @@ export default function CreateArena() {
 								width="100%"
 								alt=""
 							/>
-							<div className="flex items-center flex-col space-y-5">
+							<div className="flex items-center flex-col md:flex-row bg-white">
 								<InputFile
 									id="input-arena-image"
 									accept="image/png, image/jpeg"
 									onChange={(e) => changeImageButton(e)}
 								/>
+								{existedVenue !== null && (
+									<Button
+										variant="solid"
+										id="change-arena-image-button"
+										onClick={(e) => submitImage(e)}
+										className="mx-4 my-2">
+										Upload
+									</Button>
+								)}
 							</div>
 						</div>
 					</div>
