@@ -56,11 +56,11 @@ export default function AddServices() {
 	};
 
 	const operationalNotes = {
-		venue_id: venueId ? venueId : parseInt(venueId),
+		venue_id: venueId ? parseInt(venueId) : venueId,
 		days: days,
 		open_hours: open,
 		close_hours: close,
-		price: price ? price : parseInt(price),
+		price: price ? parseInt(price) : price,
 		facility: facilities,
 	};
 

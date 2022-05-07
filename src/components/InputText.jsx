@@ -117,13 +117,20 @@ export function RadioCategory({ value, setValue }) {
 
 export function CheckDay({ value, setValue }) {
 	const AvailableDays = [
-		"Monday" ? "monday" : "Monday",
-		"Tuesday" ? "tuesday" : "Tuesday",
-		"Wednesday" ? "wednesday" : "Wednesday",
-		"Thursday" ? "thursday" : "Thursday",
-		"Friday" ? "friday" : "Friday",
-		"Saturday" ? "saturday" : "Saturday",
-		"Sunday" ? "sunday" : "Sunday",
+		"monday" || "Monday",
+		"tuesday" || "Tuesday",
+		"wednesday" || "Wednesday",
+		"thursday" || "Thursday",
+		"friday" || "Friday",
+		"saturday" || "Saturday",
+		"sunday" || "Sunday",
+		// "Monday" ? "monday" : "Monday",
+		// "Tuesday" ? "tuesday" : "Tuesday",
+		// "Wednesday" ? "wednesday" : "Wednesday",
+		// "Thursday" ? "thursday" : "Thursday",
+		// "Friday" ? "friday" : "Friday",
+		// "Saturday" ? "saturday" : "Saturday",
+		// "Sunday" ? "sunday" : "Sunday",
 	];
 	return (
 		<FormControl
