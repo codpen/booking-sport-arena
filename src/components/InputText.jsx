@@ -113,158 +113,149 @@ export function RadioCategory({ value, setValue }) {
 }
 
 export function CheckDay({ value, setValue }) {
-  const AvailableDays = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-  return (
-    <FormControl
-      sx={{
-        display: "block",
-      }}
-    >
-      <FormGroup
-        sx={{
-          display: "flex",
-          justifyContent: {
-            lg: "space-between",
-            md: "space-between",
-            sm: "left",
-            xs: "left",
-          },
-          flexDirection: {
-            lg: "row",
-            md: "row",
-            sm: "column",
-            xs: "column",
-          },
-        }}
-      >
-        {AvailableDays.map((day, index) => (
-          <FormControlLabel
-            key={index}
-            control={
-              <Checkbox
-                checked={value.indexOf(day) !== -1}
-                onChange={(event) => {
-                  setValue(
-                    event.target.checked
-                      ? [...value, day]
-                      : value.filter((v) => v !== day)
-                  );
-                }}
-                name={day}
-                id={day}
-                color="success"
-              />
-            }
-            label={day}
-          />
-        ))}
-      </FormGroup>
-    </FormControl>
-  );
+	const AvailableDays = [
+		"Monday" ? "monday" : "Monday",
+		"Tuesday" ? "tuesday" : "Tuesday",
+		"Wednesday" ? "wednesday" : "Wednesday",
+		"Thursday" ? "thursday" : "Thursday",
+		"Friday" ? "friday" : "Friday",
+		"Saturday" ? "saturday" : "Saturday",
+		"Sunday" ? "sunday" : "Sunday",
+	];
+	return (
+		<FormControl
+			sx={{
+				display: "block",
+			}}>
+			<FormGroup
+				sx={{
+					display: "flex",
+					justifyContent: {
+						lg: "space-between",
+						md: "space-between",
+						sm: "left",
+						xs: "left",
+					},
+					flexDirection: {
+						lg: "row",
+						md: "row",
+						sm: "column",
+						xs: "column",
+					},
+				}}>
+				{value
+					? AvailableDays.map((day, index) => {
+							return (
+								<FormControlLabel
+									key={index}
+									value={day}
+									checked={value.includes(day)}
+									onChange={setValue}
+									control={<Checkbox color="success" />}
+									label={day}
+								/>
+							);
+					  })
+					: AvailableDays.map((day, index) => (
+							<FormControlLabel
+								key={index}
+								control={
+									<Checkbox
+										checked={value.indexOf(day) !== -1}
+										onChange={(event) => {
+											setValue(
+												event.target.checked
+													? [...value, day]
+													: value.filter(
+															(v) => v !== day
+													  )
+											);
+										}}
+										name={day}
+										id={day}
+										color="success"
+									/>
+								}
+								label={day}
+							/>
+					  ))}
+			</FormGroup>
+		</FormControl>
+	);
 }
 
 export function PickTime({ value, setValue }) {
-  return (
-    <LocalizationProvider dateAdapter={AdapterMoment}>
-      <MobileTimePicker
-        value={value}
-        onChange={(newValue) => {
-          setValue(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} color="success" />}
-      />
-    </LocalizationProvider>
-  );
+	return (
+		<LocalizationProvider dateAdapter={AdapterMoment}>
+			<MobileTimePicker
+				value={value}
+				onChange={(newValue) => {
+					setValue(newValue);
+				}}
+				renderInput={(params) => (
+					<TextField {...params} color="success" />
+				)}
+			/>
+		</LocalizationProvider>
+	);
 }
 
 export function AddFacilities({ value, setValue }) {
-  const AvailableFacilities = [1, 2, 3, 4, 5, 6, 7];
-  const NameFacilities = [
-    "Masjid",
-    "Tempat Parkir",
-    "Toilet",
-    "Cafe",
-    "Loker",
-    "Wifi",
-    "Peminjaman Alat Olahraga",
-  ];
-  return (
-    <FormControl
-      sx={{
-        display: "block",
-      }}
-    >
-      <FormGroup
-        sx={{
-          display: "flex",
-          justifyContent: {
-            lg: "space-between",
-            md: "space-between",
-            sm: "left",
-            xs: "left",
-          },
-          flexDirection: {
-            lg: "row",
-            md: "row",
-            sm: "column",
-            xs: "column",
-          },
-        }}
-      >
-        {AvailableFacilities.map((facility, index) => (
-          <FormControlLabel
-            key={index}
-            control={
-              <Checkbox
-                checked={value.indexOf(facility) !== -1}
-                onChange={(event) => {
-                  setValue(
-                    event.target.checked
-                      ? [...value, facility]
-                      : value.filter((v) => v !== facility)
-                  );
-                }}
-                name={NameFacilities[index]}
-                id={`facility-number-${facility}`}
-                color="success"
-              />
-            }
-            label={NameFacilities[index]}
-          />
-        ))}
-      </FormGroup>
-    </FormControl>
-  );
+	const AvailableFacilities = [1, 2, 3, 4, 5, 6, 7];
+	const NameFacilities = [
+		"Masjid",
+		"Tempat Parkir",
+		"Toilet",
+		"Cafe",
+		"Loker",
+		"Wifi",
+		"Peminjaman Alat Olahraga",
+	];
+	return (
+		<FormControl
+			sx={{
+				display: "block",
+			}}>
+			<FormGroup
+				sx={{
+					display: "flex",
+					justifyContent: {
+						lg: "space-between",
+						md: "space-between",
+						sm: "left",
+						xs: "left",
+					},
+					flexDirection: {
+						lg: "row",
+						md: "row",
+						sm: "column",
+						xs: "column",
+					},
+				}}>
+				{AvailableFacilities.map((facility, index) => (
+					<FormControlLabel
+						key={index}
+						control={
+							<Checkbox
+								checked={value.indexOf(facility) !== -1}
+								onChange={(event) => {
+									setValue(
+										event.target.checked
+											? [...value, facility]
+											: value.filter(
+													(v) => v !== facility
+											  )
+									);
+								}}
+								name={NameFacilities[index]}
+								id={`facility-number-${facility}`}
+								color="success"
+							/>
+						}
+						label={NameFacilities[index]}
+					/>
+				))}
+			</FormGroup>
+		</FormControl>
+	);
 }
-
-// export function InputText({ type, placeholder, onChange }) {
-//   return (
-//     <input
-//       className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
-//       type={type}
-//       placeholder={placeholder}
-//       // value={value}
-//       onChange={onChange}
-//     />
-//   );
-// }
-
-// export function InputText(props) {
-//   return (
-//     <input
-//       className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
-//       type={props.type}
-//       placeholder={props.placeholder}
-//       // value={props.value}
-//       onChange={props.onChange}
-//     />
-//   );
-// }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
 	AddFacilities,
@@ -18,20 +18,40 @@ import {
 	successMessage,
 	errorMessage,
 } from "../../functions/Alert";
-import { statusLogin } from "../../services/Users";
+import { API, statusLogin } from "../../services/Users";
 
 export default function AddServices() {
-	document.title = "Create Arena";
+	const existedVenue = localStorage.getItem("venue_id");
+	const [venueId, setVenueId] = useState(existedVenue);
 	const [days, setDays] = useState([]);
 	const [open, setOpen] = useState(new Date());
 	const [close, setClose] = useState(new Date());
 	const [price, setPrice] = useState(0);
 	const [facilities, setFacilities] = useState([]);
 	// venue id ?
-	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 	const token = statusLogin();
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		getVenue();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+	const getVenue = async () => {
+		await axios
+			.get(`${API}/venues/${venueId}`)
+			.then((res) => {
+				setDays(
+					res.data.data.operational_hours.map((item) => item.day)
+				);
+				console.log(res.data.data);
+				document.title = res.data.data.name
+					? `Edit | ${res.data.data.name}`
+					: "Create Arena";
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 	const submitButton = (e) => {
 		e.preventDefault();
 		if (price === 0 || price === "" || price === "0") {
@@ -69,7 +89,6 @@ export default function AddServices() {
 				});
 		}
 	};
-
 	return (
 		<LayoutOwner>
 			<form>
