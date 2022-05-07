@@ -3,12 +3,13 @@ import Layout from "../components/Layout";
 import { InputText } from "../components/InputText";
 import Button from "../components/Buttons";
 import { useNavigate } from "react-router-dom";
-import { fetchUser, statusLogin } from "../services/Users";
+import { fetchUser, statusLogin, statusRole } from "../services/Users";
 import axios from "axios";
 import {
 	errorMessage,
 	fillAll,
 	minimumCharacter,
+	MuiError,
 	successMessage,
 } from "../functions/Alert";
 import Swal from "sweetalert2";
@@ -26,7 +27,7 @@ export default function User() {
 	const [image, setImage] = useState("");
 	const [imagePreview, setImagePreview] = useState(null);
 	const [userId, setUserId] = useState("");
-	const [role, setRole] = useState("");
+	const role = statusRole();
 	document.title = "Profile";
 
 	useEffect(() => {
@@ -38,7 +39,6 @@ export default function User() {
 			setBusinessName,
 			setImage,
 			setUserId,
-			setRole,
 		});
 	}, []);
 
@@ -104,7 +104,7 @@ export default function User() {
 				successMessage(res);
 			})
 			.catch((err) => {
-				errorMessage(err);
+				MuiError(err);
 			});
 	};
 
@@ -183,14 +183,25 @@ export default function User() {
 								Profile
 							</h1>
 							<div className="my-auto flex justify-center">
-								<Button
-									id="become-owner-button"
-									variant="solid"
-									onClick={() => {
-										navigate("/verify");
-									}}>
-									Become Owner
-								</Button>
+								{role === "user" ? (
+									<Button
+										id="become-owner-button"
+										variant="solid"
+										onClick={() => {
+											navigate("/verify");
+										}}>
+										Become Owner
+									</Button>
+								) : role === "owner" ? (
+									<Button
+										id="owner-page"
+										variant="solid"
+										onClick={() => {
+											navigate("/owner");
+										}}>
+										Owner Page
+									</Button>
+								) : null}
 							</div>
 						</div>
 						<div className="row-span-2 border col-span-2 rounded-3xl">
