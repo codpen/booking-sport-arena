@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { IconCard, IconLoading } from "./Card";
-
-const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
+import { API } from "../services/Users";
 
 export function ListCategory() {
 	const [skeleton] = useState([1, 2, 3, 4]);
