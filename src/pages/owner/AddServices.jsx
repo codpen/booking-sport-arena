@@ -8,7 +8,6 @@ import {
 } from "../../components/InputText";
 import { LayoutOwner } from "../../components/Layout";
 import Button from "../../components/Buttons";
-import moment from "moment";
 import axios from "axios";
 import {
 	minimumFacility,
@@ -22,13 +21,13 @@ import { API, statusLogin } from "../../services/Users";
 
 export default function AddServices() {
 	const existedVenue = localStorage.getItem("venue_id");
-	const [venueId, setVenueId] = useState(existedVenue);
+	// eslint-disable-next-line no-unused-vars
+	const [venueId, setVenueId] = useState(existedVenue ? existedVenue : 0);
 	const [days, setDays] = useState([]);
 	const [open, setOpen] = useState("");
 	const [close, setClose] = useState("");
 	const [price, setPrice] = useState(0);
 	const [facilities, setFacilities] = useState([]);
-	// venue id ?
 	const token = statusLogin();
 	const navigate = useNavigate();
 
@@ -52,9 +51,19 @@ export default function AddServices() {
 					: "Create Arena";
 			})
 			.catch((err) => {
-				console.log(err);
+				errorMessage(err);
 			});
 	};
+
+	const operationalNotes = {
+		venue_id: venueId ? venueId : parseInt(venueId),
+		days: days,
+		open_hours: open,
+		close_hours: close,
+		price: price ? price : parseInt(price),
+		facility: facilities,
+	};
+
 	const submitButton = (e) => {
 		e.preventDefault();
 		if (price === 0 || price === "" || price === "0") {
@@ -68,14 +77,6 @@ export default function AddServices() {
 		} else if (facilities.length === 0) {
 			minimumFacility();
 		} else if (days && open && close && price && facilities) {
-			const operationalNotes = {
-				// venue_id: "",
-				days: days,
-				open_hours: moment(open).format("HH:mm"),
-				close_hours: moment(close).format("HH:mm"),
-				price: parseInt(price),
-				facility: facilities,
-			};
 			axios
 				.post(`${API}/venues/step2`, operationalNotes, {
 					headers: {
@@ -92,6 +93,38 @@ export default function AddServices() {
 				});
 		}
 	};
+
+	const updateButton = (e) => {
+		e.preventDefault();
+		if (price === 0 || price === "" || price === "0") {
+			notForFree();
+		} else if (price < 0) {
+			notForFree();
+		} else if (close < open) {
+			timeError();
+		} else if (days.length === 0) {
+			minimumDay();
+		} else if (facilities.length === 0) {
+			minimumFacility();
+		} else if (days && open && close && price && facilities) {
+			axios
+				.put(`${API}/venues/step2/${venueId}`, operationalNotes, {
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				})
+				.then((res) => {
+					successMessage(res);
+					navigate(`/venues/${venueId}`);
+					localStorage.removeItem("venue_id");
+				})
+				.catch((err) => {
+					errorMessage(err);
+				});
+		}
+	};
+
 	return (
 		<LayoutOwner>
 			<form>
@@ -148,15 +181,29 @@ export default function AddServices() {
 							/>
 						</div>
 					</div>
-					<div className="w-full flex justify-center md:justify-end my-2 lg:mx-10">
-						<Button
-							className="w-full md:w-28 md:px-10"
-							onClick={(e) => submitButton(e)}
-							variant="solid"
-							type="submit"
-							id="submit-button">
-							Next
-						</Button>
+					<div className="w-full flex justify-center md:justify-end my-2 lg:mx-10 flex-col lg:flex-row">
+						{existedVenue !== null && (
+							<Button
+								className="w-full md:w-28 my-2"
+								onClick={(e) => {
+									updateButton(e);
+								}}
+								variant="warning"
+								type="submit"
+								id="button-next">
+								Update
+							</Button>
+						)}
+						{existedVenue === null && (
+							<Button
+								className="w-full md:w-28 md:px-10"
+								onClick={(e) => submitButton(e)}
+								variant="solid"
+								type="submit"
+								id="submit-button">
+								Next
+							</Button>
+						)}
 					</div>
 				</div>
 			</form>
