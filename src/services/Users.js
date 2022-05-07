@@ -32,3 +32,10 @@ export const fetchUser = async (props) => {
 			errorMessage(err);
 		});
 };
+
+export function statusRole() {
+	const getRole = localStorage.getItem("user-info");
+	const parsedRole = JSON.parse(getRole);
+	const role = parsedRole.role;
+	return role;
+}
