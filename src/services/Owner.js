@@ -1,6 +1,6 @@
 import axios from "axios";
 import { errorMessage, successMessage } from "../functions/Alert";
-import { statusLogin } from "./Users";
+import { statusLogin, API } from "./Users";
 
 export const fetchBookingData = async (setBookingData) => {
 	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
@@ -15,7 +15,6 @@ export const fetchBookingData = async (setBookingData) => {
 };
 
 export const deleteVenue = async ({ venue_id }) => {
-	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 	const token = statusLogin();
 	axios
 		.delete(`${API}/venues/${venue_id}`, {
