@@ -142,5 +142,5 @@ export function minimumFacility() {
 }
 
 export function MuiError(err) {
-	return <Alert severity="error">{err.response.data.message}</Alert>;
+	return <Alert severity="error">{err.data.message}</Alert>;
 }

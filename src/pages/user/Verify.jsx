@@ -105,7 +105,7 @@ export default function Verification() {
 								</h6>
 								<InputFile
 									id="input-business-certificate"
-									accept="/.pdf"
+									accept="application/pdf"
 									className="border-2"
 									value={certificate}
 									onChange={(e) =>
