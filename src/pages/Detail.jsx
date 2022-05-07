@@ -14,7 +14,9 @@ import Layout from "../components/Layout";
 import { errorMessage, successMessage } from "../functions/Alert";
 import { statusLogin } from "../services/Users";
 import "../styles/App.css";
-import { API } from "../services/Users";
+import { API, statusRole } from "../services/Users";
+import { deleteVenue } from "../services/Owner";
+import Swal from "sweetalert2";
 
 export default function Venue() {
 	const params = useParams();
@@ -27,8 +29,8 @@ export default function Venue() {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [skeleton] = useState([1, 2, 3, 4]);
+	const role = statusRole();
 	// const [linkPayment, setLinkPayment] = useState("");
-
 	const [selectedDay, setSelectedDay] = useState({
 		day: moment().format("dddd"),
 		date: moment().format("LL"),
@@ -58,10 +60,9 @@ export default function Venue() {
 			})
 			.catch((err) => {
 				setLoading(false);
-				console.log(err);
+				errorMessage(err);
 			});
 	};
-
 	const bookNow = async (e) => {
 		e.preventDefault();
 		const token = statusLogin();
@@ -92,6 +93,27 @@ export default function Venue() {
 				errorMessage(err);
 			});
 	};
+
+	const handleDelete = async (e) => {
+		e.preventDefault();
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			confirmButtonText: "Yes, delete it!",
+			cancelButtonText: "No, cancel!",
+			cancelButtonColor: "#d33",
+		}).then((result) => {
+			if (result.value) {
+				deleteVenue(venues.id);
+				navigate("/");
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				Swal.fire("Cancelled", "Your venue is safe :)", "error");
+			}
+		});
+	};
 	return (
 		<Layout>
 			<div
@@ -103,10 +125,31 @@ export default function Venue() {
 					<div className="h-full grid gap-4 content-center"></div>
 				</div>
 			</div>
-
-			<div className="w-full capitalize border-b-2 my-5">
-				<h3 className="text-3xl font-semibold">{venues.name}</h3>
-				<h4 className="text-lg text-teal-500">{venues.city}</h4>
+			<div className="w-full capitalize border-b-2 my-5 justify-between flex">
+				<div className="text-left lg:basis-3/4">
+					<h3 className="text-3xl font-semibold">{venues.name}</h3>
+					<h4 className="text-lg text-teal-500">{venues.city}</h4>
+				</div>
+				{role === "owner" && (
+					<div className="text-right flex flex-row lg:basis-1/4 my-auto justify-between gap-4">
+						<Button
+							type="button"
+							variant="warning"
+							className="w-full"
+							onClick={() => {
+								navigate("/owner/create");
+							}}>
+							Edit
+						</Button>
+						<Button
+							type="button"
+							variant="danger"
+							className="w-full"
+							onClick={handleDelete}>
+							Delete
+						</Button>
+					</div>
+				)}
 			</div>
 			<div className="flex mb-4 flex-col lg:flex-row">
 				<div className="basis-8/12">
@@ -149,7 +192,6 @@ export default function Venue() {
 					</div>
 				</div>
 			</div>
-
 			<div className="w-full my-5">
 				<div className="my-3">
 					<h4 className="text-xl font-bold">Facility</h4>
@@ -167,7 +209,6 @@ export default function Venue() {
 					</div>
 				</div>
 			</div>
-
 			<div className="w-full my-5">
 				<div className="my-3 space-y-5">
 					<div className="space-y-2">
@@ -194,7 +235,6 @@ export default function Venue() {
 						price={price}
 					/>
 				</div>
-
 				<div className="flex justify-center">
 					<Button
 						variant="solid"
