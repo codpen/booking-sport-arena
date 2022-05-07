@@ -26,6 +26,7 @@ export default function Venue() {
 	const [close, setClose] = useState("");
 	const [facilities, setFacilities] = useState([]);
 	const [price, setPrice] = useState(0);
+	const [category, setCategory] = useState([]);
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [skeleton] = useState([1, 2, 3, 4]);
@@ -56,6 +57,7 @@ export default function Venue() {
 				setPrice(res.data.data.operational_hours[0].price);
 				setOpen(res.data.data.operational_hours[0].open_hour);
 				setClose(res.data.data.operational_hours[0].close_hour);
+				setCategory(res.data.data.category);
 				document.title = `Hobiku | ${res.data.data.name}`;
 			})
 			.catch((err) => {
@@ -101,6 +103,11 @@ export default function Venue() {
 		}
 	};
 
+	const handleEdit = async () => {
+		const venue_id = venues.id;
+		localStorage.setItem("venue_id", venue_id);
+		navigate(`/owner/edit/${venue_id}`);
+	};
 	const handleDelete = async (e) => {
 		e.preventDefault();
 		Swal.fire({
@@ -143,9 +150,7 @@ export default function Venue() {
 							type="button"
 							variant="warning"
 							className="w-full"
-							onClick={() => {
-								navigate("/owner/create");
-							}}>
+							onClick={handleEdit}>
 							Edit
 						</Button>
 						<Button
@@ -194,8 +199,18 @@ export default function Venue() {
 						</table>
 					</div>
 					<div className="my-3">
-						<h4 className="text-xl font-bold">Address</h4>
+						<h4 className="text-xl font-bold">Information</h4>
 						<h6 className="text-lg my-1">{venues.address}</h6>
+					</div>
+					<div className="my-3">
+						<h4 className="text-xl font-bold">Category</h4>
+						<div className="w-1/2 my-2">
+							<IconCard
+								id={category.id}
+								icon={category.icon_name}
+								name={category.name}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
