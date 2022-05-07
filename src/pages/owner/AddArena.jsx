@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Buttons";
-import { errorMessage, fillAll } from "../../functions/Alert";
+import {
+	errorMessage,
+	fillAll,
+	MuiError,
+	successMessage,
+} from "../../functions/Alert";
 import {
 	InputText,
 	TextArea,
@@ -11,10 +16,12 @@ import {
 import { LayoutOwner } from "../../components/Layout";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { statusLogin } from "../../services/Users";
+import { statusLogin, API } from "../../services/Users";
 
 export default function CreateArena() {
-	// const [venueId, setVenueId] = useState(0);
+	const existedVenue = localStorage.getItem("venue_id");
+	// eslint-disable-next-line no-unused-vars
+	const [venueId, setVenueId] = useState(existedVenue);
 	const [venueName, setVenueName] = useState("");
 	const [details, setDetails] = useState("");
 	const [address, setAddress] = useState("");
@@ -23,9 +30,43 @@ export default function CreateArena() {
 	const [image, setImage] = useState("");
 	const [imagePreview, setImagePreview] = useState(null);
 	const navigate = useNavigate();
-	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 	const token = statusLogin();
-	document.title = "Create Arena";
+
+	useEffect(() => {
+		getVenue();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	const getVenue = async () => {
+		await axios
+			.get(`${API}/venues/${venueId}`)
+			.then((res) => {
+				setVenueName(res.data.data.name);
+				setDetails(res.data.data.description);
+				setAddress(res.data.data.address);
+				setCity(res.data.data.city);
+				setCategory(res.data.data.category.id);
+				setImage(res.data.data.image);
+				setImagePreview(res.data.data.image);
+				document.title = res.data.data.name
+					? `Edit | ${res.data.data.name}`
+					: "Create Arena";
+			})
+			.catch((err) => {
+				MuiError(err);
+			});
+	};
+
+	function createVenue() {
+		const formData = new FormData();
+		formData.append("venue_name", venueName);
+		formData.append("detail", details);
+		formData.append("address", address);
+		formData.append("city", city);
+		formData.append("category_id", category);
+		formData.append("venue_photo", image);
+		return formData;
+	}
 
 	const changeImageButton = (e) => {
 		e.preventDefault();
@@ -37,13 +78,7 @@ export default function CreateArena() {
 	const nextButton = (e) => {
 		e.preventDefault();
 		if (venueName && address && city && category && image) {
-			const formData = new FormData();
-			formData.append("venue_name", venueName);
-			formData.append("detail", details);
-			formData.append("address", address);
-			formData.append("city", city);
-			formData.append("category_id", category);
-			formData.append("venue_photo", image);
+			const formData = createVenue();
 			Swal.fire({
 				title: "Are you sure?",
 				text: "Please make sure all the information is correct",
@@ -64,10 +99,42 @@ export default function CreateArena() {
 							},
 						})
 						.then((res) => {
-							if (res.status === 200) {
-								console.log(res);
-								// setVenueId(res.data.data.venue_id);
-							}
+							successMessage(res);
+						})
+						.catch((err) => {
+							errorMessage(err);
+						});
+				}
+			});
+		} else {
+			fillAll();
+		}
+	};
+
+	const updateButton = (e) => {
+		e.preventDefault();
+		if (venueName && address && city && category && image) {
+			const formData = createVenue();
+			Swal.fire({
+				title: "Are you sure?",
+				text: "Please make sure all the information is correct",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes",
+				cancelButtonText: "No",
+			}).then((result) => {
+				if (result.value) {
+					axios
+						.put(`${API}/venues/step1/${venueId}`, formData, {
+							headers: {
+								"Content-Type": "multipart/form-data",
+								Authorization: `Bearer ${token}`,
+							},
+						})
+						.then((res) => {
+							successMessage(res);
 						})
 						.catch((err) => {
 							errorMessage(err);
@@ -137,15 +204,17 @@ export default function CreateArena() {
 						</h6>
 						<div className="">
 							<RadioCategory
-								value={category}
+								value={category ? category : parseInt(category)}
 								setValue={setCategory}
 							/>
 						</div>
 					</div>
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
-							Upload Image (
-							<strong className="text-amber-500">*</strong>)
+							Upload Image
+							{existedVenue === null && (
+								<strong className="text-amber-500">*</strong>
+							)}
 						</h6>
 						<div className="border-2 rounded-md">
 							<img
@@ -168,15 +237,29 @@ export default function CreateArena() {
 						(<strong className="text-amber-500">*</strong>) Please
 						make sure you fill all the required fields correctly.
 					</p>
-					<div className="w-full flex justify-center md:justify-end my-2 lg:mx-10">
-						<Button
-							className="w-full md:w-28 md:px-10"
-							onClick={(e) => nextButton(e)}
-							variant="solid"
-							type="submit"
-							id="button-next">
-							Next
-						</Button>
+					<div className="w-full flex justify-center md:justify-end my-2 lg:mx-10 flex-col lg:flex-row">
+						{existedVenue !== null && (
+							<Button
+								className="w-full md:w-28 my-2"
+								onClick={(e) => {
+									updateButton(e);
+								}}
+								variant="warning"
+								type="submit"
+								id="button-next">
+								Update
+							</Button>
+						)}
+						{existedVenue === null && (
+							<Button
+								className="w-full md:w-28 my-2"
+								onClick={(e) => nextButton(e)}
+								variant="solid"
+								type="submit"
+								id="button-next">
+								Next
+							</Button>
+						)}
 					</div>
 				</div>
 			</form>
