@@ -4,7 +4,7 @@ import {
 	AddFacilities,
 	CheckDay,
 	InputText,
-	PickTime,
+	TimeSelector,
 } from "../../components/InputText";
 import { LayoutOwner } from "../../components/Layout";
 import Button from "../../components/Buttons";
@@ -24,8 +24,8 @@ export default function AddServices() {
 	const existedVenue = localStorage.getItem("venue_id");
 	const [venueId, setVenueId] = useState(existedVenue);
 	const [days, setDays] = useState([]);
-	const [open, setOpen] = useState(new Date());
-	const [close, setClose] = useState(new Date());
+	const [open, setOpen] = useState("");
+	const [close, setClose] = useState("");
 	const [price, setPrice] = useState(0);
 	const [facilities, setFacilities] = useState([]);
 	// venue id ?
@@ -45,7 +45,8 @@ export default function AddServices() {
 				);
 				setPrice(res.data.data.operational_hours[0].price);
 				setFacilities(res.data.data.facility.map((item) => item.id));
-				console.log(res.data.data);
+				setOpen(res.data.data.operational_hours[0].open_hour);
+				setClose(res.data.data.operational_hours[0].close_hour);
 				document.title = res.data.data.name
 					? `Edit | ${res.data.data.name}`
 					: "Create Arena";
@@ -108,13 +109,16 @@ export default function AddServices() {
 								<h6 className="basis-3/4 capitalize my-auto md:px-5">
 									Open:
 								</h6>
-								<PickTime value={open} setValue={setOpen} />
+								<TimeSelector value={open} setValue={setOpen} />
 							</div>
 							<div className="basis-1/2 md:border-2 md:ml-2 md:rounded-md flex justify-between">
 								<h6 className="basis-3/4 capitalize my-auto md:px-5">
 									Closes:
 								</h6>
-								<PickTime value={close} setValue={setClose} />
+								<TimeSelector
+									value={close}
+									setValue={setClose}
+								/>
 							</div>
 						</div>
 						<div className="lg:w-1/2 w-full flex flex-row md:border-y-2 md:border-l-2 md:rounded-l-md md:mr-2 md:pr-2 my-3">
