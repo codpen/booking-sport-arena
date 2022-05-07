@@ -44,6 +44,7 @@ export default function AddServices() {
 					res.data.data.operational_hours.map((item) => item.day)
 				);
 				setPrice(res.data.data.operational_hours[0].price);
+				setFacilities(res.data.data.facility.map((item) => item.id));
 				console.log(res.data.data);
 				document.title = res.data.data.name
 					? `Edit | ${res.data.data.name}`
