@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { errorMessage } from "../functions/Alert";
+import { MuiError } from "../functions/Alert";
 
 export const API = `https://haudhi.site`;
 export function statusLogin() {
@@ -29,7 +29,7 @@ export const fetchUser = async (props) => {
 			props.setRole(profile.role);
 		})
 		.catch((err) => {
-			errorMessage(err);
+			MuiError(err);
 		});
 };
 
