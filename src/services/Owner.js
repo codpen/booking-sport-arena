@@ -1,4 +1,6 @@
 import axios from "axios";
+import { errorMessage, successMessage } from "../functions/Alert";
+import { statusLogin } from "./Users";
 
 export const fetchBookingData = async (setBookingData) => {
 	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
@@ -9,5 +11,22 @@ export const fetchBookingData = async (setBookingData) => {
 		})
 		.catch((err) => {
 			console.log(err);
+		});
+};
+
+export const deleteVenue = async ({ venue_id }) => {
+	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
+	const token = statusLogin();
+	axios
+		.delete(`${API}/venues/${venue_id}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		})
+		.then((res) => {
+			successMessage(res);
+		})
+		.catch((err) => {
+			errorMessage(err);
 		});
 };

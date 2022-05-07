@@ -1,13 +1,10 @@
 import axios from 'axios';
 import { errorMessage } from "../functions/Alert";
-// v2
-const API =
-	// 'https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0/users';
-	`https://haudhi.site`;
 
+export const API = `https://haudhi.site`;
 export function statusLogin() {
 	const getToken = localStorage.getItem("user-info");
-	const parsedToken = JSON.parse(getToken);
+	const parsedToken = getToken ? JSON.parse(getToken) : "";
 	const token = parsedToken.token;
 	return token;
 }
@@ -35,3 +32,10 @@ export const fetchUser = async (props) => {
 			errorMessage(err);
 		});
 };
+
+export function statusRole() {
+	const getRole = localStorage.getItem("user-info");
+	const parsedRole = getRole ? JSON.parse(getRole) : "";
+	const role = parsedRole ? parsedRole.role : "";
+	return role;
+}
