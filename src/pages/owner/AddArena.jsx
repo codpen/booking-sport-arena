@@ -100,6 +100,7 @@ export default function CreateArena() {
 						})
 						.then((res) => {
 							successMessage(res);
+							navigate("/owner/services");
 						})
 						.catch((err) => {
 							errorMessage(err);
@@ -113,8 +114,13 @@ export default function CreateArena() {
 
 	const updateButton = (e) => {
 		e.preventDefault();
-		if (venueName && address && city && category && image) {
-			const formData = createVenue();
+		if (venueName && address && city) {
+			const arenaUpdate = {
+				venue_name: venueName,
+				detail: details,
+				address: address,
+				city: city,
+			};
 			Swal.fire({
 				title: "Are you sure?",
 				text: "Please make sure all the information is correct",
@@ -127,14 +133,15 @@ export default function CreateArena() {
 			}).then((result) => {
 				if (result.value) {
 					axios
-						.put(`${API}/venues/step1/${venueId}`, formData, {
+						.put(`${API}/venues/step1/${venueId}`, arenaUpdate, {
 							headers: {
-								"Content-Type": "multipart/form-data",
+								"Content-Type": "application/json",
 								Authorization: `Bearer ${token}`,
 							},
 						})
 						.then((res) => {
 							successMessage(res);
+							navigate(`/owner/edit/${venueId}/services`);
 						})
 						.catch((err) => {
 							errorMessage(err);
@@ -197,18 +204,22 @@ export default function CreateArena() {
 							/>
 						</div>
 					</div>
-					<div className="mb-5 w-full px-3 lg:px-10">
-						<h6 className="font-bold my-3">
-							Category (
-							<strong className="text-amber-500">*</strong>)
-						</h6>
-						<div className="">
-							<RadioCategory
-								value={category ? category : parseInt(category)}
-								setValue={setCategory}
-							/>
+					{existedVenue === null ? (
+						<div className="mb-5 w-full px-3 lg:px-10">
+							<h6 className="font-bold my-3">
+								Category (
+								<strong className="text-amber-500">*</strong>)
+							</h6>
+							<div className="">
+								<RadioCategory
+									value={
+										category ? category : parseInt(category)
+									}
+									setValue={setCategory}
+								/>
+							</div>
 						</div>
-					</div>
+					) : null}
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Upload Image
