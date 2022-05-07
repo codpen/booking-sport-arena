@@ -4,7 +4,7 @@ import { errorMessage } from "../functions/Alert";
 export const API = `https://haudhi.site`;
 export function statusLogin() {
 	const getToken = localStorage.getItem("user-info");
-	const parsedToken = JSON.parse(getToken);
+	const parsedToken = getToken ? JSON.parse(getToken) : "";
 	const token = parsedToken.token;
 	return token;
 }
@@ -35,7 +35,7 @@ export const fetchUser = async (props) => {
 
 export function statusRole() {
 	const getRole = localStorage.getItem("user-info");
-	const parsedRole = getRole ? JSON.parse(getRole).role : "";
+	const parsedRole = getRole ? JSON.parse(getRole) : "";
 	const role = parsedRole ? parsedRole.role : "";
 	return role;
 }

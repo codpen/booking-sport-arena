@@ -66,32 +66,39 @@ export default function Venue() {
 
 	const bookNow = async (e) => {
 		e.preventDefault();
-		const token = statusLogin();
-		const startTime = moment(selectedTime, "HH:mm").clone();
-		const endTime = moment(selectedTime, "HH:mm").clone().add(1, "hours");
-		const booking = {
-			venue_id: venues.id,
-			price: price,
-			status: "pending",
-			start_date: startTime,
-			end_date: endTime,
-		};
-		await axios
-			.post(`${API}/booking`, booking, {
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-			})
-			.then((res) => {
-				successMessage(res);
-				// nunggu response res.link (or anyhing else)
-				// window.location.href = res.data.data.link;
-				navigate("/");
-			})
-			.catch((err) => {
-				errorMessage(err);
-			});
+		if (localStorage.getItem("user-info")) {
+			const token = statusLogin();
+			const startTime = moment(selectedTime, "HH:mm").clone();
+			const endTime = moment(selectedTime, "HH:mm")
+				.clone()
+				.add(1, "hours");
+			const booking = {
+				venue_id: venues.id,
+				price: price,
+				status: "pending",
+				start_date: startTime,
+				end_date: endTime,
+			};
+			await axios
+				.post(`${API}/booking`, booking, {
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				})
+				.then((res) => {
+					successMessage(res);
+					// nunggu response res.link (or anyhing else)
+					// window.location.href = res.data.data.link;
+					navigate("/");
+				})
+				.catch((err) => {
+					errorMessage(err);
+				});
+		} else {
+			Swal.fire({ title: "Login", text: "Please login first" });
+			navigate("/login");
+		}
 	};
 
 	const handleDelete = async (e) => {
