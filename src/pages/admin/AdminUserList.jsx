@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import swal from "sweetalert";
-import AccordionRequestOwner from "../../components/AccordionRequestOwner";
+import AccordionUserList from "../../components/AccordionUserList";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { getRequestOwner } from "../../services/AdminOwnerRequest";
+import { getUserList } from "../../services/AdminUserList";
 
-export default function AdminOwnerRequest() {
-  const [requestOwner, setRequestOwner] = useState([]);
+export default function AdminUserList() {
+  const [userList, setUserList] = useState([]);
+  console.log(userList);
 
   useEffect(() => {
     if (localStorage.getItem("user-info")) {
       const json = JSON.parse(localStorage.getItem("user-info"));
-      fetchDataRequestOwner(json.token);
+      fetchDataUserList(json.token);
     } else {
       Navigate("/login");
     }
-    fetchDataRequestOwner();
+    fetchDataUserList();
   }, []);
 
-  const fetchDataRequestOwner = async (token) => {
-    const response = await getRequestOwner(token);
+  const fetchDataUserList = async (token) => {
+    const response = await getUserList(token);
     if (response.code === 200) {
-      setRequestOwner(response.data);
+      setUserList(response.data);
       swal("Success", "Data has been fetched", "success");
     } else {
-      if (response.message === "missing or malformed jwt") {
+      if (response.message === "missing or malformed jwtt") {
         Navigate("/login");
       } else {
         swal("Error", response.message, "error");
@@ -32,18 +33,16 @@ export default function AdminOwnerRequest() {
     }
   };
 
-  const populatingRequestOwner = () => {
-    if (requestOwner.length > 0) {
-      return requestOwner.map((data, index) => {
+  const populatingUserList = () => {
+    if (userList.length > 0) {
+      return userList.map((data, index) => {
         return (
-          <AccordionRequestOwner
+          <AccordionUserList
             id={index}
             fullname={data.fullname}
             username={data.username}
             email={data.email}
             phone={data.phone_number}
-            status={data.status}
-            certificate={data.business_certificate}
           />
         );
       });
@@ -55,16 +54,15 @@ export default function AdminOwnerRequest() {
       <Sidebar />
       {/* <Accordion /> */}
       <div className="w-full border-2 rounded-lg mb-10 mx-8 mt-20 py-3">
-        <p className="text-lg font-semibold pt-2 pb-6 ml-7"> owner Request</p>
+        <p className="text-lg font-semibold pt-2 pb-6 ml-7"> User List</p>
         <div className="flex text-slate-500 mb-3 ">
-          <p className="pl-10 basis-2/5">User</p>
-          <p className="basis-1/5">Contact</p>
-          <p className="basis-1/5">Date</p>
-          <p className="basis-1/5">Status</p>
+          <p className="pl-10 basis-6/12">User</p>
+          <p className="basis-3/12">Contact</p>
+          <p className="basis-3/12"></p>
         </div>
         <div className="w-full bg-slate-100 h-0.5 mx-4 mb-3" />
         {/* <TableDropdown /> */}
-        {populatingRequestOwner()}
+        {populatingUserList}
       </div>
     </div>
   );
