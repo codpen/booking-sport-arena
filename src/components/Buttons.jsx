@@ -1,27 +1,15 @@
 import React from "react";
 
-export default function Button({
-
-	className,
-	variant,
-	children,
-	onClick,
-	type,
-	id,
-}) {
+export default function Button(props) {
+	const { className, variant, children, onClick, type, id } = props;
 	const addClassName = className ? `${className}` : "";
-
 	const variants = {
 		solid: "bg-teal-500 text-white",
 		outline: "border-teal-500 text-teal-500 border",
 		warning: " bg-amber-500 text-white",
 		danger: "bg-red-500 text-white",
 	};
-
-
-  const pickedVariant = variants[variant];
-
-
+	const pickedVariant = variants[variant];
 	return (
 		<button
 			id={id}
@@ -31,5 +19,4 @@ export default function Button({
 			{children}
 		</button>
 	);
-
 }

@@ -59,6 +59,25 @@ export function IconCard(item) {
 	);
 }
 
+export function CategoryCard(item) {
+	return (
+		<>
+			<div key={item.id} className="">
+				<button
+					onClick={() => {
+						console.log(item.id);
+						// tinggal ubah ini jadi function untuk filter category
+					}}
+					id={`category-${item.id}`}
+					className="rounded-3xl border-2 bg-white shadow-md outline-gray-500 text-center w-full py-2">
+					<i className={`text-4xl p-2 ${item.icon}`} />
+					<h5 className="font-bold uppercase">{item.name}</h5>
+				</button>
+			</div>
+		</>
+	);
+}
+
 export function WideCard(item) {
 	moment.locale("en");
 	return (
