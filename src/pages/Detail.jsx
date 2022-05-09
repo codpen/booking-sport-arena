@@ -153,13 +153,13 @@ export default function Venue() {
 					<div className="h-full grid gap-4 content-center"></div>
 				</div>
 			</div>
-			<div className="w-full capitalize border-b-2 my-5 justify-between flex">
-				<div className="text-left lg:basis-3/4">
+			<div className="w-full capitalize md:border-b-2 my-5 md:justify-between flex flex-col md:flex-row">
+				<div className="md:text-left text-center lg:basis-3/4">
 					<h3 className="text-3xl font-semibold">{venues.name}</h3>
 					<h4 className="text-lg text-teal-500">{venues.city}</h4>
 				</div>
 				{role === "owner" && (
-					<div className="text-right flex flex-row lg:basis-1/4 my-auto justify-between gap-4">
+					<div className="text-right border-y-2 py-3 md:border-none flex flex-row lg:basis-1/4 my-3 md:my-auto justify-between gap-4">
 						<Button
 							type="button"
 							variant="warning"
