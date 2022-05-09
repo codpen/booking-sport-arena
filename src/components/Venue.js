@@ -36,9 +36,9 @@ export const Venues = ({ venues, loading }) => {
 										{venue.name}
 									</h3>
 									<h6 className="">{venue.location}</h6>
-									{/* <h2 className="text-amber-500 text-xl font-semibold">
+									<h2 className="text-amber-500 text-xl font-semibold">
 										Rp. {venue.price.toLocaleString()}
-									</h2> */}
+									</h2>
 								</div>
 							</div>
 						</div>
