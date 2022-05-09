@@ -17,7 +17,6 @@ import Typography from "@mui/material/Typography";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import HistoryIcon from "@mui/icons-material/History";
 import StadiumIcon from "@mui/icons-material/Stadium";
-import AddBoxIcon from "@mui/icons-material/AddBox";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { teal, grey } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
@@ -40,6 +39,7 @@ export function ResponsiveDrawer(props) {
 					variant="h5"
 					className="uppercase font-bold hidden md:block text-center"
 					noWrap
+					id="homepage-logo"
 					onClick={() => navigate("/")}
 					component="button">
 					Hobiku
@@ -51,6 +51,7 @@ export function ResponsiveDrawer(props) {
 				<ListItem
 					button
 					key="Dashboard"
+					id="dashboard-link"
 					onClick={() => {
 						navigate("/owner");
 					}}>
@@ -61,16 +62,17 @@ export function ResponsiveDrawer(props) {
 				</ListItem>
 				<ListItem
 					button
-					key="Create Arena"
+					key="Arena"
+					id="arena-section"
 					onClick={() => {
 						navigate("/owner/create");
 					}}>
 					<ListItemIcon>
-						<AddBoxIcon />
+						<StadiumIcon />
 					</ListItemIcon>
-					<ListItemText primary="Create Arena" />
+					<ListItemText primary="Arena" />
 				</ListItem>
-				<ListItem
+				{/* <ListItem
 					button
 					key="Arena 1"
 					onClick={() => {
@@ -80,10 +82,11 @@ export function ResponsiveDrawer(props) {
 						<StadiumIcon />
 					</ListItemIcon>
 					<ListItemText primary="Arena 1" />
-				</ListItem>
+				</ListItem> */}
 				<ListItem
 					button
 					key="Transaction"
+					id="history-transaction-link"
 					onClick={() => {
 						navigate("/owner/transaction");
 					}}>
@@ -98,6 +101,7 @@ export function ResponsiveDrawer(props) {
 				<ListItem
 					button
 					key="Logout"
+					id="logout"
 					onClick={() => {
 						localStorage.removeItem("user-info");
 						navigate("/");
@@ -115,7 +119,6 @@ export function ResponsiveDrawer(props) {
 
 	return (
 		<Box sx={{ display: "flex" }}>
-			{/* body area */}
 			<CssBaseline />
 			<AppBar
 				position="fixed"
@@ -138,6 +141,7 @@ export function ResponsiveDrawer(props) {
 						variant="h5"
 						className="uppercase font-bold md:hidden block"
 						noWrap
+						id="homepage-title"
 						onClick={() => navigate("/")}
 						component="button">
 						Hobiku
