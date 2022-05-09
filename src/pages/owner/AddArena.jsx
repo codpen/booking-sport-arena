@@ -19,9 +19,11 @@ import Swal from "sweetalert2";
 import { statusLogin, API } from "../../services/Users";
 
 export default function CreateArena() {
-	const existedVenue = localStorage.getItem("venue_id");
-	// eslint-disable-next-line no-unused-vars
-	const [venueId, setVenueId] = useState(existedVenue ? existedVenue : 0);
+	const existedVenue = localStorage.getItem("venue_id") ? true : false;
+	const url = document.location.href;
+	const [venueId, setVenueId] = useState(
+		existedVenue ? localStorage.getItem("venue_id") : ""
+	);
 	const [venueName, setVenueName] = useState("");
 	const [details, setDetails] = useState("");
 	const [address, setAddress] = useState("");
@@ -31,9 +33,10 @@ export default function CreateArena() {
 	const [imagePreview, setImagePreview] = useState(null);
 	const navigate = useNavigate();
 	const token = statusLogin();
+	document.title = `Hobiku | Create Arena`;
 
 	useEffect(() => {
-		getVenue();
+		url === `${window.location.origin}/owner/edit/${venueId}` && getVenue();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -48,9 +51,10 @@ export default function CreateArena() {
 				setCategory(res.data.data.category.id);
 				setImage(res.data.data.image);
 				setImagePreview(res.data.data.image);
-				document.title = res.data.data.name
-					? `Edit | ${res.data.data.name}`
-					: "Create Arena";
+				document.title =
+					url === `${window.location.origin}/owner/edit/${venueId}`
+						? `Edit | ${res.data.data.name}`
+						: "Hobiku | Create Arena";
 			})
 			.catch((err) => {
 				MuiError(err);
@@ -59,12 +63,12 @@ export default function CreateArena() {
 
 	function createVenue() {
 		const formData = new FormData();
-		formData.append("venue_name", venueName);
-		formData.append("detail", details);
+		formData.append("name", venueName);
+		formData.append("description", details);
 		formData.append("address", address);
 		formData.append("city", city);
 		formData.append("category_id", category);
-		formData.append("venue_photo", image);
+		formData.append("image", image);
 		return formData;
 	}
 
@@ -100,6 +104,7 @@ export default function CreateArena() {
 						})
 						.then((res) => {
 							successMessage(res);
+							setVenueId(res.data.data.id);
 							navigate("/owner/services");
 						})
 						.catch((err) => {
@@ -116,8 +121,8 @@ export default function CreateArena() {
 		e.preventDefault();
 		if (venueName && address && city) {
 			const arenaUpdate = {
-				venue_name: venueName,
-				detail: details,
+				name: venueName,
+				description: details,
 				address: address,
 				city: city,
 			};
@@ -156,7 +161,7 @@ export default function CreateArena() {
 	const submitImage = (e) => {
 		e.preventDefault();
 		const formData = new FormData();
-		formData.append("venue_photo", image);
+		formData.append("image", image);
 		axios
 			.put(`${API}/venues/image/${venueId}`, formData, {
 				headers: {
@@ -178,8 +183,11 @@ export default function CreateArena() {
 				<div className="flex flex-wrap mx-3 mb-6">
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
-							Venue Name (
-							<strong className="text-amber-500">*</strong>)
+							Venue Name
+							{url !==
+								`${window.location.origin}/owner/edit/${venueId}` && (
+								<strong className="text-amber-500">*</strong>
+							)}
 						</h6>
 						<InputText
 							id="input-arena-name"
@@ -200,8 +208,11 @@ export default function CreateArena() {
 					</div>
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
-							Address (
-							<strong className="text-amber-500">*</strong>)
+							Address
+							{url !==
+								`${window.location.origin}/owner/edit/${venueId}` && (
+								<strong className="text-amber-500">*</strong>
+							)}
 						</h6>
 						<div className="flex md:flex-wrap flex-col gap-y-2 md:flex-row md:gap-0">
 							<InputText
@@ -223,7 +234,8 @@ export default function CreateArena() {
 							/>
 						</div>
 					</div>
-					{existedVenue === null ? (
+					{url !==
+					`${window.location.origin}/owner/edit/${venueId}` ? (
 						<div className="mb-5 w-full px-3 lg:px-10">
 							<h6 className="font-bold my-3">
 								Category (
@@ -242,7 +254,8 @@ export default function CreateArena() {
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Upload Image
-							{existedVenue === null && (
+							{url !==
+								`${window.location.origin}/owner/edit/${venueId}` && (
 								<strong className="text-amber-500">*</strong>
 							)}
 						</h6>
@@ -260,7 +273,9 @@ export default function CreateArena() {
 									accept="image/png, image/jpeg"
 									onChange={(e) => changeImageButton(e)}
 								/>
-								{existedVenue !== null && (
+								{/* {existedVenue !== null && ( */}
+								{url ===
+									`${window.location.origin}/owner/edit/${venueId}` && (
 									<Button
 										variant="solid"
 										id="change-arena-image-button"
@@ -272,12 +287,25 @@ export default function CreateArena() {
 							</div>
 						</div>
 					</div>
-					<p className="w-full px-3 lg:px-10">
-						(<strong className="text-amber-500">*</strong>) Please
-						make sure you fill all the required fields correctly.
-					</p>
+					{url !==
+						`${window.location.origin}/owner/edit/${venueId}` && (
+						<p className="w-full px-3 lg:px-10">
+							(<strong className="text-amber-500">*</strong>)
+							Please make sure you fill all the required fields
+							correctly.
+						</p>
+					)}
+					{url ===
+						`${window.location.origin}/owner/edit/${venueId}` && (
+						<p className="w-full px-3 lg:px-10">
+							(<strong className="text-teal-500">*</strong>) If
+							you change the image, please click the upload button
+							to upload the new image.
+						</p>
+					)}
 					<div className="w-full flex justify-center md:justify-end my-2 lg:mx-10 flex-col lg:flex-row">
-						{existedVenue !== null && (
+						{url ===
+							`${window.location.origin}/owner/edit/${venueId}` && (
 							<Button
 								className="w-full md:w-28 my-2"
 								onClick={(e) => {
@@ -289,7 +317,8 @@ export default function CreateArena() {
 								Update
 							</Button>
 						)}
-						{existedVenue === null && (
+						{url !==
+							`${window.location.origin}/owner/edit/${venueId}` && (
 							<Button
 								className="w-full md:w-28 my-2"
 								onClick={(e) => nextButton(e)}
