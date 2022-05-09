@@ -32,7 +32,6 @@ export default function Venue() {
 	const [skeleton] = useState([1, 2, 3, 4]);
 	const role = statusRole();
 	document.title = `Hobiku | ${venues.name}`;
-	// const [linkPayment, setLinkPayment] = useState("");
 	const [selectedDay, setSelectedDay] = useState({
 		day: moment().format("dddd"),
 		date: moment().format("LL"),
@@ -40,6 +39,9 @@ export default function Venue() {
 	const [selectedTime, setSelectedTime] = useState(
 		moment().startOf("day").format("LT")
 	);
+	const dayFormat = `${selectedDay.day}, ${moment(selectedDay.date).format(
+		"DD MMMM YYYY"
+	)}`;
 
 	useEffect(() => {
 		fetchVenues();
@@ -67,7 +69,7 @@ export default function Venue() {
 				);
 				setClose(
 					res.data.data.operational_hours !== undefined || []
-						? res.data.data.operational_hours[0].open_hour
+						? res.data.data.operational_hours[0].close_hour
 						: "No Data"
 				);
 				setCategory(res.data.data.category);
@@ -75,13 +77,12 @@ export default function Venue() {
 			})
 			.catch((err) => {
 				setLoading(false);
-				// errorMessage(err);
 				MuiError(err);
 			});
 	};
-
 	const bookNow = async (e) => {
 		e.preventDefault();
+		// const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 		if (localStorage.getItem("user-info")) {
 			const token = statusLogin();
 			const startTime = moment(selectedTime, "HH:mm").clone();
@@ -91,9 +92,9 @@ export default function Venue() {
 			const booking = {
 				venue_id: venues.id,
 				price: price,
-				status: "pending",
-				start_date: startTime,
-				end_date: endTime,
+				day: dayFormat,
+				start_date: moment(startTime).format("HH:mm"),
+				end_date: moment(endTime).format("HH:mm"),
 			};
 			await axios
 				.post(`${API}/booking`, booking, {
@@ -104,9 +105,7 @@ export default function Venue() {
 				})
 				.then((res) => {
 					successMessage(res);
-					// nunggu response res.link (or anyhing else)
-					// window.location.href = res.data.data.link;
-					navigate("/");
+					window.location.href = res.data.data.payment_url;
 				})
 				.catch((err) => {
 					errorMessage(err);
@@ -262,8 +261,8 @@ export default function Venue() {
 						<TimeSlots
 							selectedTime={selectedTime}
 							setSelectedTime={setSelectedTime}
-							open_hour={open ? open : 8}
-							close_hour={close ? close : 23}
+							open_hour={open ? parseInt(open) : 8}
+							close_hour={close ? parseInt(close) : 23}
 						/>
 					</div>
 					{selectedDay && selectedTime && (
