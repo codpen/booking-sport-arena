@@ -11,7 +11,7 @@ import {
 	IconLoading,
 } from "../components/Card";
 import Layout from "../components/Layout";
-import { errorMessage, successMessage } from "../functions/Alert";
+import { errorMessage, successMessage, MuiError } from "../functions/Alert";
 import { statusLogin } from "../services/Users";
 import "../styles/App.css";
 import { API, statusRole } from "../services/Users";
@@ -31,6 +31,7 @@ export default function Venue() {
 	const [loading, setLoading] = useState(false);
 	const [skeleton] = useState([1, 2, 3, 4]);
 	const role = statusRole();
+	document.title = `Hobiku | ${venues.name}`;
 	// const [linkPayment, setLinkPayment] = useState("");
 	const [selectedDay, setSelectedDay] = useState({
 		day: moment().format("dddd"),
@@ -54,15 +55,28 @@ export default function Venue() {
 				setVenues(res.data.data);
 				setOperational(res.data.data.operational_hours);
 				setFacilities(res.data.data.facility);
-				setPrice(res.data.data.operational_hours[0].price);
-				setOpen(res.data.data.operational_hours[0].open_hour);
-				setClose(res.data.data.operational_hours[0].close_hour);
+				setPrice(
+					res.data.data.operational_hours !== undefined || []
+						? res.data.data.operational_hours[0].price
+						: 0
+				);
+				setOpen(
+					res.data.data.operational_hours !== undefined || []
+						? res.data.data.operational_hours[0].open_hour
+						: "No Data"
+				);
+				setClose(
+					res.data.data.operational_hours !== undefined || []
+						? res.data.data.operational_hours[0].open_hour
+						: "No Data"
+				);
 				setCategory(res.data.data.category);
 				document.title = `Hobiku | ${res.data.data.name}`;
 			})
 			.catch((err) => {
 				setLoading(false);
-				errorMessage(err);
+				// errorMessage(err);
+				MuiError(err);
 			});
 	};
 
@@ -122,6 +136,7 @@ export default function Venue() {
 		}).then((result) => {
 			if (result.value) {
 				deleteVenue(venues.id);
+				localStorage.removeItem("venue_id");
 				navigate("/");
 			} else if (result.dismiss === Swal.DismissReason.cancel) {
 				Swal.fire("Cancelled", "Your venue is safe :)", "error");

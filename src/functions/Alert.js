@@ -1,5 +1,6 @@
 import * as React from "react";
 import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 import Swal from "sweetalert2";
 
 // Alert Related to of Axios
@@ -114,5 +115,10 @@ export function minimumFacility() {
 }
 
 export function MuiError(err) {
-	return <Alert severity="error">{err.message}</Alert>;
+	console.log(err);
+	return (
+		<Stack sx={{ width: "100%" }}>
+			<Alert severity="error">{err.message}</Alert>;
+		</Stack>
+	);
 }
