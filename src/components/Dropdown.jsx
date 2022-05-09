@@ -4,6 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 import user from "../assets/user.png";
 import { useNavigate } from "react-router-dom";
 import { statusLogin } from "../services/Users";
+import swal from "sweetalert";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
@@ -85,6 +86,11 @@ export default function UserDropdown() {
 													"user-info"
 												);
 												navigate("/");
+												swal(
+													"Logout",
+													"Success",
+													"success"
+												);
 											}}>
 											Sign out
 										</button>
