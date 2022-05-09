@@ -5,7 +5,7 @@ import { errorMessage, fillAll, successMessage } from "../../functions/Alert";
 import Button from "../../components/Buttons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { statusLogin } from "../../services/Users";
+import { statusLogin, API } from "../../services/Users";
 
 export default function Verification() {
 	const [business, setBusiness] = useState("");
@@ -14,23 +14,14 @@ export default function Verification() {
 	const navigate = useNavigate();
 	document.title = "Become Owner";
 	const token = statusLogin();
-	const API =
-		// `https://haudhi.site`;
-		`https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (
-			business &&
-			certificate &&
-			business.length > 0 &&
-			certificate.length > 0
-		) {
+		if (business && certificate && business.length > 0) {
 			const formData = new FormData();
 			formData.append("business_name", business);
 			formData.append("business_description", description);
 			formData.append("business_certificate", certificate);
-
 			axios
 				.put(`${API}/owners/request`, formData, {
 					headers: {
@@ -71,7 +62,7 @@ export default function Verification() {
 								<InputText
 									id="input-business-name"
 									type="text"
-									placeholder="Business Name"
+									placeholder="What is your business name?"
 									value={business}
 									onChange={(e) =>
 										setBusiness(e.target.value)
@@ -82,7 +73,7 @@ export default function Verification() {
 								<h6>Business Description</h6>
 								<TextArea
 									id="input-business-description"
-									placeholder="Add a Description for your Business"
+									placeholder="At least give a description of your business"
 									value={description}
 									onChange={(e) =>
 										setDescription(e.target.value)
@@ -105,9 +96,9 @@ export default function Verification() {
 								</h6>
 								<InputFile
 									id="input-business-certificate"
-									accept="/.pdf"
+									accept="application/pdf"
 									className="border-2"
-									value={certificate}
+									// value={certificate ? certificate : ""}
 									onChange={(e) =>
 										setCertificate(e.target.files[0])
 									}
@@ -118,8 +109,8 @@ export default function Verification() {
 							</div>
 							<p>
 								(<strong className="text-amber-500">*</strong>)
-								Please make sure you have filled all the
-								required fields.
+								Please make sure you have filled correctly all
+								the required fields.
 							</p>
 
 							<div className="my-2">
