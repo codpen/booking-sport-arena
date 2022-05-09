@@ -49,7 +49,7 @@ export function TextArea(props) {
 }
 
 export function InputFile(props) {
-	const { accept, onChange, value, className, id } = props;
+	const { accept, onChange, className, id } = props;
 	const addClassName = className ? `${className}` : "";
 	return (
 		<input
@@ -57,7 +57,6 @@ export function InputFile(props) {
 			accept={accept}
 			className={`bg-white appearance-none border-gray-200 rounded w-full py-2 px-4 text-teal-500 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 justify-center file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-teal-500 hover:file:bg-violet-100 ${addClassName}`}
 			id={id}
-			value={value}
 			onChange={onChange}
 		/>
 	);
