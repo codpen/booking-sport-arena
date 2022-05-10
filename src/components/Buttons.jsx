@@ -1,5 +1,6 @@
 import React from "react";
 
+
 export default function Button(props) {
 	const { className, variant, children, onClick, type, id } = props;
 	const addClassName = className ? `${className}` : "";
@@ -19,4 +20,32 @@ export default function Button(props) {
 			{children}
 		</button>
 	);
+
+export function MiniButton({
+  className,
+  variant,
+  children,
+  onClick,
+  id,
+  type,
+}) {
+  const addClassName = className ? `${className}` : "";
+  const variants = {
+    approve: "bg-emerald-600 hover:bg-emerald-800",
+    reject: "bg-red-600 hover:bg-red-700",
+    pending: "bg-yellow-400 ",
+  };
+  const pickedVariant = variants[variant];
+
+  return (
+    <button
+      id={id}
+      className={`w-28 px-6 py-1 rounded-full mr-5 text-white  ${pickedVariant} ${addClassName}`}
+      onClick={onClick}
+      type={type}
+    >
+      {children}
+    </button>
+  );
+
 }

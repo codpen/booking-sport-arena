@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { SolidButton } from "../components/Buttons";
 import { InputText } from "../components/InputText";
-import Button from "../components/Buttons";
+import { Button } from "../components/Buttons";
 import Navbar from "../components/Navbar";
 import { loginService } from "../services/Auth";
 import swal from "sweetalert";

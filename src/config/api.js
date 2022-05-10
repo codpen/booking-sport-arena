@@ -23,9 +23,9 @@ export async function post(url, params, headers, body) {
   return axiosResponse;
 }
 
-export async function put(url, params, headers) {
+export async function put(url, params, headers, body) {
   const axiosResponse = await axios
-    .put(url, {
+    .put(url, body, {
       params,
       headers,
     })
