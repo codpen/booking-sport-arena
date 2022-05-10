@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
+import { approveOwnerRequest } from "../services/AdminOwnerRequest";
 import { miniButton } from "./Buttons";
 
 import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
@@ -18,7 +19,9 @@ export default function AccordionRequestOwner(props) {
     setExpanded(isExpanded ? panel : false);
   };
 
-  async function approve() {}
+  async function approve() {
+    const response = await approveOwnerRequest(id);
+  }
 
   return (
     <div>
@@ -56,7 +59,7 @@ export default function AccordionRequestOwner(props) {
               </div>
 
               <div className="basis-1/5 text-center">
-                <miniButton id="pending" variant="pending">
+                <miniButton id="pending" variant="pending" xs>
                   {status}
                 </miniButton>
                 {/* <button className="w-28 bg-yellow-400 px-6 py-1 rounded-full mr-20 text-white block">
@@ -87,7 +90,12 @@ export default function AccordionRequestOwner(props) {
                   </div>
                 </div>
                 <div>
-                  <button className="w-28 bg-emerald-600 px-6 py-1 rounded-full mr-5 text-white">
+                  <button
+                    className="w-28 bg-emerald-600 px-6 py-1 rounded-full mr-5 text-white"
+                    onClick={() => {
+                      approve();
+                    }}
+                  >
                     approve
                   </button>
                   <button className="w-28 bg-red-600 px-6 py-1 rounded-full mr-10 text-white">
