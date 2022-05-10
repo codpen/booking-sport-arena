@@ -1,5 +1,6 @@
 import * as React from "react";
 import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 import Swal from "sweetalert2";
 
 // Alert Related to of Axios
@@ -17,7 +18,7 @@ export function errorMessage(err) {
 	Swal.fire({
 		position: "center",
 		icon: "error",
-		title: err.response.data.message,
+		title: err.message,
 		showConfirmButton: false,
 		timer: 1500,
 	});
@@ -80,34 +81,6 @@ export function emptyInput() {
 	});
 }
 
-// export function verifyOwner(navigate) {
-// 	Swal.fire({
-// 		position: 'center',
-// 		icon: 'warning',
-//			title: 'Before you can become a venue owner, you must pass the verification process',
-// 		showCancelButton: true,
-// 		confirmButtonColor: '#3085d6',
-// 		cancelButtonColor: '#d33',
-// 		confirmButtonText: 'Yes',
-// 		cancelButtonText: 'No',
-// 	}).then((result) => {
-// 		if (result.value) {
-// 			navigate('/verify');
-// 		}
-// 	});
-// }
-
-// for swagger dummy
-export function errorMessageSwagger(err) {
-	Swal.fire({
-		position: "center",
-		icon: "error",
-		title: err.message,
-		showConfirmButton: false,
-		timer: 1500,
-	});
-}
-
 export function timeError() {
 	Swal.fire({
 		title: "Error",
@@ -142,5 +115,10 @@ export function minimumFacility() {
 }
 
 export function MuiError(err) {
-	return <Alert severity="error">{err.response.data.message}</Alert>;
+	console.log(err);
+	return (
+		<Stack sx={{ width: "100%" }}>
+			<Alert severity="error">{err.message}</Alert>;
+		</Stack>
+	);
 }

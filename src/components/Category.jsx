@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { IconCard, IconLoading } from "./Card";
+import { CategoryCard, IconLoading } from "./Card";
 import { API } from "../services/Users";
 
 export function ListCategory() {
@@ -35,7 +35,7 @@ export function ListCategory() {
 					? skeleton.map((item) => <IconLoading key={item} />)
 					: category.map((item) => (
 							<div key={item.id}>
-								<IconCard
+								<CategoryCard
 									id={item.id}
 									icon={item.icon_name}
 									name={item.name}

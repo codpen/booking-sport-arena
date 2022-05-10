@@ -20,6 +20,10 @@ export const Venues = ({ venues, loading }) => {
 							className="my-4 md:my-6 lg:my-6 bg-white shadow-md rounded-lg xl:my-6"
 							onClick={() => {
 								navigate(`/venues/${venue.id}`);
+								localStorage.setItem(
+									"venue_id",
+									JSON.stringify(venue.id)
+								);
 							}}>
 							<div className="rounded-2xl">
 								<img
@@ -36,9 +40,9 @@ export const Venues = ({ venues, loading }) => {
 										{venue.name}
 									</h3>
 									<h6 className="">{venue.location}</h6>
-									{/* <h2 className="text-amber-500 text-xl font-semibold">
+									<h2 className="text-amber-500 text-xl font-semibold">
 										Rp. {venue.price.toLocaleString()}
-									</h2> */}
+									</h2>
 								</div>
 							</div>
 						</div>

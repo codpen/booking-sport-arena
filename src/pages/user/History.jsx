@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { WideCard } from "../../components/Card";
 import Layout from "../../components/Layout";
 import { errorMessage } from "../../functions/Alert";
-
-const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
-
+import { API, statusLogin } from "../../services/Users";
+// const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 export default function BookingHistory() {
 	document.title = "Booking History";
 	const [histories, setHistories] = useState([]);
+	const [venue, setVenue] = useState([]);
 
 	useEffect(() => {
 		fetchBookingHistory();
@@ -16,9 +16,15 @@ export default function BookingHistory() {
 	}, []);
 
 	const fetchBookingHistory = async () => {
+		const token = statusLogin();
 		await axios
-			.get(`${API}/histories`)
+			.get(`${API}/histories`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
 			.then((res) => {
+				console.log(res.data.data);
 				setHistories(res.data.data);
 			})
 			.catch((err) => {
@@ -32,20 +38,17 @@ export default function BookingHistory() {
 				<h3 className="my-5 text-3xl font-semibold uppercase text-center lg:text-left">
 					Booking History
 				</h3>
-				<div className="">
+				<div className="grid grid-flow-row gap-5">
 					{histories.map((item) => (
 						<div key={item.id}>
 							<WideCard
-								name={item.venue.venue_name}
+								name={item.venue.name}
 								location={item.venue.location}
-								image={
-									item.venue.image
-										? "https://images.unsplash.com/photo-1505305976870-c0be1cd39939?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-										: item.venue.image
-								}
+								image={item.venue.image}
 								price={item.venue.price}
-								date={item.venue.date}
-								time={item.venue.hours}
+								date={item.venue.start_date}
+								start={item.venue.start_date}
+								end={item.venue.end_date}
 								status={item.venue.status}
 							/>
 						</div>

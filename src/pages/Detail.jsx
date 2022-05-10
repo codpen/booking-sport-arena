@@ -11,7 +11,7 @@ import {
 	IconLoading,
 } from "../components/Card";
 import Layout from "../components/Layout";
-import { errorMessage, successMessage } from "../functions/Alert";
+import { errorMessage, successMessage, MuiError } from "../functions/Alert";
 import { statusLogin } from "../services/Users";
 import "../styles/App.css";
 import { API, statusRole } from "../services/Users";
@@ -30,7 +30,7 @@ export default function Venue() {
 	const [loading, setLoading] = useState(false);
 	const [skeleton] = useState([1, 2, 3, 4]);
 	const role = statusRole();
-	// const [linkPayment, setLinkPayment] = useState("");
+	document.title = `Hobiku | ${venues.name}`;
 	const [selectedDay, setSelectedDay] = useState({
 		day: moment().format("dddd"),
 		date: moment().format("LL"),
@@ -38,6 +38,9 @@ export default function Venue() {
 	const [selectedTime, setSelectedTime] = useState(
 		moment().startOf("day").format("LT")
 	);
+	const dayFormat = `${selectedDay.day}, ${moment(selectedDay.date).format(
+		"DD MMMM YYYY"
+	)}`;
 
 	useEffect(() => {
 		fetchVenues();
@@ -60,12 +63,13 @@ export default function Venue() {
 			})
 			.catch((err) => {
 				setLoading(false);
-				errorMessage(err);
+				MuiError(err);
 			});
 	};
 
 	const bookNow = async (e) => {
 		e.preventDefault();
+		// const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 		if (localStorage.getItem("user-info")) {
 			const token = statusLogin();
 			const startTime = moment(selectedTime, "HH:mm").clone();
@@ -74,10 +78,10 @@ export default function Venue() {
 				.add(1, "hours");
 			const booking = {
 				venue_id: venues.id,
-				price: price,
-				status: "pending",
-				start_date: startTime,
-				end_date: endTime,
+				total_price: price,
+				day: dayFormat,
+				start_date: moment(startTime).format("HH:mm"),
+				end_date: moment(endTime).format("HH:mm"),
 			};
 			await axios
 				.post(`${API}/booking`, booking, {
@@ -88,9 +92,7 @@ export default function Venue() {
 				})
 				.then((res) => {
 					successMessage(res);
-					// nunggu response res.link (or anyhing else)
-					// window.location.href = res.data.data.link;
-					navigate("/");
+					window.location.href = res.data.data.payment_url;
 				})
 				.catch((err) => {
 					errorMessage(err);
@@ -100,8 +102,13 @@ export default function Venue() {
 			navigate("/login");
 		}
 	};
-
+	const handleEdit = async () => {
+		const venue_id = venues.id;
+		localStorage.setItem("venue_id", venue_id);
+		navigate(`/owner/edit/${venue_id}`);
+	};
 	const handleDelete = async (e) => {
+		const copyId = localStorage.getItem("venue_id");
 		e.preventDefault();
 		Swal.fire({
 			title: "Are you sure?",
@@ -114,7 +121,7 @@ export default function Venue() {
 			cancelButtonColor: "#d33",
 		}).then((result) => {
 			if (result.value) {
-				deleteVenue(venues.id);
+				deleteVenue(copyId);
 				navigate("/");
 			} else if (result.dismiss === Swal.DismissReason.cancel) {
 				Swal.fire("Cancelled", "Your venue is safe :)", "error");
@@ -132,20 +139,18 @@ export default function Venue() {
 					<div className="h-full grid gap-4 content-center"></div>
 				</div>
 			</div>
-			<div className="w-full capitalize border-b-2 my-5 justify-between flex">
-				<div className="text-left lg:basis-3/4">
+			<div className="w-full capitalize md:border-b-2 my-5 md:justify-between flex flex-col md:flex-row">
+				<div className="md:text-left text-center lg:basis-3/4">
 					<h3 className="text-3xl font-semibold">{venues.name}</h3>
 					<h4 className="text-lg text-teal-500">{venues.city}</h4>
 				</div>
 				{role === "owner" && (
-					<div className="text-right flex flex-row lg:basis-1/4 my-auto justify-between gap-4">
+					<div className="text-right border-y-2 py-3 md:border-none flex flex-row lg:basis-1/4 my-3 md:my-auto justify-between gap-4">
 						<Button
 							type="button"
 							variant="warning"
 							className="w-full"
-							onClick={() => {
-								navigate("/owner/create");
-							}}>
+							onClick={handleEdit}>
 							Edit
 						</Button>
 						<Button
@@ -193,9 +198,11 @@ export default function Venue() {
 							</tbody>
 						</table>
 					</div>
-					<div className="my-3">
-						<h4 className="text-xl font-bold">Address</h4>
-						<h6 className="text-lg my-1">{venues.address}</h6>
+					<div className="my-3 capitalize">
+						<h4 className="text-xl font-bold underline">
+							Information
+						</h4>
+						<h6 className="font-normal">{`Address: ${venues.address}`}</h6>
 					</div>
 				</div>
 			</div>
@@ -232,8 +239,8 @@ export default function Venue() {
 						<TimeSlots
 							selectedTime={selectedTime}
 							setSelectedTime={setSelectedTime}
-							open_hour={open ? open : 8}
-							close_hour={close ? close : 23}
+							open_hour={open ? parseInt(open) : 8}
+							close_hour={close ? parseInt(close) : 23}
 						/>
 					</div>
 					{selectedDay && selectedTime && (
