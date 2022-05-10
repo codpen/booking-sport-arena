@@ -6,6 +6,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 export default function AdminSetting() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const checkConfirmPassword = () => {
     if (
       password !== "" &&
