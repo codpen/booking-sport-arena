@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 // import { SolidButton } from "../components/Buttons";
 import { InputText } from "../components/InputText";
 import Navbar from "../components/Navbar";
 import illustration from "../assets/goal.png";
 import { useNavigate } from "react-router-dom";
 import { registerService } from "../services/Auth";
-import Button from "../components/Buttons";
+import { Button } from "../components/Buttons";
 import swal from "sweetalert";
 
 export default function Register() {
@@ -15,6 +15,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone_number, setPhone] = useState("");
+  const [statusValidate, setStatusValidate] = useState(false);
   const navigate = useNavigate();
   document.title = "Register";
 
@@ -22,13 +23,15 @@ export default function Register() {
     if (confirmPassword !== password) {
       return;
     }
-    let item = { fullname, username, email, phone_number, password };
-    const result = await registerService(item);
-    if (result.code === 200) {
-      swal(result.message, "", "success");
-      navigate("/login");
-    } else {
-      swal(result.message, "email aready used / check all form", "error");
+    if (statusValidate) {
+      let item = { fullname, username, email, phone_number, password };
+      const result = await registerService(item);
+      if (result.code === 200) {
+        swal(result.message, "", "success");
+        navigate("/login");
+      } else {
+        swal(result.message, "email aready used / check all form", "error");
+      }
     }
   }
 
@@ -40,6 +43,15 @@ export default function Register() {
     ) {
       return <span>Password Not Match</span>;
     }
+  };
+
+  const emailValidation = () => {
+    const regex =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (!email.length || !email || regex.test(email) === false) {
+      return <span>Email Not Match</span>;
+    }
+    setStatusValidate(true);
   };
 
   return (
@@ -91,6 +103,7 @@ export default function Register() {
                       className="invalid:text-red-500"
                       onChange={(e) => setEmail(e.target.value)}
                     />
+                    {emailValidation()}
                   </div>
                   <div>
                     <p className=" mb-2">phone number</p>
@@ -135,6 +148,7 @@ export default function Register() {
                 onClick={() => {
                   signUp();
                 }}
+                isDisabled={statusValidate ? false : true}
               >
                 register
               </Button>
