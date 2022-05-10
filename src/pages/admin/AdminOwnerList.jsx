@@ -47,6 +47,7 @@ export default function AdminOwnerList() {
       ));
     }
   };
+
   return (
     <div className="w-screen h-screen flex">
       <Sidebar />

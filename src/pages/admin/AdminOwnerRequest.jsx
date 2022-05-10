@@ -43,6 +43,7 @@ export default function AdminOwnerRequest() {
             phone={data.phone_number}
             status={data.status}
             certificate={data.business_certificate}
+            userId={data.ID}
           />
         );
       });
