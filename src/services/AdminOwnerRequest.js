@@ -19,8 +19,13 @@ export function approveOwnerRequest(token, body) {
   );
 }
 
-export function rejectOwnerRequest(token, id) {
-  return api.put(`${API}/verification/reject`, null, {
-    Authorization: `Bearer ${token}`,
-  });
+export function rejectOwnerRequest(token, body) {
+  return api.put(
+    `${API}/verification/reject`,
+    null,
+    {
+      Authorization: `Bearer ${token}`,
+    },
+    body
+  );
 }

@@ -5,7 +5,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
-import { approveOwnerRequest } from "../services/AdminOwnerRequest";
+import {
+  approveOwnerRequest,
+  rejectOwnerRequest,
+} from "../services/AdminOwnerRequest";
 import { MiniButton } from "./Buttons";
 
 import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
@@ -33,7 +36,13 @@ export default function AccordionRequestOwner(props) {
     const response = await approveOwnerRequest(token, body);
   }
 
-  async function reject() {}
+  async function reject() {
+    const body = {
+      ID: userId,
+      status: "reject",
+    };
+    const response = await rejectOwnerRequest(token, body);
+  }
 
   return (
     <div>
@@ -111,7 +120,13 @@ export default function AccordionRequestOwner(props) {
                   >
                     approve
                   </MiniButton>
-                  <MiniButton id="pending" variant="reject">
+                  <MiniButton
+                    id="pending"
+                    variant="reject"
+                    onClick={() => {
+                      reject();
+                    }}
+                  >
                     reject
                   </MiniButton>
                 </div>
