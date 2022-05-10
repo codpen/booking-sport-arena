@@ -89,24 +89,28 @@ export function RadioCategory({ value, setValue }) {
 			onChange={handleChange}>
 			<FormControlLabel
 				value={1}
+				id={1}
 				className="basis-2/12"
 				control={<Radio color="success" />}
 				label="Soccer"
 			/>
 			<FormControlLabel
 				value={2}
-				className="basis-2/12"
-				control={<Radio color="success" />}
-				label="Basketball"
-			/>
-			<FormControlLabel
-				value={3}
+				id={2}
 				className="basis-2/12"
 				control={<Radio color="success" />}
 				label="Tennis"
 			/>
 			<FormControlLabel
+				value={3}
+				id={3}
+				className="basis-2/12"
+				control={<Radio color="success" />}
+				label="Basketball"
+			/>
+			<FormControlLabel
 				value={4}
+				id={4}
 				className="basis-2/12"
 				control={<Radio color="success" />}
 				label="Volleyball"

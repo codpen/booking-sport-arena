@@ -38,7 +38,7 @@ export function loginAlert(navigate) {
 			}
 		})
 		.catch((err) => {
-			console.log(err);
+			errorMessage(err);
 		});
 }
 
@@ -115,7 +115,6 @@ export function minimumFacility() {
 }
 
 export function MuiError(err) {
-	console.log(err);
 	return (
 		<Stack sx={{ width: "100%" }}>
 			<Alert severity="error">{err.message}</Alert>;

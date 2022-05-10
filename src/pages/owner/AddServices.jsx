@@ -18,49 +18,75 @@ import {
   errorMessage,
 } from "../../functions/Alert";
 import { API, statusLogin } from "../../services/Users";
+import { dummy } from "../../services/Owner";
 
 export default function AddServices() {
-  const existedVenue = localStorage.getItem("venue_id");
-  // eslint-disable-next-line no-unused-vars
-  const [venueId, setVenueId] = useState(existedVenue ? existedVenue : 0);
-  const [days, setDays] = useState([]);
-  const [open, setOpen] = useState("");
-  const [close, setClose] = useState("");
-  const [price, setPrice] = useState(0);
-  const [facilities, setFacilities] = useState([]);
-  const token = statusLogin();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    getVenue();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const getVenue = async () => {
-    await axios
-      .get(`${API}/venues/${venueId}`)
-      .then((res) => {
-        setDays(res.data.data.operational_hours.map((item) => item.day));
-        setPrice(res.data.data.operational_hours[0].price);
-        setFacilities(res.data.data.facility.map((item) => item.id));
-        setOpen(res.data.data.operational_hours[0].open_hour);
-        setClose(res.data.data.operational_hours[0].close_hour);
-        document.title = res.data.data.name
-          ? `Edit | ${res.data.data.name}`
-          : "Create Arena";
-      })
-      .catch((err) => {
-        errorMessage(err);
-      });
-  };
+	const existedVenue = localStorage.getItem("venue_id");
+	// eslint-disable-next-line no-unused-vars
+	const [venueId, setVenueId] = useState(existedVenue ? existedVenue : 0);
+	const [days, setDays] = useState([]);
+	const [open, setOpen] = useState("");
+	const [close, setClose] = useState("");
+	const [price, setPrice] = useState(0);
+	const [facilities, setFacilities] = useState([]);
+	const token = statusLogin();
+	const navigate = useNavigate();
+	const url = document.location.href;
 
-  const operationalNotes = {
-    venue_id: venueId ? parseInt(venueId) : venueId,
-    days: days,
-    open_hours: open,
-    close_hours: close,
-    price: price ? parseInt(price) : price,
-    facility: facilities,
-  };
+	useEffect(() => {
+		url === `${window.location.origin}/owner/edit/${venueId}/services` &&
+			getVenue();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+	const getVenue = async () => {
+		await axios
+			.get(`${API}/venues/${venueId}`)
+			.then((res) => {
+				setDays(
+					res.data.data.operational_hours === {}
+						? dummy.days
+						: res.data.data.operational_hours.map(
+								(item) => item.day
+						  )
+				);
+				setPrice(
+					res.data.data.operational_hours === {}
+						? dummy.price
+						: res.data.data.operational_hours[0].price
+				);
+				setFacilities(
+					res.data.data.facility === {}
+						? dummy.facilities
+						: res.data.data.facility.map((item) => item.id)
+				);
+				setOpen(
+					res.data.data.operational_hours === {}
+						? dummy.open_hour
+						: res.data.data.operational_hours[0].open_hour
+				);
+				setClose(
+					res.data.data.operational_hours === {}
+						? dummy.close_hour
+						: res.data.data.operational_hours[0].close_hour
+				);
+				document.title = res.data.data.name
+					? `Edit | ${res.data.data.name}`
+					: "Create Arena";
+			})
+			.catch((err) => {
+				errorMessage(err);
+			});
+	};
+
+	const operationalNotes = {
+		venue_id: venueId ? parseInt(venueId) : venueId,
+		days: days,
+		open_hour: open,
+		close_hour: close,
+		price: price ? parseInt(price) : price,
+		facility: facilities,
+	};
 
   const submitButton = (e) => {
     e.preventDefault();

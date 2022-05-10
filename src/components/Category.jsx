@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { IconCard, IconLoading } from "./Card";
+import { CategoryCard, IconLoading } from "./Card";
 import { API } from "../services/Users";
+import { errorMessage } from "./Alert";
 
 export function ListCategory() {
 	const [skeleton] = useState([1, 2, 3, 4]);
@@ -17,11 +18,12 @@ export function ListCategory() {
 		await axios
 			.get(`${API}/category`)
 			.then((res) => {
-				setCategory(res.data.data);
 				setLoading(false);
+				setCategory(res.data.data);
 			})
 			.catch((err) => {
-				console.log(err);
+				setLoading(false);
+				errorMessage(err);
 			});
 	};
 
@@ -35,7 +37,7 @@ export function ListCategory() {
 					? skeleton.map((item) => <IconLoading key={item} />)
 					: category.map((item) => (
 							<div key={item.id}>
-								<IconCard
+								<CategoryCard
 									id={item.id}
 									icon={item.icon_name}
 									name={item.name}
