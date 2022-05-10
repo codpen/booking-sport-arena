@@ -12,16 +12,28 @@ import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRound
 import { green } from "@mui/material/colors";
 
 export default function AccordionRequestOwner(props) {
-  const { fullname, username, email, phone, status, certificate, id } = props;
+  const { fullname, username, email, phone, status, certificate, id, userId } =
+    props;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  const data = localStorage.getItem("user-info");
+  const json = JSON.parse(data);
+  const token = json.token;
+
   async function approve() {
-    const response = await approveOwnerRequest(id);
+    const body = {
+      ID: userId,
+      role: "owner",
+      status: "approve",
+    };
+    const response = await approveOwnerRequest(token, body);
   }
+
+  async function reject() {}
 
   return (
     <div>
@@ -90,7 +102,13 @@ export default function AccordionRequestOwner(props) {
                   </div>
                 </div>
                 <div>
-                  <MiniButton id="pending" variant="approve">
+                  <MiniButton
+                    id="pending"
+                    variant="approve"
+                    onClick={() => {
+                      approve();
+                    }}
+                  >
                     approve
                   </MiniButton>
                   <MiniButton id="pending" variant="reject">
