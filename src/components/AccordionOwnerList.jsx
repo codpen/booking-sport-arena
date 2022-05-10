@@ -1,24 +1,18 @@
-import React, { useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
-import { miniButton } from "./Buttons";
+import React from "react";
 
-import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
-import { green } from "@mui/material/colors";
-
-export default function AccordionRequestOwner(props) {
+export default function AccordionOwnerList(props) {
   const { fullname, username, email, phone, status, certificate, id } = props;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-
-  async function approve() {}
 
   return (
     <div>
@@ -56,12 +50,9 @@ export default function AccordionRequestOwner(props) {
               </div>
 
               <div className="basis-1/5 text-center">
-                <miniButton id="pending" variant="pending">
+                <button className="w-28 bg-yellow-400 px-6 py-1 rounded-full mr-20 text-white block">
                   {status}
-                </miniButton>
-                {/* <button className="w-28 bg-yellow-400 px-6 py-1 rounded-full mr-20 text-white block">
-                  {status}
-                </button> */}
+                </button>
               </div>
             </div>
           </div>
@@ -72,9 +63,9 @@ export default function AccordionRequestOwner(props) {
               <div className="flex items-center justify-between">
                 <div className="ml-8 flex justify-items-center">
                   {/* {<FiFileText />} */}
-                  <InsertDriveFileRoundedIcon
-                    sx={{ color: green[500], fontSize: 40 }}
-                  />
+                  {/* <InsertDriveFileRoundedIcon
+                      sx={{ color: green[500], fontSize: 40 }}
+                    /> */}
                   <div>
                     <a
                       // href={"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}
