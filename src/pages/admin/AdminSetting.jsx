@@ -1,11 +1,32 @@
 import React, { useState } from "react";
+import swal from "sweetalert";
+import { Button } from "../../components/Buttons";
 import { InputText } from "../../components/InputText";
 
 import Sidebar from "../../components/sidebar/Sidebar";
+import { changePassword } from "../../services/AdminChangePassword";
 
 export default function AdminSetting() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const data = localStorage.getItem("user-info");
+  const json = JSON.parse(data);
+  const token = json.token;
+
+  async function updatePassword() {
+    const body = {
+      password: password,
+    };
+    const response = await changePassword(token, body);
+    if (confirmPassword !== password) {
+      return;
+    }
+    if (response.code === 200) {
+      swal("Success", "Password changed successfully", "success");
+    } else {
+      swal("Error", response.message, "error");
+    }
+  }
 
   const checkConfirmPassword = () => {
     if (
@@ -16,6 +37,7 @@ export default function AdminSetting() {
       return <span>Password Not Match</span>;
     }
   };
+
   return (
     <div className="w-screen h-screen flex">
       <Sidebar />
@@ -55,6 +77,17 @@ export default function AdminSetting() {
         </div>
         {checkConfirmPassword()}
         {/* <TableDropdown /> */}
+        <Button
+          id="register-button"
+          type="submit"
+          variant="solid"
+          className="mt-10 "
+          onClick={() => {
+            updatePassword();
+          }}
+        >
+          submit
+        </Button>
       </div>
     </div>
   );
