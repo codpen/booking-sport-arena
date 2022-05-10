@@ -23,7 +23,7 @@ export default function Register() {
     if (confirmPassword !== password) {
       return;
     }
-    if (statusValidate) {
+    if (statusValidate == true) {
       let item = { fullname, username, email, phone_number, password };
       const result = await registerService(item);
       if (result.code === 200) {
@@ -45,7 +45,8 @@ export default function Register() {
     }
   };
 
-  const emailValidation = () => {
+  const emailValidation = (e) => {
+    setEmail(e.target.value);
     const regex =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!email || regex.test(email) === false) {
@@ -54,7 +55,7 @@ export default function Register() {
     setStatusValidate(true);
     setEmail(email);
   };
-  console.log(fullname);
+
   console.log(email);
 
   // function validateEmail (email) {
@@ -109,7 +110,7 @@ export default function Register() {
                       type="email"
                       placeholder="mail@mail.com"
                       className="invalid:text-red-500"
-                      onChange={(e) => emailValidation(e.target.value)}
+                      onChange={emailValidation}
                     />
 
                     {/* {emailValidation()} */}
