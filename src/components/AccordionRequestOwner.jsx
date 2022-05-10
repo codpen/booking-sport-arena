@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
 import { approveOwnerRequest } from "../services/AdminOwnerRequest";
-import { miniButton } from "./Buttons";
+import { MiniButton } from "./Buttons";
 
 import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
 import { green } from "@mui/material/colors";
@@ -59,9 +59,9 @@ export default function AccordionRequestOwner(props) {
               </div>
 
               <div className="basis-1/5 text-center">
-                <miniButton id="pending" variant="pending" xs>
+                <MiniButton id="pending" variant="pending" xs>
                   {status}
-                </miniButton>
+                </MiniButton>
                 {/* <button className="w-28 bg-yellow-400 px-6 py-1 rounded-full mr-20 text-white block">
                   {status}
                 </button> */}
@@ -90,17 +90,12 @@ export default function AccordionRequestOwner(props) {
                   </div>
                 </div>
                 <div>
-                  <button
-                    className="w-28 bg-emerald-600 px-6 py-1 rounded-full mr-5 text-white"
-                    onClick={() => {
-                      approve();
-                    }}
-                  >
+                  <MiniButton id="pending" variant="approve">
                     approve
-                  </button>
-                  <button className="w-28 bg-red-600 px-6 py-1 rounded-full mr-10 text-white">
+                  </MiniButton>
+                  <MiniButton id="pending" variant="reject">
                     reject
-                  </button>
+                  </MiniButton>
                 </div>
               </div>
             </div>

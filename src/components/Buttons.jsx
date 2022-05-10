@@ -33,7 +33,7 @@ export function Button({
   );
 }
 
-export function miniButton({
+export function MiniButton({
   className,
   variant,
   children,
@@ -43,16 +43,16 @@ export function miniButton({
 }) {
   const addClassName = className ? `${className}` : "";
   const variants = {
-    approve: "bg-emerald-600 ",
-    reject: "bg-red-600",
-    pending: "bg-yellow-400",
+    approve: "bg-emerald-600 hover:bg-emerald-800",
+    reject: "bg-red-600 hover:bg-red-700",
+    pending: "bg-yellow-400 ",
   };
   const pickedVariant = variants[variant];
 
   return (
     <button
       id={id}
-      className={`w-28 px-6 py-1 rounded-full mr-20 text-white bg-slate-700 ${pickedVariant} ${addClassName}`}
+      className={`w-28 px-6 py-1 rounded-full mr-5 text-white  ${pickedVariant} ${addClassName}`}
       onClick={onClick}
       type={type}
     >
