@@ -26,7 +26,6 @@ export default function Venue() {
 	const [close, setClose] = useState("");
 	const [facilities, setFacilities] = useState([]);
 	const [price, setPrice] = useState(0);
-	const [category, setCategory] = useState([]);
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [skeleton] = useState([1, 2, 3, 4]);
@@ -60,7 +59,6 @@ export default function Venue() {
 				setPrice(res.data.data.operational_hours[0].price);
 				setOpen(res.data.data.operational_hours[0].open_hour);
 				setClose(res.data.data.operational_hours[0].close_hour);
-				setCategory(res.data.data.category);
 				document.title = `Hobiku | ${res.data.data.name}`;
 			})
 			.catch((err) => {
@@ -206,16 +204,6 @@ export default function Venue() {
 						</h4>
 						<h6 className="font-normal">{`Address: ${venues.address}`}</h6>
 					</div>
-					{/* <div className="my-3">
-						<h4 className="text-xl font-bold">Category</h4>
-						<div className="w-1/2 my-2">
-							<IconCard
-								id={category.id}
-								icon={category.icon_name}
-								name={category.name}
-							/>
-						</div>
-					</div> */}
 				</div>
 			</div>
 			<div className="w-full my-5">
