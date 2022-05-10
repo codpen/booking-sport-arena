@@ -120,12 +120,12 @@ export default function CreateArena() {
 	const updateButton = (e) => {
 		e.preventDefault();
 		if (venueName && address && city) {
-			const arenaUpdate = {
-				name: venueName,
-				description: details,
-				address: address,
-				city: city,
-			};
+			const formData = new FormData();
+			formData.append("name", venueName);
+			formData.append("description", details);
+			formData.append("address", address);
+			formData.append("city", city);
+			formData.append("category_id", category);
 			Swal.fire({
 				title: "Are you sure?",
 				text: "Please make sure all the information is correct",
@@ -138,7 +138,7 @@ export default function CreateArena() {
 			}).then((result) => {
 				if (result.value) {
 					axios
-						.put(`${API}/venues/step1/${venueId}`, arenaUpdate, {
+						.put(`${API}/venues/step1/${venueId}`, formData, {
 							headers: {
 								"Content-Type": "application/json",
 								Authorization: `Bearer ${token}`,
@@ -176,7 +176,6 @@ export default function CreateArena() {
 				errorMessage(err);
 			});
 	};
-
 	return (
 		<LayoutOwner>
 			<form>
@@ -234,23 +233,21 @@ export default function CreateArena() {
 							/>
 						</div>
 					</div>
-					{url !==
-					`${window.location.origin}/owner/edit/${venueId}` ? (
-						<div className="mb-5 w-full px-3 lg:px-10">
-							<h6 className="font-bold my-3">
-								Category (
-								<strong className="text-amber-500">*</strong>)
-							</h6>
-							<div className="">
-								<RadioCategory
-									value={
-										category ? category : parseInt(category)
-									}
-									setValue={setCategory}
-								/>
-							</div>
+					<div className="mb-5 w-full px-3 lg:px-10">
+						<h6 className="font-bold my-3">
+							Category{" "}
+							{url !==
+								`${window.location.origin}/owner/edit/${venueId}` && (
+								<strong className="text-amber-500">*</strong>
+							)}
+						</h6>
+						<div className="">
+							<RadioCategory
+								value={category ? category : parseInt(category)}
+								setValue={setCategory}
+							/>
 						</div>
-					) : null}
+					</div>
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Upload Image
