@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { CategoryCard, IconLoading } from "./Card";
 import { API } from "../services/Users";
-import { errorMessage } from "./Alert";
+import { errorMessage } from "../functions/Alert";
 
 export function ListCategory() {
 	const [skeleton] = useState([1, 2, 3, 4]);

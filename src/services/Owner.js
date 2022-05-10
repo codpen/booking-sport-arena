@@ -3,9 +3,13 @@ import { errorMessage, successMessage } from "../functions/Alert";
 import { statusLogin, API } from "./Users";
 
 export const fetchBookingData = async (setBookingData) => {
-	const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
+	const token = statusLogin();
 	await axios
-		.get(`${API}/owner/history`)
+		.get(`${API}/owner/histories`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		})
 		.then((res) => {
 			setBookingData(res.data.data);
 		})
