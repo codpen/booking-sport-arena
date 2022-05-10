@@ -78,7 +78,7 @@ export default function Venue() {
 				.add(1, "hours");
 			const booking = {
 				venue_id: venues.id,
-				price: price,
+				total_price: price,
 				day: dayFormat,
 				start_date: moment(startTime).format("HH:mm"),
 				end_date: moment(endTime).format("HH:mm"),
