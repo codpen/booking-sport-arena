@@ -20,6 +20,10 @@ export const Venues = ({ venues, loading }) => {
 							className="my-4 md:my-6 lg:my-6 bg-white shadow-md rounded-lg xl:my-6"
 							onClick={() => {
 								navigate(`/venues/${venue.id}`);
+								localStorage.setItem(
+									"venue_id",
+									JSON.stringify(venue.id)
+								);
 							}}>
 							<div className="rounded-2xl">
 								<img

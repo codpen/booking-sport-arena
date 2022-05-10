@@ -59,6 +59,25 @@ export function IconCard(item) {
 	);
 }
 
+export function CategoryCard(item) {
+	return (
+		<>
+			<div key={item.id} className="">
+				<button
+					onClick={() => {
+						console.log(item.id);
+						// tinggal ubah ini jadi function untuk filter category
+					}}
+					id={`category-${item.id}`}
+					className="rounded-3xl border-2 bg-white shadow-md outline-gray-500 text-center w-full py-2">
+					<i className={`text-4xl p-2 ${item.icon}`} />
+					<h5 className="font-bold uppercase">{item.name}</h5>
+				</button>
+			</div>
+		</>
+	);
+}
+
 export function WideCard(item) {
 	moment.locale("en");
 	return (
@@ -66,25 +85,49 @@ export function WideCard(item) {
 			key={item.id}
 			className="flex flex-col md:flex-row p-2 gap-2 border-2 rounded-lg">
 			<div className="md:w-3/12 w-fit">
-				<img className="rounded-md" src={item.image} alt="" />
+				<img
+					className="rounded-md w-full"
+					src={item.image}
+					alt=""
+					height={200}
+				/>
 			</div>
-			<div className="flex md:w-9/12 flex-wrap justify-between">
-				<div className="md:w-7/12 rounded-md py-2 px-2 md:px-5 flex flex-col my-auto lg:space-y-5 capitalize">
-					<h4 className="text-2xl font-semibold">{item.name}</h4>
-					<p className="text-lg">{item.location}</p>
-					<p className="text-xl font-bold text-amber-500">{`Rp. ${item.price.toLocaleString()}`}</p>
+			<div className="justify-between flex flex-row-reverse md:hidden pb-2 border-b-2">
+				<p className="font-semibold">
+					{moment(item.date).format("DD MMMM YYYY")}
+				</p>
+				<p className="md:my-2">
+					{`${moment(item.start).format("hh:mm")} - ${moment(
+						item.end
+					).format("hh:mm")}`}
+				</p>
+			</div>
+			<div className="flex md:w-9/12 w-full flex-wrap justify-between">
+				<div className="md:w-7/12 w-full rounded-md py-2 px-2 md:px-5 flex flex-col capitalize text-center md:text-left">
+					<h4 className="text-xl font-semibold">{item.name}</h4>
+					<p className="italic">{`location: ${item.location}`}</p>
+					<p className="font-semibold my-2 text-teal-500">{`Rp. ${item.price.toLocaleString()}`}</p>
 				</div>
-				<div className="md:w-5/12 rounded-md px-2 md:px-5 py-3 md:text-right flex flex-col space-y-2 capitalize">
-					<p className="text-lg font-bold">
-						{moment(item.date).format("LL")}
-					</p>
-					<p className=" font-semibold">{item.time}</p>
+				<div className="md:w-5/12 w-full text-center rounded-md px-2 md:px-5 py-3 md:text-right hidden md:flex md:flex-col space-x-2 capitalize">
 					<div className="">
-						<button className="bg-gray-500 font-semibold text-white pointer-events-none rounded-md px-5 py-2">
+						<p className="font-semibold">
+							{moment(item.date).format("DD MMMM YYYY")}
+						</p>
+						<p className="md:my-2">
+							{`${moment(item.start).format("hh:mm")} - ${moment(
+								item.end
+							).format("hh:mm")}`}
+						</p>
+					</div>
+					<div className="">
+						<button className="bg-gray-500 font-semibold text-white pointer-events-none rounded-md uppercase px-5 py-2">
 							{item.status}
 						</button>
 					</div>
 				</div>
+				<button className="w-full md:hidden uppercase bg-gray-500 font-semibold text-white pointer-events-none rounded-md px-5 py-2">
+					{item.status}
+				</button>
 			</div>
 		</div>
 	);

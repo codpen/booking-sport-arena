@@ -26,7 +26,6 @@ export default function Venue() {
 	const [close, setClose] = useState("");
 	const [facilities, setFacilities] = useState([]);
 	const [price, setPrice] = useState(0);
-	const [category, setCategory] = useState([]);
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [skeleton] = useState([1, 2, 3, 4]);
@@ -57,22 +56,9 @@ export default function Venue() {
 				setVenues(res.data.data);
 				setOperational(res.data.data.operational_hours);
 				setFacilities(res.data.data.facility);
-				setPrice(
-					res.data.data.operational_hours !== undefined || []
-						? res.data.data.operational_hours[0].price
-						: 0
-				);
-				setOpen(
-					res.data.data.operational_hours !== undefined || []
-						? res.data.data.operational_hours[0].open_hour
-						: "No Data"
-				);
-				setClose(
-					res.data.data.operational_hours !== undefined || []
-						? res.data.data.operational_hours[0].close_hour
-						: "No Data"
-				);
-				setCategory(res.data.data.category);
+				setPrice(res.data.data.operational_hours[0].price);
+				setOpen(res.data.data.operational_hours[0].open_hour);
+				setClose(res.data.data.operational_hours[0].close_hour);
 				document.title = `Hobiku | ${res.data.data.name}`;
 			})
 			.catch((err) => {
@@ -80,6 +66,7 @@ export default function Venue() {
 				MuiError(err);
 			});
 	};
+
 	const bookNow = async (e) => {
 		e.preventDefault();
 		// const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
@@ -115,13 +102,13 @@ export default function Venue() {
 			navigate("/login");
 		}
 	};
-
 	const handleEdit = async () => {
 		const venue_id = venues.id;
 		localStorage.setItem("venue_id", venue_id);
 		navigate(`/owner/edit/${venue_id}`);
 	};
 	const handleDelete = async (e) => {
+		const copyId = localStorage.getItem("venue_id");
 		e.preventDefault();
 		Swal.fire({
 			title: "Are you sure?",
@@ -134,8 +121,7 @@ export default function Venue() {
 			cancelButtonColor: "#d33",
 		}).then((result) => {
 			if (result.value) {
-				deleteVenue(venues.id);
-				localStorage.removeItem("venue_id");
+				deleteVenue(copyId);
 				navigate("/");
 			} else if (result.dismiss === Swal.DismissReason.cancel) {
 				Swal.fire("Cancelled", "Your venue is safe :)", "error");
@@ -153,13 +139,13 @@ export default function Venue() {
 					<div className="h-full grid gap-4 content-center"></div>
 				</div>
 			</div>
-			<div className="w-full capitalize border-b-2 my-5 justify-between flex">
-				<div className="text-left lg:basis-3/4">
+			<div className="w-full capitalize md:border-b-2 my-5 md:justify-between flex flex-col md:flex-row">
+				<div className="md:text-left text-center lg:basis-3/4">
 					<h3 className="text-3xl font-semibold">{venues.name}</h3>
 					<h4 className="text-lg text-teal-500">{venues.city}</h4>
 				</div>
 				{role === "owner" && (
-					<div className="text-right flex flex-row lg:basis-1/4 my-auto justify-between gap-4">
+					<div className="text-right border-y-2 py-3 md:border-none flex flex-row lg:basis-1/4 my-3 md:my-auto justify-between gap-4">
 						<Button
 							type="button"
 							variant="warning"
@@ -212,19 +198,11 @@ export default function Venue() {
 							</tbody>
 						</table>
 					</div>
-					<div className="my-3">
-						<h4 className="text-xl font-bold">Information</h4>
-						<h6 className="text-lg my-1">{venues.address}</h6>
-					</div>
-					<div className="my-3">
-						<h4 className="text-xl font-bold">Category</h4>
-						<div className="w-1/2 my-2">
-							<IconCard
-								id={category.id}
-								icon={category.icon_name}
-								name={category.name}
-							/>
-						</div>
+					<div className="my-3 capitalize">
+						<h4 className="text-xl font-bold underline">
+							Information
+						</h4>
+						<h6 className="font-normal">{`Address: ${venues.address}`}</h6>
 					</div>
 				</div>
 			</div>

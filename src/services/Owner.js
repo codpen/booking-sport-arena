@@ -14,7 +14,8 @@ export const fetchBookingData = async (setBookingData) => {
 		});
 };
 
-export const deleteVenue = async ({ venue_id }) => {
+export const deleteVenue = async (venue_id) => {
+	// const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 	const token = statusLogin();
 	axios
 		.delete(`${API}/venues/${venue_id}`, {
@@ -28,4 +29,13 @@ export const deleteVenue = async ({ venue_id }) => {
 		.catch((err) => {
 			errorMessage(err);
 		});
+};
+
+export const dummy = {
+	venue_id: 1,
+	days: ["none"],
+	open_hour: "00:00",
+	close_hour: "00:00",
+	price: 0,
+	facilities: ["none"],
 };
