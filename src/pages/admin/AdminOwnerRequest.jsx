@@ -15,7 +15,6 @@ export default function AdminOwnerRequest() {
     } else {
       Navigate("/login");
     }
-    fetchDataRequestOwner();
   }, []);
 
   const fetchDataRequestOwner = async (token) => {

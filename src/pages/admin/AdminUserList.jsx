@@ -16,7 +16,6 @@ export default function AdminUserList() {
     } else {
       Navigate("/login");
     }
-    fetchDataUserList();
   }, []);
 
   const fetchDataUserList = async (token) => {
@@ -62,7 +61,7 @@ export default function AdminUserList() {
         </div>
         <div className="w-full bg-slate-100 h-0.5 mx-4 mb-3" />
         {/* <TableDropdown /> */}
-        {populatingUserList}
+        {populatingUserList()}
       </div>
     </div>
   );
