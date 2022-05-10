@@ -26,7 +26,6 @@ export function Button({
       className={`px-5 py-2 rounded-md font-bold ${pickedVariant} ${addClassName}`}
       onClick={onClick}
       type={type}
-      disabled={isDisabled}
     >
       {children}
     </button>

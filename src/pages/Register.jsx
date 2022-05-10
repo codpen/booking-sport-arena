@@ -47,12 +47,20 @@ export default function Register() {
 
   const emailValidation = () => {
     const regex =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!email.length || !email || regex.test(email) === false) {
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!email || regex.test(email) === false) {
       return <span>Email Not Match</span>;
     }
     setStatusValidate(true);
+    setEmail(email);
   };
+  console.log(fullname);
+  console.log(email);
+
+  // function validateEmail (email) {
+  //   const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  //   return regexp.test(email);
+  // }
 
   return (
     <div>
@@ -101,9 +109,10 @@ export default function Register() {
                       type="email"
                       placeholder="mail@mail.com"
                       className="invalid:text-red-500"
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => emailValidation(e.target.value)}
                     />
-                    {emailValidation()}
+
+                    {/* {emailValidation()} */}
                   </div>
                   <div>
                     <p className=" mb-2">phone number</p>
@@ -148,7 +157,6 @@ export default function Register() {
                 onClick={() => {
                   signUp();
                 }}
-                isDisabled={statusValidate ? false : true}
               >
                 register
               </Button>
