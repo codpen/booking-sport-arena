@@ -57,21 +57,9 @@ export default function Venue() {
 				setVenues(res.data.data);
 				setOperational(res.data.data.operational_hours);
 				setFacilities(res.data.data.facility);
-				setPrice(
-					res.data.data.operational_hours !== undefined || []
-						? res.data.data.operational_hours[0].price
-						: 0
-				);
-				setOpen(
-					res.data.data.operational_hours !== undefined || []
-						? res.data.data.operational_hours[0].open_hour
-						: "No Data"
-				);
-				setClose(
-					res.data.data.operational_hours !== undefined || []
-						? res.data.data.operational_hours[0].close_hour
-						: "No Data"
-				);
+				setPrice(res.data.data.operational_hours[0].price);
+				setOpen(res.data.data.operational_hours[0].open_hour);
+				setClose(res.data.data.operational_hours[0].close_hour);
 				setCategory(res.data.data.category);
 				document.title = `Hobiku | ${res.data.data.name}`;
 			})
@@ -80,6 +68,7 @@ export default function Venue() {
 				MuiError(err);
 			});
 	};
+
 	const bookNow = async (e) => {
 		e.preventDefault();
 		// const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
@@ -115,13 +104,13 @@ export default function Venue() {
 			navigate("/login");
 		}
 	};
-
 	const handleEdit = async () => {
 		const venue_id = venues.id;
 		localStorage.setItem("venue_id", venue_id);
 		navigate(`/owner/edit/${venue_id}`);
 	};
 	const handleDelete = async (e) => {
+		const copyId = localStorage.getItem("venue_id");
 		e.preventDefault();
 		Swal.fire({
 			title: "Are you sure?",
@@ -134,8 +123,7 @@ export default function Venue() {
 			cancelButtonColor: "#d33",
 		}).then((result) => {
 			if (result.value) {
-				deleteVenue(venues.id);
-				localStorage.removeItem("venue_id");
+				deleteVenue(copyId);
 				navigate("/");
 			} else if (result.dismiss === Swal.DismissReason.cancel) {
 				Swal.fire("Cancelled", "Your venue is safe :)", "error");
@@ -212,11 +200,13 @@ export default function Venue() {
 							</tbody>
 						</table>
 					</div>
-					<div className="my-3">
-						<h4 className="text-xl font-bold">Information</h4>
-						<h6 className="text-lg my-1">{venues.address}</h6>
+					<div className="my-3 capitalize">
+						<h4 className="text-xl font-bold underline">
+							Information
+						</h4>
+						<h6 className="font-normal">{`Address: ${venues.address}`}</h6>
 					</div>
-					<div className="my-3">
+					{/* <div className="my-3">
 						<h4 className="text-xl font-bold">Category</h4>
 						<div className="w-1/2 my-2">
 							<IconCard
@@ -225,7 +215,7 @@ export default function Venue() {
 								name={category.name}
 							/>
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</div>
 			<div className="w-full my-5">
