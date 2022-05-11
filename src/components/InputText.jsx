@@ -5,10 +5,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import Checkbox from "@mui/material/Checkbox";
 import { FormGroup } from "@mui/material";
-// import TextField from "@mui/material/TextField";
-// import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -128,13 +124,6 @@ export function CheckDay({ value, setValue }) {
 		"friday" || "Friday",
 		"saturday" || "Saturday",
 		"sunday" || "Sunday",
-		// "Monday" ? "monday" : "Monday",
-		// "Tuesday" ? "tuesday" : "Tuesday",
-		// "Wednesday" ? "wednesday" : "Wednesday",
-		// "Thursday" ? "thursday" : "Thursday",
-		// "Friday" ? "friday" : "Friday",
-		// "Saturday" ? "saturday" : "Saturday",
-		// "Sunday" ? "sunday" : "Sunday",
 	];
 	return (
 		<FormControl
@@ -168,9 +157,7 @@ export function CheckDay({ value, setValue }) {
 										setValue(
 											event.target.checked
 												? [...value, day]
-												: value.filter(
-														(v) => v !== day
-												  )
+												: value.filter((v) => v !== day)
 										);
 									}}
 									control={<Checkbox color="success" />}
@@ -206,32 +193,17 @@ export function CheckDay({ value, setValue }) {
 	);
 }
 
-// export function PickTime({ value, setValue }) {
-// 	return (
-// 		<LocalizationProvider dateAdapter={AdapterMoment}>
-// 			<MobileTimePicker
-// 				value={value}
-// 				onChange={(newValue) => {
-// 					setValue(newValue);
-// 				}}
-// 				renderInput={(params) => (
-// 					<TextField {...params} color="success" />
-// 				)}
-// 			/>
-// 		</LocalizationProvider>
-// 	);
-// }
-
 export function AddFacilities({ value, setValue }) {
+	console.log(value);
 	const AvailableFacilities = [1, 2, 3, 4, 5, 6, 7];
 	const NameFacilities = [
-		"Masjid",
-		"Tempat Parkir",
+		"Mosque",
+		"Parking Lot",
 		"Toilet",
 		"Cafe",
-		"Loker",
+		"Locker",
 		"Wifi",
-		"Peminjaman Alat Olahraga",
+		"Rental Equipment",
 	];
 	return (
 		<FormControl

@@ -1,14 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Button from "../components/Buttons";
+import { Button } from "../components/Buttons";
 import {
-	IconCard,
-	DaySlots,
-	TimeSlots,
-	DisplayBooking,
-	IconLoading,
+  IconCard,
+  DaySlots,
+  TimeSlots,
+  DisplayBooking,
+  IconLoading,
 } from "../components/Card";
 import Layout from "../components/Layout";
 import { errorMessage, successMessage, MuiError } from "../functions/Alert";
@@ -19,6 +19,7 @@ import { deleteVenue } from "../services/Owner";
 import Swal from "sweetalert2";
 
 export default function Venue() {
+
 	const params = useParams();
 	const [venues, setVenues] = useState([]);
 	const [operational, setOperational] = useState([]);
@@ -80,8 +81,8 @@ export default function Venue() {
 				venue_id: venues.id,
 				total_price: price,
 				day: dayFormat,
-				start_date: moment(startTime).format("HH:mm"),
-				end_date: moment(endTime).format("HH:mm"),
+				start_date: startTime,
+				end_date: endTime,
 			};
 			await axios
 				.post(`${API}/booking`, booking, {

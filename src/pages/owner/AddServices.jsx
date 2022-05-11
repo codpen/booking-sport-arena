@@ -1,29 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-	AddFacilities,
-	CheckDay,
-	InputText,
-	TimeSelector,
+  AddFacilities,
+  CheckDay,
+  InputText,
+  TimeSelector,
 } from "../../components/InputText";
 import { LayoutOwner } from "../../components/Layout";
-import Button from "../../components/Buttons";
+import { Button } from "../../components/Buttons";
 import axios from "axios";
 import {
-	minimumFacility,
-	notForFree,
-	minimumDay,
-	timeError,
-	successMessage,
-	errorMessage,
+  minimumFacility,
+  notForFree,
+  minimumDay,
+  timeError,
+  successMessage,
+  errorMessage,
 } from "../../functions/Alert";
 import { API, statusLogin } from "../../services/Users";
 import { dummy } from "../../services/Owner";
 
 export default function AddServices() {
 	const existedVenue = localStorage.getItem("venue_id");
+	const createdVenue = localStorage.getItem("created_id");
+	const url = document.location.href;
 	// eslint-disable-next-line no-unused-vars
-	const [venueId, setVenueId] = useState(existedVenue ? existedVenue : 0);
+	const [venueId, setVenueId] = useState(
+		url === `${window.location.origin}/owner/services`
+			? createdVenue
+			: existedVenue
+	);
 	const [days, setDays] = useState([]);
 	const [open, setOpen] = useState("");
 	const [close, setClose] = useState("");
@@ -31,8 +37,7 @@ export default function AddServices() {
 	const [facilities, setFacilities] = useState([]);
 	const token = statusLogin();
 	const navigate = useNavigate();
-	const url = document.location.href;
-
+	console.log(venueId);
 	useEffect(() => {
 		url === `${window.location.origin}/owner/edit/${venueId}/services` &&
 			getVenue();
@@ -80,13 +85,13 @@ export default function AddServices() {
 
 	const operationalNotes = {
 		venue_id: venueId ? parseInt(venueId) : venueId,
-		days: days,
+		day: days,
 		open_hour: open,
 		close_hour: close,
 		price: price ? parseInt(price) : price,
-		facility: facilities,
+		facility_id: facilities,
 	};
-
+  
 	const submitButton = (e) => {
 		e.preventDefault();
 		if (price === 0 || price === "" || price === "0") {
@@ -117,36 +122,36 @@ export default function AddServices() {
 		}
 	};
 
-	const updateButton = (e) => {
-		e.preventDefault();
-		if (price === 0 || price === "" || price === "0") {
-			notForFree();
-		} else if (price < 0) {
-			notForFree();
-		} else if (close < open) {
-			timeError();
-		} else if (days.length === 0) {
-			minimumDay();
-		} else if (facilities.length === 0) {
-			minimumFacility();
-		} else if (days && open && close && price && facilities) {
-			axios
-				.put(`${API}/venues/step2/${venueId}`, operationalNotes, {
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-				})
-				.then((res) => {
-					successMessage(res);
-					navigate(`/venues/${venueId}`);
-					localStorage.removeItem("venue_id");
-				})
-				.catch((err) => {
-					errorMessage(err);
-				});
-		}
-	};
+  const updateButton = (e) => {
+    e.preventDefault();
+    if (price === 0 || price === "" || price === "0") {
+      notForFree();
+    } else if (price < 0) {
+      notForFree();
+    } else if (close < open) {
+      timeError();
+    } else if (days.length === 0) {
+      minimumDay();
+    } else if (facilities.length === 0) {
+      minimumFacility();
+    } else if (days && open && close && price && facilities) {
+      axios
+        .put(`${API}/venues/step2/${venueId}`, operationalNotes, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          successMessage(res);
+          navigate(`/venues/${venueId}`);
+          localStorage.removeItem("venue_id");
+        })
+        .catch((err) => {
+          errorMessage(err);
+        });
+    }
+  };
 
 	return (
 		<LayoutOwner>
@@ -205,7 +210,8 @@ export default function AddServices() {
 						</div>
 					</div>
 					<div className="w-full flex justify-center md:justify-end my-2 lg:mx-10 flex-col lg:flex-row">
-						{existedVenue !== null && (
+						{url ===
+							`${window.location.origin}/owner/edit/${venueId}/services` && (
 							<Button
 								className="w-full md:w-28 my-2"
 								onClick={(e) => {
@@ -217,7 +223,7 @@ export default function AddServices() {
 								Update
 							</Button>
 						)}
-						{existedVenue === null && (
+						{url === `${window.location.origin}/owner/services` && (
 							<Button
 								className="w-full md:w-28 md:px-10"
 								onClick={(e) => submitButton(e)}
