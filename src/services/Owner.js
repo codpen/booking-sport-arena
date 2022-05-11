@@ -19,7 +19,6 @@ export const fetchBookingData = async (setBookingData) => {
 };
 
 export const deleteVenue = async (venue_id) => {
-	// const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 	const token = statusLogin();
 	axios
 		.delete(`${API}/venues/${venue_id}`, {
