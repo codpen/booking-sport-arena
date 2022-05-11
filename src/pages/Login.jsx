@@ -27,7 +27,7 @@ export default function Login() {
       } else {
         localStorage.setItem("user-info", JSON.stringify(Auth.data));
         swal(Auth.message, "", "success");
-        navigate("/");
+        navigate("/user");
       }
     } else if (Auth.code === 400) {
       swal("Login failed", Auth.message, "error");

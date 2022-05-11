@@ -144,7 +144,7 @@ export function TimeSlots({
 	const endTime = moment().startOf("day").add(close_hour, "hours");
 	return (
 		<div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4">
-			{[...Array(endTime.diff(startTime, "hours") + 1)].map((_, i) => {
+			{[...Array(endTime.diff(startTime, "hours"))].map((_, i) => {
 				const time = moment(startTime).add(i, "hours");
 				const extraTime = moment(startTime).add(i + 1, "hours");
 				return (

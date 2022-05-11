@@ -4,11 +4,9 @@ import { WideCard } from "../../components/Card";
 import Layout from "../../components/Layout";
 import { errorMessage } from "../../functions/Alert";
 import { API, statusLogin } from "../../services/Users";
-// const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
 export default function BookingHistory() {
 	document.title = "Booking History";
 	const [histories, setHistories] = useState([]);
-	const [venue, setVenue] = useState([]);
 
 	useEffect(() => {
 		fetchBookingHistory();
@@ -24,7 +22,6 @@ export default function BookingHistory() {
 				},
 			})
 			.then((res) => {
-				console.log(res.data.data);
 				setHistories(res.data.data);
 			})
 			.catch((err) => {
