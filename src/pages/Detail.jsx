@@ -80,8 +80,8 @@ export default function Venue() {
 				venue_id: venues.id,
 				total_price: price,
 				day: dayFormat,
-				start_date: moment(startTime).format("HH:mm"),
-				end_date: moment(endTime).format("HH:mm"),
+				start_date: startTime,
+				end_date: endTime,
 			};
 			await axios
 				.post(`${API}/booking`, booking, {
