@@ -11,7 +11,7 @@ import {
   IconLoading,
 } from "../components/Card";
 import Layout from "../components/Layout";
-import { errorMessage, successMessage, MuiError } from "../functions/Alert";
+import { successMessage, MuiError } from "../functions/Alert";
 import { statusLogin } from "../services/Users";
 import "../styles/App.css";
 import { API, statusRole } from "../services/Users";
@@ -19,7 +19,6 @@ import { deleteVenue } from "../services/Owner";
 import Swal from "sweetalert2";
 
 export default function Venue() {
-
 	const params = useParams();
 	const [venues, setVenues] = useState([]);
 	const [operational, setOperational] = useState([]);
@@ -42,11 +41,23 @@ export default function Venue() {
 	const dayFormat = `${selectedDay.day}, ${moment(selectedDay.date).format(
 		"DD MMMM YYYY"
 	)}`;
+	const [userId, setUserId] = useState("");
+	const [creatorVenue, setCreatorVenue] = useState("");
 
 	useEffect(() => {
 		fetchVenues();
+		fetchUserID();
 		// eslint-disable-next-line
 	}, []);
+	const fetchUserID = async () => {
+		const token = statusLogin();
+		const res = await axios.get(`${API}/users/profile`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		setUserId(res.data.data.id);
+	};
 	const fetchVenues = async () => {
 		setLoading(true);
 		const { venue_id } = params;
@@ -60,18 +71,22 @@ export default function Venue() {
 				setPrice(res.data.data.operational_hours[0].price);
 				setOpen(res.data.data.operational_hours[0].open_hour);
 				setClose(res.data.data.operational_hours[0].close_hour);
+				setCreatorVenue(res.data.data.user_id);
 				document.title = `Hobiku | ${res.data.data.name}`;
 			})
 			.catch((err) => {
 				setLoading(false);
-				MuiError(err);
+				Swal.fire({
+					title: "Oops...",
+					text: err.response.data.message,
+				});
 			});
 	};
-
 	const bookNow = async (e) => {
 		e.preventDefault();
-		// const API = `https://virtserver.swaggerhub.com/hafidhirsyad/sport-arena-api/1.0.0`;
-		if (localStorage.getItem("user-info")) {
+		if (selectedTime === "00:00") {
+			Swal.fire({ title: "Please select a day and time" });
+		} else if (localStorage.getItem("user-info")) {
 			const token = statusLogin();
 			const startTime = moment(selectedTime, "HH:mm").clone();
 			const endTime = moment(selectedTime, "HH:mm")
@@ -96,7 +111,11 @@ export default function Venue() {
 					window.location.href = res.data.data.payment_url;
 				})
 				.catch((err) => {
-					errorMessage(err);
+					Swal.fire({
+						icon: "error",
+						title: "Oops...",
+						text: err.message,
+					});
 				});
 		} else {
 			Swal.fire({ title: "Login", text: "Please login first" });
@@ -145,7 +164,7 @@ export default function Venue() {
 					<h3 className="text-3xl font-semibold">{venues.name}</h3>
 					<h4 className="text-lg text-teal-500">{venues.city}</h4>
 				</div>
-				{role === "owner" && (
+				{role === "owner" && userId === creatorVenue && (
 					<div className="text-right border-y-2 py-3 md:border-none flex flex-row lg:basis-1/4 my-3 md:my-auto justify-between gap-4">
 						<Button
 							type="button"
@@ -167,8 +186,8 @@ export default function Venue() {
 			<div className="flex mb-4 flex-col lg:flex-row">
 				<div className="basis-8/12">
 					<div className="my-3">
-						<h4 className="text-xl font-bold">Description</h4>
-						<p>
+						<h4 className="text-xl font-bold pb-2">Description</h4>
+						<p className="md:pr-4">
 							{venues.description
 								? venues.description
 								: "No Description"}
@@ -200,7 +219,7 @@ export default function Venue() {
 						</table>
 					</div>
 					<div className="my-3 capitalize">
-						<h4 className="text-xl font-bold underline">
+						<h4 className="pb-2 text-xl font-bold underline">
 							Information
 						</h4>
 						<h6 className="font-normal">{`Address: ${venues.address}`}</h6>
@@ -209,7 +228,7 @@ export default function Venue() {
 			</div>
 			<div className="w-full my-5">
 				<div className="my-3">
-					<h4 className="text-xl font-bold">Facility</h4>
+					<h4 className="pb-2 text-xl font-bold">Facility</h4>
 					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 my-2">
 						{loading
 							? skeleton.map((item) => <IconLoading key={item} />)
