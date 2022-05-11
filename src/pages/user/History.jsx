@@ -46,7 +46,7 @@ export default function BookingHistory() {
 								location={item.venue.location}
 								image={item.venue.image}
 								price={item.venue.price}
-								date={item.venue.start_date}
+								date={item.venue.day}
 								start={item.venue.start_date}
 								end={item.venue.end_date}
 								status={item.venue.status}

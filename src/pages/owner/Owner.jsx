@@ -6,7 +6,6 @@ import moment from "moment";
 
 export default function Owner() {
 	const [bookingData, setBookingData] = useState([]);
-	const [status, setStatus] = useState("booked");
 	document.title = "Hobiku | Owner Dashboard";
 
 	const dashboardColumns = [
@@ -34,6 +33,7 @@ export default function Owner() {
 			editable: true,
 		},
 	];
+
 	useEffect(() => {
 		fetchBookingData(setBookingData);
 	}, []);
@@ -41,28 +41,30 @@ export default function Owner() {
 	return (
 		<ResponsiveDrawer>
 			<p className="text-xl my-2 font-semibold">Owner Dashboard</p>
-			{bookingData.map((data) => {
-				return (
-					<DataTable
-						key={data.id}
-						columns={dashboardColumns}
-						rows={[
-							{
-								id: data.id,
-								day: moment(data.venue.date).format("dddd"),
-								date: moment(data.venue.date).format(
-									"DD MMMM YYYY"
-								),
-								booking: data.venue.hours,
-								user: data.user.fullname,
-								// status: data.status,
-								// status: data.status === "booked" ? "Booked" : "Cancelled",
-								status: status,
-							},
-						]}
-					/>
-				);
-			})}
+			{bookingData.length > 0 ? (
+				<DataTable
+					key={bookingData.id}
+					columns={dashboardColumns}
+					rows={bookingData.map((data) => {
+						return {
+							id: data.id,
+							day: moment(data.payment.date).format("dddd"),
+							date: moment(data.payment.date).format(
+								"DD MMMM YYYY"
+							),
+							booking: `${data.payment.start_date} - ${data.payment.end_date}`,
+							user: data.payment[0].user.fullname,
+							status: data.payment[0].status,
+						};
+					})}
+				/>
+			) : (
+				<div className="flex justify-center border-2 rounded-md">
+					<p className="text-xl my-2 font-semibold p-2">
+						No booking data available
+					</p>
+				</div>
+			)}
 		</ResponsiveDrawer>
 	);
 }
