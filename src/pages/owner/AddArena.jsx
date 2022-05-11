@@ -148,7 +148,8 @@ export default function CreateArena() {
 						})
 						.then((res) => {
 							successMessage(res);
-							navigate(`/owner/edit/${venueId}/services`);
+							// navigate(`/owner/edit/${venueId}/services`);
+							navigate("/");
 						})
 						.catch((err) => {
 							errorMessage(err);
