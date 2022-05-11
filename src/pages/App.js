@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../components/Buttons";
 import { ListCategory } from "../components/Category";
 import { InputText } from "../components/InputText";
@@ -7,6 +8,18 @@ import "../styles/App.css";
 
 function App() {
   document.title = "Hobiku - Booking Sport Arena";
+  const [search, setSearch] = useState("");
+  const nameForm = useRef(null);
+
+  const handleClickEvent = () => {
+    const form = nameForm.current;
+    setSearch(form["search"].value);
+  };
+
+  useEffect(() => {
+    console.log(search);
+  }, [search]);
+
   return (
     <>
       <Layout>
@@ -19,10 +32,16 @@ function App() {
                 the best sport arena in the city
               </h5>
               <div className="mx-auto flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-row gap-2">
-                <InputText type="text" placeholder="Search" id="input-search" />
-                <Button variant="solid" className="" id="search-button">
-                  <i className="fa-solid fa-magnifying-glass"></i>
-                </Button>
+                <form ref={nameForm}>
+                  <InputText
+                    type="text"
+                    placeholder="Search"
+                    id="input-search"
+                  />
+                  <Button variant="solid" className="" id="search-button">
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                  </Button>
+                </form>
               </div>
             </div>
           </div>
