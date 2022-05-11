@@ -27,6 +27,7 @@ import {
 } from "react-icons/fi";
 
 import { BiCog } from "react-icons/bi";
+import { Navigate, useNavigate } from "react-router-dom";
 
 //import sidebar css from react-pro-sidebar module and our custom css
 // import "react-pro-sidebar/dist/css/styles.css";
@@ -41,6 +42,7 @@ const Sidebar = () => {
     //condition checking to change state from true to false and vice versa
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   };
+  const navigate = useNavigate();
 
   const isActive = (path) => {
     return window.location.pathname === path
@@ -101,7 +103,15 @@ const Sidebar = () => {
           </SidebarContent>
           <SidebarFooter>
             <Menu iconShape="square">
-              <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
+              <MenuItem
+                icon={<FiLogOut />}
+                onClick={() => {
+                  localStorage.removeItem("user-info");
+                  navigate("/");
+                }}
+              >
+                Logout
+              </MenuItem>
             </Menu>
           </SidebarFooter>
         </ProSidebar>
