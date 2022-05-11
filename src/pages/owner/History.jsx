@@ -39,7 +39,7 @@ export default function Transaction() {
 	function countTotal() {
 		let total = 0;
 		for (let i = 0; i < bookingData.length; i++) {
-			total += bookingData[i].venue.price;
+			total += bookingData[i].payment.total_price;
 		}
 		return total;
 	}
@@ -47,26 +47,30 @@ export default function Transaction() {
 	return (
 		<ResponsiveDrawer>
 			<p className="text-xl my-2 font-semibold">Transaction History</p>
-			{bookingData.map((data) => {
-				return (
-					<DataTable
-						key={data.id}
-						columns={historyColumns}
-						rows={[
-							{
-								id: data.id,
-								day: moment(data.venue.date).format("dddd"),
-								date: moment(data.venue.date).format(
-									"DD MMMM YYYY"
-								),
-								booking: data.venue.hours,
-								user: data.user.fullname,
-								price: data.venue.price,
-							},
-						]}
-					/>
-				);
-			})}
+			{bookingData.length > 0 ? (
+				<DataTable
+					key={bookingData.id}
+					columns={historyColumns}
+					rows={bookingData.map((data) => {
+						return {
+							id: data.id,
+							day: moment(data.payment.date).format("dddd"),
+							date: moment(data.payment.date).format(
+								"DD MMMM YYYY"
+							),
+							booking: `${data.payment.start_date} - ${data.payment.end_date}`,
+							user: data.payment[0].user.fullname,
+							price: data.payment.total_price,
+						};
+					})}
+				/>
+			) : (
+				<div className="flex justify-center border-2 rounded-md">
+					<p className="text-xl my-2 font-semibold p-2">
+						No Transaction History
+					</p>
+				</div>
+			)}
 			<div className="flex justify-between my-5">
 				<p className="text-xl font-semibold">Total:</p>
 				<p className="text-xl font-semibold">

@@ -70,7 +70,7 @@ export function ResponsiveDrawer(props) {
 					<ListItemIcon>
 						<StadiumIcon />
 					</ListItemIcon>
-					<ListItemText primary="Arena" />
+					<ListItemText primary="Create Arena" />
 				</ListItem>
 				{/* <ListItem
 					button

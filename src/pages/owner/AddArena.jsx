@@ -79,43 +79,45 @@ export default function CreateArena() {
     setImagePreview(URL.createObjectURL(file));
   };
 
-  const nextButton = (e) => {
-    e.preventDefault();
-    if (venueName && address && city && category && image) {
-      const formData = createVenue();
-      Swal.fire({
-        title: "Are you sure?",
-        text: "Please make sure all the information is correct",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-      }).then((result) => {
-        if (result.value) {
-          navigate("/owner/services");
-          axios
-            .post(`${API}/venues/step1`, formData, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then((res) => {
-              successMessage(res);
-              setVenueId(res.data.data.id);
-              navigate("/owner/services");
-            })
-            .catch((err) => {
-              errorMessage(err);
-            });
-        }
-      });
-    } else {
-      fillAll();
-    }
-  };
+	const nextButton = (e) => {
+		e.preventDefault();
+		if (venueName && address && city && category && image) {
+			const formData = createVenue();
+			Swal.fire({
+				title: "Are you sure?",
+				text: "Please make sure all the information is correct",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes",
+				cancelButtonText: "No",
+			}).then((result) => {
+				if (result.value) {
+					axios
+						.post(`${API}/venues/step1`, formData, {
+							headers: {
+								"Content-Type": "multipart/form-data",
+								Authorization: `Bearer ${token}`,
+							},
+						})
+						.then((res) => {
+							setVenueId(res.data.data.id);
+							localStorage.setItem(
+								"created_id",
+								res.data.data.id
+							);
+							navigate("/owner/services");
+						})
+						.catch((err) => {
+							errorMessage(err);
+						});
+				}
+			});
+		} else {
+			fillAll();
+		}
+	};
 
 	const updateButton = (e) => {
 		e.preventDefault();
@@ -270,7 +272,6 @@ export default function CreateArena() {
 									accept="image/png, image/jpeg"
 									onChange={(e) => changeImageButton(e)}
 								/>
-								{/* {existedVenue !== null && ( */}
 								{url ===
 									`${window.location.origin}/owner/edit/${venueId}` && (
 									<Button
