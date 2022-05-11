@@ -4,11 +4,11 @@ export function ImageDisclosure({ onChange, onSubmit }) {
 	return (
 		<Disclosure>
 			<Disclosure.Button className="py-2">
-				<button
+				<div
 					id="open-trigger"
 					className="py-1 px-3 my-2 uppercase font-semibold text-teal-500 border-t-2 border-b-2">
 					Change Image
-				</button>
+				</div>
 			</Disclosure.Button>
 
 			<Transition
