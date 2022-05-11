@@ -75,10 +75,7 @@ const Sidebar = () => {
               >
                 Home
               </MenuItem>
-              <MenuItem
-                className=" hover:bg-emerald-900 active:bg-emerald-900 hover:rounded-full"
-                icon={<FaList />}
-              >
+              <MenuItem className={isActive("/admin/")} icon={<FaList />}>
                 <a href="/admin/">Owner request</a>
               </MenuItem>
               <MenuItem

@@ -1,48 +1,18 @@
-import React, { useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
-import {
-  approveOwnerRequest,
-  rejectOwnerRequest,
-} from "../services/AdminOwnerRequest";
-import { MiniButton } from "./Buttons";
+import React from "react";
 
-import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
-import { green } from "@mui/material/colors";
-
-export default function AccordionRequestOwner(props) {
-  const { fullname, username, email, phone, status, certificate, id, userId } =
-    props;
+export default function AccordionOwnerList(props) {
+  const { fullname, username, email, phone, status, certificate, id } = props;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-
-  const data = localStorage.getItem("user-info");
-  const json = JSON.parse(data);
-  const token = json.token;
-
-  async function approve() {
-    const body = {
-      ID: userId,
-      role: "owner",
-      status: "approve",
-    };
-    const response = await approveOwnerRequest(token, body);
-  }
-
-  async function reject() {
-    const body = {
-      ID: userId,
-      status: "reject",
-    };
-    const response = await rejectOwnerRequest(token, body);
-  }
 
   return (
     <div>
@@ -80,12 +50,9 @@ export default function AccordionRequestOwner(props) {
               </div>
 
               <div className="basis-1/5 text-center">
-                <MiniButton id="pending" variant="pending" xs>
+                <button className="w-28 bg-yellow-400 px-6 py-1 rounded-full mr-20 text-white block">
                   {status}
-                </MiniButton>
-                {/* <button className="w-28 bg-yellow-400 px-6 py-1 rounded-full mr-20 text-white block">
-                  {status}
-                </button> */}
+                </button>
               </div>
             </div>
           </div>
@@ -96,9 +63,9 @@ export default function AccordionRequestOwner(props) {
               <div className="flex items-center justify-between">
                 <div className="ml-8 flex justify-items-center">
                   {/* {<FiFileText />} */}
-                  <InsertDriveFileRoundedIcon
-                    sx={{ color: green[500], fontSize: 40 }}
-                  />
+                  {/* <InsertDriveFileRoundedIcon
+                      sx={{ color: green[500], fontSize: 40 }}
+                    /> */}
                   <div>
                     <a
                       // href={"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}
@@ -111,24 +78,12 @@ export default function AccordionRequestOwner(props) {
                   </div>
                 </div>
                 <div>
-                  <MiniButton
-                    id="pending"
-                    variant="approve"
-                    onClick={() => {
-                      approve();
-                    }}
-                  >
+                  <button className="w-28 bg-emerald-600 px-6 py-1 rounded-full mr-5 text-white">
                     approve
-                  </MiniButton>
-                  <MiniButton
-                    id="pending"
-                    variant="reject"
-                    onClick={() => {
-                      reject();
-                    }}
-                  >
+                  </button>
+                  <button className="w-28 bg-red-600 px-6 py-1 rounded-full mr-10 text-white">
                     reject
-                  </MiniButton>
+                  </button>
                 </div>
               </div>
             </div>
