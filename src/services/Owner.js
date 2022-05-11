@@ -12,6 +12,7 @@ export const fetchBookingData = async (setBookingData) => {
 		})
 		.then((res) => {
 			setBookingData(res.data.data);
+			console.log(res.data);
 		})
 		.catch((err) => {
 			errorMessage(err);
