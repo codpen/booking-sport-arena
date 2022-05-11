@@ -22,8 +22,14 @@ import { dummy } from "../../services/Owner";
 
 export default function AddServices() {
 	const existedVenue = localStorage.getItem("venue_id");
+	const createdVenue = localStorage.getItem("created_id");
+	const url = document.location.href;
 	// eslint-disable-next-line no-unused-vars
-	const [venueId, setVenueId] = useState(existedVenue ? existedVenue : 0);
+	const [venueId, setVenueId] = useState(
+		url === `${window.location.origin}/owner/services`
+			? createdVenue
+			: existedVenue
+	);
 	const [days, setDays] = useState([]);
 	const [open, setOpen] = useState("");
 	const [close, setClose] = useState("");
@@ -31,8 +37,7 @@ export default function AddServices() {
 	const [facilities, setFacilities] = useState([]);
 	const token = statusLogin();
 	const navigate = useNavigate();
-	const url = document.location.href;
-
+	console.log(venueId);
 	useEffect(() => {
 		url === `${window.location.origin}/owner/edit/${venueId}/services` &&
 			getVenue();
@@ -80,15 +85,16 @@ export default function AddServices() {
 
 	const operationalNotes = {
 		venue_id: venueId ? parseInt(venueId) : venueId,
-		days: days,
+		day: days,
 		open_hour: open,
 		close_hour: close,
 		price: price ? parseInt(price) : price,
-		facility: facilities,
+		facility_id: facilities,
 	};
 
 	const submitButton = (e) => {
 		e.preventDefault();
+		console.log(operationalNotes);
 		if (price === 0 || price === "" || price === "0") {
 			notForFree();
 		} else if (price < 0) {
@@ -205,7 +211,8 @@ export default function AddServices() {
 						</div>
 					</div>
 					<div className="w-full flex justify-center md:justify-end my-2 lg:mx-10 flex-col lg:flex-row">
-						{existedVenue !== null && (
+						{url ===
+							`${window.location.origin}/owner/edit/${venueId}/services` && (
 							<Button
 								className="w-full md:w-28 my-2"
 								onClick={(e) => {
@@ -217,7 +224,7 @@ export default function AddServices() {
 								Update
 							</Button>
 						)}
-						{existedVenue === null && (
+						{url === `${window.location.origin}/owner/services` && (
 							<Button
 								className="w-full md:w-28 md:px-10"
 								onClick={(e) => submitButton(e)}

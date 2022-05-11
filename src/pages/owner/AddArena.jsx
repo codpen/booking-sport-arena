@@ -94,7 +94,6 @@ export default function CreateArena() {
 				cancelButtonText: "No",
 			}).then((result) => {
 				if (result.value) {
-					navigate("/owner/services");
 					axios
 						.post(`${API}/venues/step1`, formData, {
 							headers: {
@@ -103,8 +102,11 @@ export default function CreateArena() {
 							},
 						})
 						.then((res) => {
-							successMessage(res);
 							setVenueId(res.data.data.id);
+							localStorage.setItem(
+								"created_id",
+								res.data.data.id
+							);
 							navigate("/owner/services");
 						})
 						.catch((err) => {
@@ -270,7 +272,6 @@ export default function CreateArena() {
 									accept="image/png, image/jpeg"
 									onChange={(e) => changeImageButton(e)}
 								/>
-								{/* {existedVenue !== null && ( */}
 								{url ===
 									`${window.location.origin}/owner/edit/${venueId}` && (
 									<Button
