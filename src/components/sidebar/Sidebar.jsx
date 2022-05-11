@@ -27,7 +27,7 @@ import {
 } from "react-icons/fi";
 
 import { BiCog } from "react-icons/bi";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //import sidebar css from react-pro-sidebar module and our custom css
 // import "react-pro-sidebar/dist/css/styles.css";

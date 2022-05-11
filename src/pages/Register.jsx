@@ -16,6 +16,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone_number, setPhone] = useState("");
   const [statusValidate, setStatusValidate] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const navigate = useNavigate();
   document.title = "Register";
 
@@ -53,7 +54,8 @@ export default function Register() {
       return <span>Email Not Match</span>;
     }
     setStatusValidate(true);
-    setEmail(email);
+    setIsEmailValid(true);
+    // setEmail(email);
   };
 
   console.log(email);
@@ -112,6 +114,9 @@ export default function Register() {
                       className="invalid:text-red-500"
                       onChange={emailValidation}
                     />
+                    {!isEmailValid && (
+                      <p className="text-xs text-red-500">Email tidak valid</p>
+                    )}
 
                     {/* {emailValidation()} */}
                   </div>
