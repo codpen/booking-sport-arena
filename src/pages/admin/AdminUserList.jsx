@@ -52,7 +52,7 @@ export default function AdminUserList() {
     <div className="w-screen h-screen flex">
       <Sidebar />
       {/* <Accordion /> */}
-      <div className="w-full border-2 rounded-lg mb-10 mx-8 mt-20 py-3">
+      <div className="w-full border-2 rounded-lg mb-10 mx-8 mt-10 py-3 overflow-y-scroll overflow-x-hidden">
         <p className="text-lg font-semibold pt-2 pb-6 ml-7"> User List</p>
         <div className="flex text-slate-500 mb-3 ">
           <p className="pl-10 basis-6/12">User</p>
@@ -61,7 +61,7 @@ export default function AdminUserList() {
         </div>
         <div className="w-full bg-slate-100 h-0.5 mx-4 mb-3" />
         {/* <TableDropdown /> */}
-        {populatingUserList()}
+        <div>{populatingUserList()}</div>
       </div>
     </div>
   );
