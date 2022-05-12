@@ -1,88 +1,80 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Buttons";
+import { errorMessage, fillAll, successMessage } from "../../functions/Alert";
 import {
-  errorMessage,
-  fillAll,
-  MuiError,
-  successMessage,
-} from "../../functions/Alert";
-import {
-  InputText,
-  TextArea,
-  RadioCategory,
-  InputFile,
+	InputText,
+	TextArea,
+	RadioCategory,
+	InputFile,
 } from "../../components/InputText";
 import { LayoutOwner } from "../../components/Layout";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { statusLogin, API } from "../../services/Users";
+import { updatedItems, createdArenaItems } from "../../functions/forms";
 
 export default function CreateArena() {
-  const existedVenue = localStorage.getItem("venue_id") ? true : false;
-  const url = document.location.href;
-  const [venueId, setVenueId] = useState(
-    existedVenue ? localStorage.getItem("venue_id") : ""
-  );
-  const [venueName, setVenueName] = useState("");
-  const [details, setDetails] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [category, setCategory] = useState("");
-  const [image, setImage] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
-  const navigate = useNavigate();
-  const token = statusLogin();
-  document.title = `Hobiku | Create Arena`;
+	const existedVenue = localStorage.getItem("venue_id") ? true : false;
+	const url = document.location.href;
+	const [venueId, setVenueId] = useState(
+		existedVenue ? localStorage.getItem("venue_id") : ""
+	);
+	const [venueName, setVenueName] = useState("");
+	const [details, setDetails] = useState("");
+	const [address, setAddress] = useState("");
+	const [city, setCity] = useState("");
+	const [category, setCategory] = useState("");
+	const [image, setImage] = useState("");
+	const [imagePreview, setImagePreview] = useState(null);
+	const navigate = useNavigate();
+	const token = statusLogin();
+	document.title = `Hobiku | Create Arena`;
+	const editUrl = `${window.location.origin}/owner/edit/${venueId}`;
+	useEffect(() => {
+		url === editUrl && getVenue();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-  useEffect(() => {
-    url === `${window.location.origin}/owner/edit/${venueId}` && getVenue();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+	const getVenue = async () => {
+		await axios
+			.get(`${API}/venues/${venueId}`)
+			.then((res) => {
+				setVenueName(res.data.data.name);
+				setDetails(res.data.data.description);
+				setAddress(res.data.data.address);
+				setCity(res.data.data.city);
+				setCategory(res.data.data.category.id);
+				setImage(res.data.data.image);
+				setImagePreview(res.data.data.image);
+				document.title =
+					url === `${window.location.origin}/owner/edit/${venueId}`
+						? `Edit | ${res.data.data.name}`
+						: "Hobiku | Create Arena";
+			})
+			.catch((err) => {
+				errorMessage(err);
+			});
+	};
 
-  const getVenue = async () => {
-    await axios
-      .get(`${API}/venues/${venueId}`)
-      .then((res) => {
-        setVenueName(res.data.data.name);
-        setDetails(res.data.data.description);
-        setAddress(res.data.data.address);
-        setCity(res.data.data.city);
-        setCategory(res.data.data.category.id);
-        setImage(res.data.data.image);
-        setImagePreview(res.data.data.image);
-        document.title =
-          url === `${window.location.origin}/owner/edit/${venueId}`
-            ? `Edit | ${res.data.data.name}`
-            : "Hobiku | Create Arena";
-      })
-      .catch((err) => {
-        MuiError(err);
-      });
-  };
-
-  function createVenue() {
-    const formData = new FormData();
-    formData.append("name", venueName);
-    formData.append("description", details);
-    formData.append("address", address);
-    formData.append("city", city);
-    formData.append("category_id", category);
-    formData.append("image", image);
-    return formData;
-  }
-
-  const changeImageButton = (e) => {
-    e.preventDefault();
-    const file = e.target.files[0];
-    setImage(file);
-    setImagePreview(URL.createObjectURL(file));
-  };
+	const changeImageButton = (e) => {
+		e.preventDefault();
+		const file = e.target.files[0];
+		setImage(file);
+		setImagePreview(URL.createObjectURL(file));
+	};
 
 	const nextButton = (e) => {
 		e.preventDefault();
 		if (venueName && address && city && category && image) {
-			const formData = createVenue();
+			const formData = createdArenaItems(
+				venueName,
+				details,
+				address,
+				city,
+				category,
+				image
+			);
 			Swal.fire({
 				title: "Are you sure?",
 				text: "Please make sure all the information is correct",
@@ -122,12 +114,13 @@ export default function CreateArena() {
 	const updateButton = (e) => {
 		e.preventDefault();
 		if (venueName && address && city) {
-			const formData = new FormData();
-			formData.append("name", venueName);
-			formData.append("description", details);
-			formData.append("address", address);
-			formData.append("city", city);
-			formData.append("category_id", category);
+			const formData = updatedItems(
+				venueName,
+				details,
+				address,
+				city,
+				category
+			);
 			Swal.fire({
 				title: "Are you sure?",
 				text: "Please make sure all the information is correct",
@@ -148,8 +141,6 @@ export default function CreateArena() {
 						})
 						.then((res) => {
 							successMessage(res);
-							// navigate(`/owner/edit/${venueId}/services`);
-							navigate("/");
 						})
 						.catch((err) => {
 							errorMessage(err);
@@ -159,6 +150,11 @@ export default function CreateArena() {
 		} else {
 			fillAll();
 		}
+	};
+
+	const skipUpdateButton = (e) => {
+		e.preventDefault();
+		navigate(`/owner/edit/${venueId}/services`);
 	};
 
 	const submitImage = (e) => {
@@ -186,8 +182,7 @@ export default function CreateArena() {
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Venue Name
-							{url !==
-								`${window.location.origin}/owner/edit/${venueId}` && (
+							{url !== editUrl && (
 								<strong className="text-amber-500">*</strong>
 							)}
 						</h6>
@@ -211,8 +206,7 @@ export default function CreateArena() {
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Address
-							{url !==
-								`${window.location.origin}/owner/edit/${venueId}` && (
+							{url !== editUrl && (
 								<strong className="text-amber-500">*</strong>
 							)}
 						</h6>
@@ -239,8 +233,7 @@ export default function CreateArena() {
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Category{" "}
-							{url !==
-								`${window.location.origin}/owner/edit/${venueId}` && (
+							{url !== editUrl && (
 								<strong className="text-amber-500">*</strong>
 							)}
 						</h6>
@@ -254,8 +247,7 @@ export default function CreateArena() {
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Upload Image
-							{url !==
-								`${window.location.origin}/owner/edit/${venueId}` && (
+							{url !== editUrl && (
 								<strong className="text-amber-500">*</strong>
 							)}
 						</h6>
@@ -273,53 +265,61 @@ export default function CreateArena() {
 									accept="image/png, image/jpeg"
 									onChange={(e) => changeImageButton(e)}
 								/>
-								{url ===
-									`${window.location.origin}/owner/edit/${venueId}` && (
+								{url === editUrl && (
 									<Button
 										variant="solid"
 										id="change-arena-image-button"
 										onClick={(e) => submitImage(e)}
-										className="mx-4 my-2">
+										className="mx-4 my-2 w-full md:w-1/4">
 										Upload
 									</Button>
 								)}
 							</div>
 						</div>
 					</div>
-					{url !==
-						`${window.location.origin}/owner/edit/${venueId}` && (
-						<p className="w-full px-3 lg:px-10">
-							(<strong className="text-amber-500">*</strong>)
-							Please make sure you fill all the required fields
-							correctly.
-						</p>
-					)}
-					{url ===
-						`${window.location.origin}/owner/edit/${venueId}` && (
-						<p className="w-full px-3 lg:px-10">
-							(<strong className="text-teal-500">*</strong>) If
-							you change the image, please click the upload button
-							to upload the new image.
-						</p>
-					)}
-					<div className="w-full flex justify-center md:justify-end my-2 lg:mx-10 flex-col lg:flex-row">
-						{url ===
-							`${window.location.origin}/owner/edit/${venueId}` && (
-							<Button
-								className="w-full md:w-28 my-2"
-								onClick={(e) => {
-									updateButton(e);
-								}}
-								variant="warning"
-								type="submit"
-								id="button-next">
-								Update
-							</Button>
+					<div className="w-full px-3 lg:px-10">
+						{url !== editUrl ? (
+							<p>
+								(<strong className="text-amber-500">*</strong>)
+								Please make sure you fill all the required
+								fields correctly.
+							</p>
+						) : (
+							<p>
+								(<strong className="text-teal-500">*</strong>)
+								If you change the image, please click the upload
+								button to upload the new image.
+							</p>
 						)}
-						{url !==
-							`${window.location.origin}/owner/edit/${venueId}` && (
+					</div>
+					<div className="w-full my-2 lg:mx-10 flex-col lg:flex-row">
+						{url === editUrl && (
+							<div className="flex gap-4 justify-center md:justify-between">
+								<Button
+									className="w-full md:w-28 my-2"
+									onClick={(e) => {
+										updateButton(e);
+									}}
+									variant="warning"
+									type="submit"
+									id="button-next">
+									Update
+								</Button>
+								<Button
+									className="w-full md:w-28 my-2"
+									onClick={(e) => {
+										skipUpdateButton(e);
+									}}
+									variant="solid"
+									type="submit"
+									id="button-skip">
+									Next
+								</Button>
+							</div>
+						)}
+						{url !== editUrl && (
 							<Button
-								className="w-full md:w-28 my-2"
+								className="w-full md:w-28 my-2 justify-center md:justify-end"
 								onClick={(e) => nextButton(e)}
 								variant="solid"
 								type="submit"
