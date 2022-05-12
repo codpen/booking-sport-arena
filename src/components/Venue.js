@@ -49,29 +49,35 @@ export const Venues = ({ venues, loading }) => {
   );
 };
 
-export function ListVenue() {
+export function ListVenue({ search, category }) {
   const [venues, setVenues] = useState([]);
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [venuesPerPage, setVenuesPerPage] = useState(12);
-  let [searchParams] = useSearchParams();
+  // let [searchParams] = useSearchParams();
+  // let search = searchParams.get("search");
+  // let category = searchParams.get("category");
 
   useEffect(() => {
-    fetchVenues(searchParams.get("search"));
-  }, [searchParams.get("search")]);
+    fetchVenues(search, category);
+  }, [search, category]);
 
-  const fetchVenues = async (search) => {
+  const fetchVenues = async (search, category) => {
     setLoading(true);
     await axios
       .get(`${API}/venues`, {
         params: {
           name: search,
+          category: category,
         },
       })
       .then((res) => {
-        setVenues(res.data.data);
+        // console.log(res);
+        if (res.data.data) {
+          setVenues(res.data.data);
+        }
         setLoading(false);
       })
       .catch((err) => {
@@ -83,13 +89,20 @@ export function ListVenue() {
   const indexOfFirstVenue = indexOfLastVenue - venuesPerPage;
   const currentVenues = venues.slice(indexOfFirstVenue, indexOfLastVenue);
 
+  const displayVenue = () => {
+    if (venues.length > 0) {
+      return <Venues venues={currentVenues} loading={loading} />;
+    }
+    return <span>tidak ada data</span>;
+  };
+
   return (
     <>
       <h4 className="uppercase text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl  my-8 text-teal-500 font-bold text-center">
         LIST ARENA
       </h4>
-      <Venues venues={currentVenues} loading={loading} />
-      <PaginationRounded />
+      {displayVenue()}
+      {/* <PaginationRounded /> */}
     </>
   );
 }

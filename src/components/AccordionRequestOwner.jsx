@@ -5,14 +5,12 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
-import {
-  approveOwnerRequest,
-  rejectOwnerRequest,
-} from "../services/AdminOwnerRequest";
+import { approveOwnerRequest, rejectOwnerRequest } from "../services/Admin";
 import { MiniButton } from "./Buttons";
 
 import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
 import { green } from "@mui/material/colors";
+import swal from "sweetalert";
 
 export default function AccordionRequestOwner(props) {
   const { fullname, username, email, phone, status, certificate, id, userId } =
@@ -36,6 +34,25 @@ export default function AccordionRequestOwner(props) {
     const response = await approveOwnerRequest(token, body);
   }
 
+  const confirmreject = () => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+        reject();
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
+  };
+
   async function reject() {
     const body = {
       ID: userId,
@@ -43,6 +60,25 @@ export default function AccordionRequestOwner(props) {
     };
     const response = await rejectOwnerRequest(token, body);
   }
+
+  const confirmApprove = () => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! Your imaginary file has been deleted!", {
+          icon: "success",
+        });
+        approve();
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
+  };
 
   return (
     <div>
@@ -115,7 +151,7 @@ export default function AccordionRequestOwner(props) {
                     id="pending"
                     variant="approve"
                     onClick={() => {
-                      approve();
+                      confirmApprove();
                     }}
                   >
                     approve
@@ -124,7 +160,7 @@ export default function AccordionRequestOwner(props) {
                     id="pending"
                     variant="reject"
                     onClick={() => {
-                      reject();
+                      confirmreject();
                     }}
                   >
                     reject

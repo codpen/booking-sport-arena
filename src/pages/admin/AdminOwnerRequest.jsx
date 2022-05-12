@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import swal from "sweetalert";
 import AccordionRequestOwner from "../../components/AccordionRequestOwner";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { getRequestOwner } from "../../services/AdminOwnerRequest";
+import { getRequestOwner } from "../../services/Admin";
 
 export default function AdminOwnerRequest() {
   const [requestOwner, setRequestOwner] = useState([]);

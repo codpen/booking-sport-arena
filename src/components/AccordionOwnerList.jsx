@@ -7,7 +7,17 @@ import { Avatar } from "@mui/material";
 import React from "react";
 
 export default function AccordionOwnerList(props) {
-  const { fullname, username, email, phone, status, certificate, id } = props;
+  const {
+    fullname,
+    username,
+    email,
+    phone,
+    status,
+    certificate,
+    id,
+    totalVenue,
+    image,
+  } = props;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -16,6 +26,7 @@ export default function AccordionOwnerList(props) {
 
   return (
     <div>
+      <h1>{totalVenue}</h1>
       <Accordion
         expanded={expanded === `panel${id}`}
         onChange={handleChange(`panel${id}`)}
@@ -31,7 +42,11 @@ export default function AccordionOwnerList(props) {
                 <Avatar
                   sx={{ width: 56, height: 56 }}
                   alt="Remy Sharp"
-                  src="https://source.unsplash.com/360x360?profile"
+                  src={
+                    image
+                      ? image
+                      : "https://source.unsplash.com/360x360?profile"
+                  }
                 />
                 <div className="ml-4 ">
                   <p>{fullname}</p>
@@ -68,7 +83,6 @@ export default function AccordionOwnerList(props) {
                     /> */}
                   <div>
                     <a
-                      // href={"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}
                       href={certificate}
                       target="_blank"
                       rel="noopener noreferrer"
