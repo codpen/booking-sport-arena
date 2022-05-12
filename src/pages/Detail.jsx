@@ -4,14 +4,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../components/Buttons";
 import {
-  IconCard,
-  DaySlots,
-  TimeSlots,
-  DisplayBooking,
-  IconLoading,
+	IconCard,
+	DaySlots,
+	TimeSlots,
+	DisplayBooking,
+	IconLoading,
 } from "../components/Card";
 import Layout from "../components/Layout";
-import { successMessage, MuiError } from "../functions/Alert";
+import { errorMessage, successMessage } from "../functions/Alert";
 import { statusLogin } from "../services/Users";
 import "../styles/App.css";
 import { API, statusRole } from "../services/Users";
@@ -76,10 +76,7 @@ export default function Venue() {
 			})
 			.catch((err) => {
 				setLoading(false);
-				Swal.fire({
-					title: "Oops...",
-					text: err.response.data.message,
-				});
+				errorMessage(err);
 			});
 	};
 	const bookNow = async (e) => {
@@ -107,15 +104,15 @@ export default function Venue() {
 					},
 				})
 				.then((res) => {
-					successMessage(res);
-					window.location.href = res.data.data.payment_url;
+					if (res.data.code === 200) {
+						window.open(res.data.data.payment_url, "_blank");
+						successMessage(res);
+					} else {
+						successMessage(res);
+					}
 				})
 				.catch((err) => {
-					Swal.fire({
-						icon: "error",
-						title: "Oops...",
-						text: err.message,
-					});
+					errorMessage(err);
 				});
 		} else {
 			Swal.fire({ title: "Login", text: "Please login first" });
