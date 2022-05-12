@@ -39,13 +39,12 @@ export default function Transaction() {
 	function countTotal() {
 		let total = 0;
 		for (let i = 0; i < bookingData.length; i++) {
-			if (bookingData[i].total_price !== null) {
+			if (bookingData[i].status === "paid") {
 				total += bookingData[i].total_price;
 			}
 		}
 		return total;
 	}
-
 	return (
 		<ResponsiveDrawer>
 			<p className="text-xl my-2 font-semibold">Transaction History</p>
@@ -58,17 +57,23 @@ export default function Transaction() {
 							id: data.id,
 							day:
 								data.payment !== null
-									? moment(data.payment.date).format("dddd")
+									? moment(data.payment[0].day).format("dddd")
 									: "",
 							date:
 								data.payment !== null
-									? moment(data.payment.date).format(
+									? moment(data.payment[0].day).format(
 											"DD MMMM YYYY"
 									  )
 									: "",
 							booking:
 								data.payment !== null
-									? `${data.payment.start_date} - ${data.payment.end_date}`
+									? `${moment
+											.utc(
+												`${data.payment[0].start_date}`
+											)
+											.format("HH:mm")} - 	${moment
+											.utc(data.payment[0].end_date)
+											.format("HH:mm")}`
 									: "",
 							user:
 								data.payment !== null
@@ -76,7 +81,7 @@ export default function Transaction() {
 									: "",
 							price:
 								data.payment !== null
-									? data.payment.total_price
+									? data.payment[0].total_price
 									: "",
 						};
 					})}

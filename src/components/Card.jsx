@@ -97,9 +97,7 @@ export function WideCard(item) {
 					{moment(item.date).format("DD MMMM YYYY")}
 				</p>
 				<p className="md:my-2">
-					{`${moment(item.start).format("hh:mm")} - ${moment(
-						item.end
-					).format("hh:mm")}`}
+					{item.start} - {item.end}
 				</p>
 			</div>
 			<div className="flex md:w-9/12 w-full flex-wrap justify-between">
@@ -114,9 +112,7 @@ export function WideCard(item) {
 							{moment(item.date).format("DD MMMM YYYY")}
 						</p>
 						<p className="md:my-2">
-							{`${moment(item.start).format("hh:mm")} - ${moment(
-								item.end
-							).format("hh:mm")}`}
+							{item.start} - {item.end}
 						</p>
 					</div>
 					<div className="">
