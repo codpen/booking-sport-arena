@@ -12,6 +12,7 @@ import { LayoutOwner } from "../../components/Layout";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { statusLogin, API } from "../../services/Users";
+import { updatedItems, createdArenaItems } from "../../functions/forms";
 
 export default function CreateArena() {
 	const existedVenue = localStorage.getItem("venue_id") ? true : false;
@@ -29,9 +30,9 @@ export default function CreateArena() {
 	const navigate = useNavigate();
 	const token = statusLogin();
 	document.title = `Hobiku | Create Arena`;
-
+	const editUrl = `${window.location.origin}/owner/edit/${venueId}`;
 	useEffect(() => {
-		url === `${window.location.origin}/owner/edit/${venueId}` && getVenue();
+		url === editUrl && getVenue();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -56,17 +57,6 @@ export default function CreateArena() {
 			});
 	};
 
-	function createVenue() {
-		const formData = new FormData();
-		formData.append("name", venueName);
-		formData.append("description", details);
-		formData.append("address", address);
-		formData.append("city", city);
-		formData.append("category_id", category);
-		formData.append("image", image);
-		return formData;
-	}
-
 	const changeImageButton = (e) => {
 		e.preventDefault();
 		const file = e.target.files[0];
@@ -77,7 +67,14 @@ export default function CreateArena() {
 	const nextButton = (e) => {
 		e.preventDefault();
 		if (venueName && address && city && category && image) {
-			const formData = createVenue();
+			const formData = createdArenaItems(
+				venueName,
+				details,
+				address,
+				city,
+				category,
+				image
+			);
 			Swal.fire({
 				title: "Are you sure?",
 				text: "Please make sure all the information is correct",
@@ -117,12 +114,13 @@ export default function CreateArena() {
 	const updateButton = (e) => {
 		e.preventDefault();
 		if (venueName && address && city) {
-			const formData = new FormData();
-			formData.append("name", venueName);
-			formData.append("description", details);
-			formData.append("address", address);
-			formData.append("city", city);
-			formData.append("category_id", category);
+			const formData = updatedItems(
+				venueName,
+				details,
+				address,
+				city,
+				category
+			);
 			Swal.fire({
 				title: "Are you sure?",
 				text: "Please make sure all the information is correct",
@@ -184,8 +182,7 @@ export default function CreateArena() {
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Venue Name
-							{url !==
-								`${window.location.origin}/owner/edit/${venueId}` && (
+							{url !== editUrl && (
 								<strong className="text-amber-500">*</strong>
 							)}
 						</h6>
@@ -209,8 +206,7 @@ export default function CreateArena() {
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Address
-							{url !==
-								`${window.location.origin}/owner/edit/${venueId}` && (
+							{url !== editUrl && (
 								<strong className="text-amber-500">*</strong>
 							)}
 						</h6>
@@ -237,8 +233,7 @@ export default function CreateArena() {
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Category{" "}
-							{url !==
-								`${window.location.origin}/owner/edit/${venueId}` && (
+							{url !== editUrl && (
 								<strong className="text-amber-500">*</strong>
 							)}
 						</h6>
@@ -252,8 +247,7 @@ export default function CreateArena() {
 					<div className="mb-5 w-full px-3 lg:px-10">
 						<h6 className="font-bold my-3">
 							Upload Image
-							{url !==
-								`${window.location.origin}/owner/edit/${venueId}` && (
+							{url !== editUrl && (
 								<strong className="text-amber-500">*</strong>
 							)}
 						</h6>
@@ -271,8 +265,7 @@ export default function CreateArena() {
 									accept="image/png, image/jpeg"
 									onChange={(e) => changeImageButton(e)}
 								/>
-								{url ===
-									`${window.location.origin}/owner/edit/${venueId}` && (
+								{url === editUrl && (
 									<Button
 										variant="solid"
 										id="change-arena-image-button"
@@ -284,25 +277,23 @@ export default function CreateArena() {
 							</div>
 						</div>
 					</div>
-					{url !==
-						`${window.location.origin}/owner/edit/${venueId}` && (
-						<p className="w-full px-3 lg:px-10">
-							(<strong className="text-amber-500">*</strong>)
-							Please make sure you fill all the required fields
-							correctly.
-						</p>
-					)}
-					{url ===
-						`${window.location.origin}/owner/edit/${venueId}` && (
-						<p className="w-full px-3 lg:px-10">
-							(<strong className="text-teal-500">*</strong>) If
-							you change the image, please click the upload button
-							to upload the new image.
-						</p>
-					)}
+					<div className="w-full px-3 lg:px-10">
+						{url !== editUrl ? (
+							<p>
+								(<strong className="text-amber-500">*</strong>)
+								Please make sure you fill all the required
+								fields correctly.
+							</p>
+						) : (
+							<p>
+								(<strong className="text-teal-500">*</strong>)
+								If you change the image, please click the upload
+								button to upload the new image.
+							</p>
+						)}
+					</div>
 					<div className="w-full my-2 lg:mx-10 flex-col lg:flex-row">
-						{url ===
-							`${window.location.origin}/owner/edit/${venueId}` && (
+						{url === editUrl && (
 							<div className="flex gap-4 justify-center md:justify-between">
 								<Button
 									className="w-full md:w-28 my-2"
@@ -326,8 +317,7 @@ export default function CreateArena() {
 								</Button>
 							</div>
 						)}
-						{url !==
-							`${window.location.origin}/owner/edit/${venueId}` && (
+						{url !== editUrl && (
 							<Button
 								className="w-full md:w-28 my-2 justify-center md:justify-end"
 								onClick={(e) => nextButton(e)}
