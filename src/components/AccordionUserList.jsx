@@ -46,10 +46,6 @@ export default function AccordionUserList(props) {
                 <p>{email}</p>
                 <p className="text-slate-400">{phone}</p>
               </div>
-
-              <div className="basis-3/12 text-center">
-                <button className="w-28 bg-yellow-400 px-6 py-1 rounded-full mr-20 text-white block"></button>
-              </div>
             </div>
           </div>
         </AccordionSummary>

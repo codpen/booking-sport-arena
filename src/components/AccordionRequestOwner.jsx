@@ -25,15 +25,6 @@ export default function AccordionRequestOwner(props) {
   const json = JSON.parse(data);
   const token = json.token;
 
-  async function approve() {
-    const body = {
-      ID: userId,
-      role: "owner",
-      status: "approve",
-    };
-    const response = await approveOwnerRequest(token, body);
-  }
-
   const confirmreject = () => {
     swal({
       title: "Are you sure?",
@@ -59,18 +50,28 @@ export default function AccordionRequestOwner(props) {
       status: "reject",
     };
     const response = await rejectOwnerRequest(token, body);
+    <meta http-equiv="refresh" content="30" />;
+  }
+
+  async function approve() {
+    const body = {
+      ID: userId,
+      role: "owner",
+      status: "approve",
+    };
+    const response = await approveOwnerRequest(token, body);
   }
 
   const confirmApprove = () => {
     swal({
       title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this imaginary file!",
+      text: "user will become owner if you agree",
       icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal("Poof! Your imaginary file has been deleted!", {
+        swal("user become owner", {
           icon: "success",
         });
         approve();
