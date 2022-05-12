@@ -204,64 +204,63 @@ export function CheckDay({ value, setValue }) {
 }
 
 export function AddFacilities({ value, setValue }) {
-  console.log(value);
-  const AvailableFacilities = [1, 2, 3, 4, 5, 6, 7];
-  const NameFacilities = [
-    "Mosque",
-    "Parking Lot",
-    "Toilet",
-    "Cafe",
-    "Locker",
-    "Wifi",
-    "Rental Equipment",
-  ];
-  return (
-    <FormControl
-      sx={{
-        display: "block",
-      }}
-    >
-      <FormGroup
-        sx={{
-          display: "flex",
-          justifyContent: {
-            lg: "space-between",
-            md: "space-between",
-            sm: "left",
-            xs: "left",
-          },
-          flexDirection: {
-            lg: "row",
-            md: "row",
-            sm: "column",
-            xs: "column",
-          },
-        }}
-      >
-        {AvailableFacilities.map((facility, index) => (
-          <FormControlLabel
-            key={index}
-            control={
-              <Checkbox
-                checked={value.indexOf(facility) !== -1}
-                onChange={(event) => {
-                  setValue(
-                    event.target.checked
-                      ? [...value, facility]
-                      : value.filter((v) => v !== facility)
-                  );
-                }}
-                name={NameFacilities[index]}
-                id={`facility-number-${facility}`}
-                color="success"
-              />
-            }
-            label={NameFacilities[index]}
-          />
-        ))}
-      </FormGroup>
-    </FormControl>
-  );
+	const AvailableFacilities = [1, 2, 3, 4, 5, 6, 7];
+	const NameFacilities = [
+		"Mosque",
+		"Parking Lot",
+		"Toilet",
+		"Cafe",
+		"Locker",
+		"Wifi",
+		"Rental Equipment",
+	];
+	return (
+		<FormControl
+			sx={{
+				display: "block",
+			}}>
+			<FormGroup
+				sx={{
+					display: "flex",
+					justifyContent: {
+						lg: "space-between",
+						md: "space-between",
+						sm: "left",
+						xs: "left",
+					},
+					flexDirection: {
+						lg: "row",
+						md: "row",
+						sm: "column",
+						xs: "column",
+					},
+				}}>
+				{AvailableFacilities.map((facility, index) => (
+					<FormControlLabel
+						key={index}
+						control={
+							<Checkbox
+								checked={value.indexOf(facility) !== -1}
+								onChange={(event) => {
+									setValue(
+										event.target.checked
+											? [...value, facility]
+											: value.filter(
+													(v) => v !== facility
+											  )
+									);
+								}}
+								name={NameFacilities[index]}
+								id={`facility-number-${facility}`}
+								color="success"
+							/>
+						}
+						label={NameFacilities[index]}
+					/>
+				))}
+			</FormGroup>
+		</FormControl>
+	);
 }
 
 export function TimeSelector({ value, setValue }) {

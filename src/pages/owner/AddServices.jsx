@@ -37,7 +37,7 @@ export default function AddServices() {
 	const [facilities, setFacilities] = useState([]);
 	const token = statusLogin();
 	const navigate = useNavigate();
-	console.log(venueId);
+
 	useEffect(() => {
 		url === `${window.location.origin}/owner/edit/${venueId}/services` &&
 			getVenue();
@@ -91,7 +91,7 @@ export default function AddServices() {
 		price: price ? parseInt(price) : price,
 		facility_id: facilities,
 	};
-  
+
 	const submitButton = (e) => {
 		e.preventDefault();
 		if (price === 0 || price === "" || price === "0") {
@@ -122,36 +122,41 @@ export default function AddServices() {
 		}
 	};
 
-  const updateButton = (e) => {
-    e.preventDefault();
-    if (price === 0 || price === "" || price === "0") {
-      notForFree();
-    } else if (price < 0) {
-      notForFree();
-    } else if (close < open) {
-      timeError();
-    } else if (days.length === 0) {
-      minimumDay();
-    } else if (facilities.length === 0) {
-      minimumFacility();
-    } else if (days && open && close && price && facilities) {
-      axios
-        .put(`${API}/venues/step2/${venueId}`, operationalNotes, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          successMessage(res);
-          navigate(`/venues/${venueId}`);
-          localStorage.removeItem("venue_id");
-        })
-        .catch((err) => {
-          errorMessage(err);
-        });
-    }
-  };
+	const updateButton = (e) => {
+		e.preventDefault();
+		if (price === 0 || price === "" || price === "0") {
+			notForFree();
+		} else if (price < 0) {
+			notForFree();
+		} else if (close < open) {
+			timeError();
+		} else if (days.length === 0) {
+			minimumDay();
+		} else if (facilities.length === 0) {
+			minimumFacility();
+		} else if (days && open && close && price && facilities) {
+			axios
+				.put(`${API}/venues/step2/${venueId}`, operationalNotes, {
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				})
+				.then((res) => {
+					successMessage(res);
+					navigate(`/venues/${venueId}`);
+					localStorage.removeItem("venue_id");
+				})
+				.catch((err) => {
+					errorMessage(err);
+				});
+		}
+	};
+
+	const backButton = (e) => {
+		e.preventDefault();
+		navigate(`/owner/edit/${venueId}`);
+	};
 
 	return (
 		<LayoutOwner>
@@ -209,23 +214,35 @@ export default function AddServices() {
 							/>
 						</div>
 					</div>
-					<div className="w-full flex justify-center md:justify-end my-2 lg:mx-10 flex-col lg:flex-row">
+					<div className="w-full my-2 lg:mx-10 flex-col lg:flex-row">
 						{url ===
 							`${window.location.origin}/owner/edit/${venueId}/services` && (
-							<Button
-								className="w-full md:w-28 my-2"
-								onClick={(e) => {
-									updateButton(e);
-								}}
-								variant="warning"
-								type="submit"
-								id="button-next">
-								Update
-							</Button>
+							<div className="flex gap-4 flex-row-reverse justify-center md:justify-between">
+								<Button
+									className="w-full md:w-28 my-2"
+									onClick={(e) => {
+										updateButton(e);
+									}}
+									variant="warning"
+									type="submit"
+									id="button-update">
+									Update
+								</Button>
+								<Button
+									className="w-full md:w-28 my-2"
+									onClick={(e) => {
+										backButton(e);
+									}}
+									variant="solid"
+									type="submit"
+									id="button-back">
+									Back
+								</Button>
+							</div>
 						)}
 						{url === `${window.location.origin}/owner/services` && (
 							<Button
-								className="w-full md:w-28 md:px-10"
+								className="w-full md:w-28 md:px-10 justify-center md:justify-end"
 								onClick={(e) => submitButton(e)}
 								variant="solid"
 								type="submit"
