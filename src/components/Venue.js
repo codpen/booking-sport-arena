@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CardLoading } from "./Card";
 import PaginationRounded from "./Pagination";
 import { API } from "../services/Users";
@@ -56,15 +56,20 @@ export function ListVenue() {
   const [currentPage, setCurrentPage] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [venuesPerPage, setVenuesPerPage] = useState(12);
+  let [searchParams] = useSearchParams();
 
   useEffect(() => {
-    fetchVenues();
-  }, []);
+    fetchVenues(searchParams.get("search"));
+  }, [searchParams.get("search")]);
 
-  const fetchVenues = async () => {
+  const fetchVenues = async (search) => {
     setLoading(true);
     await axios
-      .get(`${API}/venues`)
+      .get(`${API}/venues`, {
+        params: {
+          name: search,
+        },
+      })
       .then((res) => {
         setVenues(res.data.data);
         setLoading(false);
