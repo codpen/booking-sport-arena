@@ -60,11 +60,11 @@ export default function Owner() {
 									: "",
 							booking:
 								data.payment !== null
-									? `${moment(
-											data.payment[0].start_date
-									  ).format("HH:mm")} - ${moment(
-											data.payment[0].end_date
-									  ).format("HH:mm")}`
+									? `${moment
+											.utc(data.payment[0].start_date)
+											.format("HH:mm")} - ${moment
+											.utc(data.payment[0].end_date)
+											.format("HH:mm")}`
 									: "",
 							user:
 								data.payment !== null
