@@ -20,7 +20,7 @@ import StadiumIcon from "@mui/icons-material/Stadium";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { teal, grey } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
-
+import logo from "../assets/hobiku.png";
 const drawerWidth = 240;
 
 export function ResponsiveDrawer(props) {
@@ -34,7 +34,7 @@ export function ResponsiveDrawer(props) {
 
 	const drawer = (
 		<div>
-			<Toolbar className="flex justify-center">
+			<Toolbar className="flex justify-center bg-gray-50">
 				<Typography
 					variant="h5"
 					className="uppercase font-bold hidden md:block text-center"
@@ -42,7 +42,7 @@ export function ResponsiveDrawer(props) {
 					id="homepage-logo"
 					onClick={() => navigate("/")}
 					component="button">
-					Hobiku
+					<img src={logo} alt="Hobiku" width={130} height={40} />
 				</Typography>
 			</Toolbar>
 			<Divider />
@@ -72,17 +72,6 @@ export function ResponsiveDrawer(props) {
 					</ListItemIcon>
 					<ListItemText primary="Create Arena" />
 				</ListItem>
-				{/* <ListItem
-					button
-					key="Arena 1"
-					onClick={() => {
-						navigate("/owner/:arena_id");
-					}}>
-					<ListItemIcon>
-						<StadiumIcon />
-					</ListItemIcon>
-					<ListItemText primary="Arena 1" />
-				</ListItem> */}
 				<ListItem
 					button
 					key="Transaction"
@@ -144,7 +133,7 @@ export function ResponsiveDrawer(props) {
 						id="homepage-title"
 						onClick={() => navigate("/")}
 						component="button">
-						Hobiku
+						<img src={logo} alt="Hobiku" width={130} height={40} />
 					</Typography>
 				</Toolbar>
 			</AppBar>
