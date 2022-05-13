@@ -13,8 +13,17 @@ import { green } from "@mui/material/colors";
 import swal from "sweetalert";
 
 export default function AccordionRequestOwner(props) {
-  const { fullname, username, email, phone, status, certificate, id, userId } =
-    props;
+  const {
+    fullname,
+    username,
+    email,
+    phone,
+    status,
+    certificate,
+    id,
+    userId,
+    image,
+  } = props;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -28,18 +37,18 @@ export default function AccordionRequestOwner(props) {
   const confirmreject = () => {
     swal({
       title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this imaginary file!",
+      text: "request to become owner will be rejected",
       icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal("Poof! Your imaginary file has been deleted!", {
+        swal("request to become owner is rejected", {
           icon: "success",
         });
         reject();
       } else {
-        swal("Your imaginary file is safe!");
+        swal("action cancelled");
       }
     });
   };
@@ -50,7 +59,7 @@ export default function AccordionRequestOwner(props) {
       status: "reject",
     };
     const response = await rejectOwnerRequest(token, body);
-    <meta http-equiv="refresh" content="30" />;
+    document.location.reload(true);
   }
 
   async function approve() {
@@ -60,6 +69,7 @@ export default function AccordionRequestOwner(props) {
       status: "approve",
     };
     const response = await approveOwnerRequest(token, body);
+    document.location.reload(true);
   }
 
   const confirmApprove = () => {
@@ -71,12 +81,12 @@ export default function AccordionRequestOwner(props) {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal("user become owner", {
+        swal("user approved to become owner", {
           icon: "success",
         });
         approve();
       } else {
-        swal("Your imaginary file is safe!");
+        swal("action cancelled!");
       }
     });
   };
@@ -98,7 +108,11 @@ export default function AccordionRequestOwner(props) {
                 <Avatar
                   sx={{ width: 56, height: 56 }}
                   alt="Remy Sharp"
-                  src="https://source.unsplash.com/360x360?profile"
+                  src={
+                    image
+                      ? image
+                      : "https://source.unsplash.com/360x360?profile"
+                  }
                 />
                 <div className="ml-4 ">
                   <p>{fullname}</p>
