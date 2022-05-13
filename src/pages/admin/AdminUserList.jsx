@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import swal from "sweetalert";
 import AccordionUserList from "../../components/AccordionUserList";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { getUserList } from "../../services/AdminUserList";
+import { getUserList } from "../../services/Admin";
 
 export default function AdminUserList() {
   const [userList, setUserList] = useState([]);

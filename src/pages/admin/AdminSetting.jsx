@@ -4,7 +4,7 @@ import { Button } from "../../components/Buttons";
 import { InputText } from "../../components/InputText";
 
 import Sidebar from "../../components/sidebar/Sidebar";
-import { changePassword } from "../../services/AdminChangePassword";
+import { changePassword } from "../../services/Admin";
 
 export default function AdminSetting() {
   const [password, setPassword] = useState("");
@@ -46,16 +46,7 @@ export default function AdminSetting() {
         <p className="text-lg font-semibold pt-2 pb-6 ml-7"> owner Setting</p>
         <div className="flex text-slate-500 mb-3 "></div>
         <div className="w-full bg-slate-100 h-0.5 mx-4 mb-3" />
-        <div className="md:flex w-full gap-3">
-          <div>
-            <p className=" mb-2">old password</p>
-            <InputText
-              id="input-password"
-              placeholder="input old password"
-              // onChange={(e) => setPassword(e.target.value)}
-              type="password"
-            />
-          </div>
+        <div className="md:flex w-full gap-3 ml-4">
           <div>
             <p className=" mb-2">new password</p>
             <InputText
@@ -81,7 +72,7 @@ export default function AdminSetting() {
           id="register-button"
           type="submit"
           variant="solid"
-          className="mt-10 "
+          className="mt-10 ml-4"
           onClick={() => {
             updatePassword();
           }}
