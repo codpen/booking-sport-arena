@@ -7,7 +7,6 @@ import { getUserList } from "../../services/Admin";
 
 export default function AdminUserList() {
   const [userList, setUserList] = useState([]);
-  console.log(userList);
 
   useEffect(() => {
     if (localStorage.getItem("user-info")) {

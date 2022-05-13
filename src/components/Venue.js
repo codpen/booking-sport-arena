@@ -74,7 +74,6 @@ export function ListVenue({ search, category }) {
         },
       })
       .then((res) => {
-        // console.log(res);
         if (res.data.data) {
           setVenues(res.data.data);
         }
