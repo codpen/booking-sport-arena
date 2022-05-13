@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+<div align="center">
+  <img src="https://cdn.discordapp.com/attachments/965636649633579048/974519983751184434/Hobiku-logo.png" />
+  <h1>Booking Sport Arena App Project</h1>
+  <a href="https://booking-sport-arena.vercel.app/" target="_blank"><strong>VISIT THE LIVE APP</strong></a>
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br />
 
-## Available Scripts
+### Overview
+> The Sport Arena Booking App is an application that is used to help sports lovers to find affordable and available sports arenas in their vicinity with the latest payment methods.
+In addition, This Application also helps the business owner of the sport arena to organize their arena schedules easily and simply.
+such as managing bookings, set up the arena, and tidy up the transaction history
 
-In the project directory, you can run:
+<br/>
 
-### `npm start`
+## Table of contents
+- [Overview](#overview)
+  - [Screenshots](#screenshots)
+  - [Links](#links)
+- [About this Apps](#about-this-application)
+  - [Features](#features)
+  - [Built with](#built-with)
+  - [Authors](#authors)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<br/>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Screenshots
 
-### `npm test`
+> Homepage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Homepage](https://cdn.discordapp.com/attachments/965636649633579048/974505124108058634/Homepage.png)
 
-### `npm run build`
+> Booking Menu
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Booking](https://cdn.discordapp.com/attachments/965636649633579048/974505123730563162/Booking.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> Profile Page
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![UserProfile](https://cdn.discordapp.com/attachments/965636649633579048/974505124779139152/Profile.png)
 
-### `npm run eject`
+> Owner Page
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![OwnerPage](https://cdn.discordapp.com/attachments/965636649633579048/974505124414226442/Owner.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Links
+ - [**FIGMA DESIGN**](https://www.figma.com/file/wc1Aye69HurKmOu0QnlfdY/sport-arena?node-id=0%3A1)
+ - [**DEMO APPLICATION**](https://booking-sport-arena.vercel.app/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<br/>
+<hr />
+<br/>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## About this Application
+### Features
+``` We have three main roles which important in this app ```
+>User
 
-## Learn More
+`User without login can access homepage & arena detail`
+- [x] User can **Create**, **Read**, **Update** & **Delete** to their own account
+- [x] User can **Read** and **Create** a Booking Schedule
+- [x] User can finish the transaction with online Payment
+- [x] User can see the history of their previous booking
+- [x] User can request to become an Owner
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+>Owner
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`User will become admin after approval from Admin`
+- [x] Owner can **Create**, **Read**, **Update** & **Delete** to their own arena
+- [x] Owner can **Read** can know who's booking on thier arena
+- [x] Owner can **Read** and save the history of the transaction
 
-### Code Splitting
+>Admin
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+`Admin account will be set up by BackEnd Team`
+- [x] Admin can **Read** all User & Owner who already registered
+- [x] Admin can Approve or Decline the User request to become an Owner
+- [x] Admin can only **Update** their password
 
-### Analyzing the Bundle Size
+<br/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Built With
+[![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://www.javascript.com/)
+[![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://reactjs.org/)
+[![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](tailwindcss.com/)
+[![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)](mui.com/)
+[![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)](https://reactrouter.com/)
+- [Axios](axios-http.com/)  to handle fetch data
+- [FontAwesome](https://fontawesome.com/) as the icon Libarary
+- [Moment.js](https://momentjs.com/) to handle time management
+- [SweetAlert](https://sweetalert2.github.io/), and [Headless UI](https://headlessui.dev/)
 
-### Making a Progressive Web App
+<br/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Authors
+[![GitHub](https://img.shields.io/badge/Ahmad_Tiar-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ATiarK)
+[![GitHub](https://img.shields.io/badge/Ricky_H-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ricky-ard)
