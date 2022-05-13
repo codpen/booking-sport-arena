@@ -8,7 +8,6 @@ import React from "react";
 
 export default function AccordionOwnerList(props) {
   const { fullname, username, id, image, businessName, venue } = props;
-  console.log(venue);
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
