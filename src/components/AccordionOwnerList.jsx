@@ -7,27 +7,46 @@ import { Avatar } from "@mui/material";
 import React from "react";
 
 export default function AccordionOwnerList(props) {
-  const {
-    fullname,
-    username,
-    id,
-    totalVenue,
-    image,
-    businessName,
-    venueImage,
-    venueName,
-    venueCity,
-    venueAddress,
-  } = props;
+  const { fullname, username, id, image, businessName, venue } = props;
+  console.log(venue);
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  const showDetail = () => {
+    if (venue.length > 0) {
+      return (
+        <AccordionDetails>
+          <Typography>
+            <div className="w-full">
+              <div className="flex items-center justify-between">
+                <div className="ml-8 flex justify-items-center">
+                  <div>
+                    <img
+                      className="basis-6/12 w-44 h-24 rounded-md"
+                      src={venue[0].image}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="basis-6/12">
+                  <p>{venue[0].name}</p>
+
+                  <p>{venue[0].city}</p>
+                  <p>{venue[0].address}</p>
+                </div>
+              </div>
+            </div>
+          </Typography>
+        </AccordionDetails>
+      );
+    }
+  };
+
   return (
     <div>
-      console.log({venueAddress});
       <Accordion
         expanded={expanded === `panel${id}`}
         onChange={handleChange(`panel${id}`)}
@@ -57,37 +76,12 @@ export default function AccordionOwnerList(props) {
 
               <div className="basis-6/12">
                 <p>{businessName}</p>
-                <p className="text-slate-400">{totalVenue}</p>
+                <p className="text-slate-400">{venue.length}</p>
               </div>
             </div>
           </div>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            <div className="w-full">
-              <div className="flex items-center justify-between">
-                <div className="ml-8 flex justify-items-center">
-                  {/* {<FiFileText />} */}
-                  {/* <InsertDriveFileRoundedIcon
-                      sx={{ color: green[500], fontSize: 40 }}
-                    /> */}
-                  <div>
-                    <img
-                      className="basis-6/12 w-44 h-24 rounded-md"
-                      src="https://source.unsplash.com/360x360?soccer"
-                      alt=""
-                    />
-                  </div>
-                </div>
-                <div className="basis-6/12">
-                  <p>text{venueName}</p>
-                  <p>text{venueCity}</p>
-                  <p>text{venueAddress}</p>
-                </div>
-              </div>
-            </div>
-          </Typography>
-        </AccordionDetails>
+        {showDetail()}
       </Accordion>
     </div>
   );

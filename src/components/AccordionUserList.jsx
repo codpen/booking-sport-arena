@@ -10,7 +10,7 @@ import { Avatar } from "@mui/material";
 // import { green } from "@mui/material/colors";
 
 export default function AccordionUserList(props) {
-  const { fullname, username, email, phone, id } = props;
+  const { fullname, username, email, phone, id, image } = props;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -34,7 +34,11 @@ export default function AccordionUserList(props) {
                 <Avatar
                   sx={{ width: 56, height: 56 }}
                   alt="avatar"
-                  src="https://source.unsplash.com/360x360?profile"
+                  src={
+                    image
+                      ? image
+                      : "https://source.unsplash.com/360x360?profile"
+                  }
                 />
                 <div className="ml-4 ">
                   <p>{fullname}</p>

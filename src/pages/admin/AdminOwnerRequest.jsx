@@ -21,7 +21,7 @@ export default function AdminOwnerRequest() {
     const response = await getRequestOwner(token);
     if (response.code === 200) {
       setRequestOwner(response.data);
-      swal("Success", "Data has been fetched", "success");
+      // swal("Success", "Data has been fetched", "success");
     } else {
       if (response.message === "missing or malformed jwt") {
         Navigate("/login");
@@ -44,6 +44,7 @@ export default function AdminOwnerRequest() {
             status={data.status}
             certificate={data.business_certificate}
             userId={data.ID}
+            image={data.image}
           />
         );
       });

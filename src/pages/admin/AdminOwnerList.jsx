@@ -21,7 +21,7 @@ export default function AdminOwnerList() {
     const response = await getOwnerList(token);
     if (response.code === 200) {
       setOwnerList(response.data);
-      swal("Success", "Data has been fetched", "success");
+      // swal("Success", "Data has been fetched", "success");
     } else {
       if (response.message === "missing or malformed jwt") {
         Navigate("/login");
@@ -40,12 +40,8 @@ export default function AdminOwnerList() {
           fullname={data.fullname}
           username={data.username}
           image={data.image}
-          totalVenue={data.venue.length ?? 0}
           businessName={data.business_name}
-          venueImage={data.venue.image}
-          venueName={data.venue.name}
-          venueCity={data.venue.city}
-          venueAddress={data.venue.address}
+          venue={data.venue}
         />
       ));
     }

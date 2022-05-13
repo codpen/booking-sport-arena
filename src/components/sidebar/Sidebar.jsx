@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import "react-pro-sidebar/dist/css/styles.css";
 // import "~react-pro-sidebar/dist/scss/styles.scss";
 import "./CustomSidebar.css";
+import logo from "./../../assets/hobikuwhite.png";
+import logoBall from "./../../assets/logo512.png";
 
 //import react pro sidebar components
 import {
@@ -56,9 +58,15 @@ const Sidebar = () => {
         {/* collapsed props to change menu size using menucollapse state */}
         <ProSidebar collapsed={menuCollapse}>
           <SidebarHeader>
-            <div className="logotext my-5">
+            <div className="logotext my-5 bac">
               {/* small and big change using menucollapse state */}
-              <p>{menuCollapse ? "H" : "Hobiku"}</p>
+              <p>
+                {menuCollapse ? (
+                  <img src={logoBall} alt="Hobiku" width={40} height={40} />
+                ) : (
+                  <img src={logo} alt="Hobiku" width={130} height={40} />
+                )}
+              </p>
             </div>
             <div className="closemenu" onClick={menuIconClick}>
               {/* changing menu collapse icon on click */}
@@ -67,16 +75,6 @@ const Sidebar = () => {
           </SidebarHeader>
           <SidebarContent>
             <Menu iconShape="square">
-              <MenuItem
-                className={
-                  " hover:bg-emerald-900" + (window.location.pathname === "/")
-                    ? "active:bg-emerald-900 hover:rounded-full"
-                    : ""
-                }
-                icon={<FiHome />}
-              >
-                Home
-              </MenuItem>
               <MenuItem className={isActive("/admin/")} icon={<FaList />}>
                 <a href="/admin/">Owner request</a>
               </MenuItem>
