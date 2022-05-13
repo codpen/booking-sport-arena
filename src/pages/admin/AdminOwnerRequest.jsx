@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import swal from "sweetalert";
 import AccordionRequestOwner from "../../components/AccordionRequestOwner";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { getRequestOwner } from "../../services/AdminOwnerRequest";
+import { getRequestOwner } from "../../services/Admin";
 
 export default function AdminOwnerRequest() {
   const [requestOwner, setRequestOwner] = useState([]);
@@ -21,7 +21,7 @@ export default function AdminOwnerRequest() {
     const response = await getRequestOwner(token);
     if (response.code === 200) {
       setRequestOwner(response.data);
-      swal("Success", "Data has been fetched", "success");
+      // swal("Success", "Data has been fetched", "success");
     } else {
       if (response.message === "missing or malformed jwt") {
         Navigate("/login");
@@ -44,6 +44,7 @@ export default function AdminOwnerRequest() {
             status={data.status}
             certificate={data.business_certificate}
             userId={data.ID}
+            image={data.image}
           />
         );
       });

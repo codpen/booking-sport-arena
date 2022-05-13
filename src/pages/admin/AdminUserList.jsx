@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import swal from "sweetalert";
 import AccordionUserList from "../../components/AccordionUserList";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { getUserList } from "../../services/AdminUserList";
+import { getUserList } from "../../services/Admin";
 
 export default function AdminUserList() {
   const [userList, setUserList] = useState([]);
@@ -22,7 +22,7 @@ export default function AdminUserList() {
     const response = await getUserList(token);
     if (response.code === 200) {
       setUserList(response.data);
-      swal("Success", "Data has been fetched", "success");
+      // swal("Success", "Data has been fetched", "success");
     } else {
       if (response.message === "missing or malformed jwtt") {
         Navigate("/login");
@@ -42,6 +42,7 @@ export default function AdminUserList() {
             username={data.username}
             email={data.email}
             phone={data.phone_number}
+            image={data.image}
           />
         );
       });

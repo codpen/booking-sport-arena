@@ -5,18 +5,25 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
-import {
-  approveOwnerRequest,
-  rejectOwnerRequest,
-} from "../services/AdminOwnerRequest";
+import { approveOwnerRequest, rejectOwnerRequest } from "../services/Admin";
 import { MiniButton } from "./Buttons";
 
 import InsertDriveFileRoundedIcon from "@mui/icons-material/InsertDriveFileRounded";
 import { green } from "@mui/material/colors";
+import swal from "sweetalert";
 
 export default function AccordionRequestOwner(props) {
-  const { fullname, username, email, phone, status, certificate, id, userId } =
-    props;
+  const {
+    fullname,
+    username,
+    email,
+    phone,
+    status,
+    certificate,
+    id,
+    userId,
+    image,
+  } = props;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -27,14 +34,24 @@ export default function AccordionRequestOwner(props) {
   const json = JSON.parse(data);
   const token = json.token;
 
-  async function approve() {
-    const body = {
-      ID: userId,
-      role: "owner",
-      status: "approve",
-    };
-    const response = await approveOwnerRequest(token, body);
-  }
+  const confirmreject = () => {
+    swal({
+      title: "Are you sure?",
+      text: "request to become owner will be rejected",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("request to become owner is rejected", {
+          icon: "success",
+        });
+        reject();
+      } else {
+        swal("action cancelled");
+      }
+    });
+  };
 
   async function reject() {
     const body = {
@@ -42,7 +59,37 @@ export default function AccordionRequestOwner(props) {
       status: "reject",
     };
     const response = await rejectOwnerRequest(token, body);
+    document.location.reload(true);
   }
+
+  async function approve() {
+    const body = {
+      ID: userId,
+      role: "owner",
+      status: "approve",
+    };
+    const response = await approveOwnerRequest(token, body);
+    document.location.reload(true);
+  }
+
+  const confirmApprove = () => {
+    swal({
+      title: "Are you sure?",
+      text: "user will become owner if you agree",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("user approved to become owner", {
+          icon: "success",
+        });
+        approve();
+      } else {
+        swal("action cancelled!");
+      }
+    });
+  };
 
   return (
     <div>
@@ -61,7 +108,11 @@ export default function AccordionRequestOwner(props) {
                 <Avatar
                   sx={{ width: 56, height: 56 }}
                   alt="Remy Sharp"
-                  src="https://source.unsplash.com/360x360?profile"
+                  src={
+                    image
+                      ? image
+                      : "https://source.unsplash.com/360x360?profile"
+                  }
                 />
                 <div className="ml-4 ">
                   <p>{fullname}</p>
@@ -115,7 +166,7 @@ export default function AccordionRequestOwner(props) {
                     id="pending"
                     variant="approve"
                     onClick={() => {
-                      approve();
+                      confirmApprove();
                     }}
                   >
                     approve
@@ -124,7 +175,7 @@ export default function AccordionRequestOwner(props) {
                     id="pending"
                     variant="reject"
                     onClick={() => {
-                      reject();
+                      confirmreject();
                     }}
                   >
                     reject

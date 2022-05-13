@@ -4,7 +4,7 @@ import { CategoryCard, IconLoading } from "./Card";
 import { API } from "../services/Users";
 import { errorMessage } from "../functions/Alert";
 
-export function ListCategory() {
+export function ListCategory({ getCategory }) {
   const [skeleton] = useState([1, 2, 3, 4]);
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState([]);
@@ -41,6 +41,9 @@ export function ListCategory() {
                   id={item.id}
                   icon={item.icon_name}
                   name={item.name}
+                  onClickItem={() => {
+                    getCategory(item.id);
+                  }}
                 />
               </div>
             ))}
