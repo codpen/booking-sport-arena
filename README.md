@@ -45,6 +45,8 @@ such as managing bookings, set up the arena, and tidy up the transaction history
 ### Links
  - [**FIGMA DESIGN**](https://www.figma.com/file/wc1Aye69HurKmOu0QnlfdY/sport-arena?node-id=0%3A1)
  - [**DEMO APPLICATION**](https://booking-sport-arena.vercel.app/)
+ 
+(if the demo app isn't working properly, it may be because of the domain for the API already been reset by Backend Team)
 
 <br/>
 <hr />
@@ -64,7 +66,7 @@ such as managing bookings, set up the arena, and tidy up the transaction history
 
 >Owner
 
-`User will become admin after approval from Admin`
+`User will become owner after approval from Admin`
 - [x] Owner can **Create**, **Read**, **Update** & **Delete** to their own arena
 - [x] Owner can **Read** can know who's booking on thier arena
 - [x] Owner can **Read** and save the history of the transaction
