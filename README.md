@@ -94,5 +94,5 @@ such as managing bookings, set up the arena, and tidy up the transaction history
 <br/>
 
 ## Authors
-[![GitHub](https://img.shields.io/badge/Ahmad_Tiar-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ATiarK)
+[![GitHub](https://img.shields.io/badge/Ahmad_Tiar-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/codpen)
 [![GitHub](https://img.shields.io/badge/Ricky_H-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ricky-ard)
